@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>રૂકસાના લેડીઝ ટેલર - સ્માર્ટ બુક અને બિલિંગ</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <style>
     :root {
       --primary: #5c0928;
@@ -41,7 +47,7 @@
       font-size: 14px;
       font-weight: 600;
       box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      z-index: 9999;
+      z-index: 99999;
       transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
       display: flex;
       align-items: center;
@@ -50,16 +56,138 @@
       pointer-events: none;
       white-space: nowrap;
     }
-    #toast-box.show {
-      top: 22px;
-      opacity: 1;
-    }
+    #toast-box.show { top: 22px; opacity: 1; }
     #toast-box.success { background: #10ac84; }
     #toast-box.error { background: #ee5253; }
     #toast-box.info { background: #2e86de; }
 
+    /* Authentication Overlays */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fdf2f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+    .auth-card {
+      max-width: 420px;
+      width: 100%;
+      background: white;
+      padding: 40px 26px;
+      border-radius: 24px;
+      border: 1.5px solid #f7dbe4;
+      box-shadow: 0 15px 35px rgba(92, 9, 40, 0.08);
+      text-align: center;
+      animation: viewSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .auth-icon { font-size: 60px; margin-bottom: 12px; }
+    .btn-google {
+      width: 100%;
+      background: #ffffff;
+      color: #333;
+      border: 1.5px solid #dadce0;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      transition: var(--transition);
+      margin-top: 22px;
+    }
+    .btn-google:hover { background: #f8f9fa; border-color: #c6c9cc; transform: translateY(-1px); }
+
+    /* Access Denied Screen */
+    #screen-denied {
+      background: linear-gradient(135deg, #2c0412 0%, #4a0820 50%, #1a020a 100%);
+      color: white;
+      z-index: 100000;
+    }
+    .denied-container {
+      max-width: 480px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 40px 26px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+      animation: viewSlideUp 0.4s ease-out;
+    }
+    .denied-icon-wrap {
+      width: 90px;
+      height: 90px;
+      background: rgba(238, 82, 83, 0.2);
+      border: 2px solid #ee5253;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 30px rgba(238, 82, 83, 0.35);
+      animation: alertBounce 2s infinite ease-in-out;
+    }
+    @keyframes alertBounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .denied-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ff6b6b;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .denied-subtitle {
+      font-size: 14px;
+      color: #ffccd2;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .denied-user-pill {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px dashed rgba(255, 107, 107, 0.6);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #f1f2f6;
+      margin-bottom: 24px;
+      word-break: break-all;
+    }
+    .denied-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ee5253, #c0392b);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(238, 82, 83, 0.3);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .denied-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(238, 82, 83, 0.45);
+    }
+
     /* Main Container */
-    .app-wrapper { width: 100%; max-width: 1100px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; background: #ffffff; box-shadow: 0 0 30px rgba(0,0,0,0.04); position: relative; }
+    .app-wrapper { width: 100%; max-width: 1100px; margin: 0 auto; min-height: 100vh; display: none; flex-direction: column; background: #ffffff; box-shadow: 0 0 30px rgba(0,0,0,0.04); position: relative; }
 
     /* Desktop Navigation */
     .app-header {
@@ -95,6 +223,7 @@
       color: #ffffff;
       transform: translateY(-1px);
     }
+    .btn-logout { background: #ee5253; color: white; border: none; padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px; margin-left: 6px; }
 
     /* Mobile Bottom Navigation */
     .bottom-nav {
@@ -130,7 +259,7 @@
     .bottom-nav-btn span { font-size: 20px; transition: transform 0.2s; }
     .bottom-nav-btn:active span { transform: scale(1.25); }
 
-    /* Content Area & View Animations */
+    /* Content Area & Animations */
     .main-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
     .view { display: none; flex-direction: column; width: 100%; }
     .view.active {
@@ -142,7 +271,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 1. WELCOME SCREEN */
+    /* Welcome Screen */
     .welcome-container {
       display: flex;
       align-items: center;
@@ -260,7 +389,7 @@
     .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 5px; font-weight: 700; }
     .menu-card p { font-size: 13px; color: var(--text-muted); }
 
-    /* Panels & Input Controls */
+    /* Panels & Inputs */
     .card-panel {
       background: white;
       border: 1px solid var(--border-color);
@@ -285,7 +414,7 @@
       padding: 12px 14px;
       border: 1.5px solid var(--border-color);
       border-radius: 10px;
-      font-size: 16px; /* Prevents auto-zoom on mobile */
+      font-size: 16px;
       margin-bottom: 14px;
       outline: none;
       transition: var(--transition);
@@ -394,6 +523,8 @@
       .billing-grid { grid-template-columns: 1.25fr 1fr; align-items: start; }
     }
     .items-scroll-list { max-height: 480px; overflow-y: auto; padding-right: 4px; }
+    
+    /* Service Card with Editable Price */
     .item-row-card {
       display: flex;
       align-items: center;
@@ -404,10 +535,37 @@
       margin-bottom: 10px;
       background: #fff;
       transition: var(--transition);
+      gap: 8px;
     }
     .item-row-card:hover { border-color: #dab4c2; background: #fffdfd; }
-    .item-meta { display: flex; align-items: center; gap: 12px; }
+    .item-meta { display: flex; align-items: center; gap: 10px; flex: 1; }
     .item-badge { font-size: 24px; background: #fff0f3; padding: 6px 10px; border-radius: 10px; }
+    
+    /* Price Editable Input */
+    .price-edit-box {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .price-edit-input {
+      width: 85px;
+      padding: 4px 8px;
+      border: 1.5px solid #ced6e0;
+      border-radius: 8px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+      background: #ffffff;
+    }
+    .price-edit-input:focus {
+      border-color: var(--primary);
+      background: #fff8f9;
+      box-shadow: 0 0 0 3px rgba(92, 9, 40, 0.08);
+    }
+
     .qty-group { display: flex; align-items: center; gap: 8px; }
     .btn-qty {
       width: 34px;
@@ -426,6 +584,15 @@
     .btn-qty:active { transform: scale(0.9); }
     .btn-qty.add { background: var(--primary); color: white; border: none; }
     .qty-display { min-width: 22px; text-align: center; font-weight: 700; }
+
+    /* Custom Item Box */
+    .custom-item-box {
+      background: #fff8f9;
+      border: 1.5px dashed #eec5d3;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 14px;
+    }
 
     /* Receipt */
     .receipt-container {
@@ -462,7 +629,7 @@
 
     @media print {
       body { background: white; }
-      .app-header, .desktop-nav, .bottom-nav, .btn-actions, .no-print, .card-panel:first-child, #toast-box { display: none !important; }
+      .app-header, .desktop-nav, .bottom-nav, .btn-actions, .no-print, .card-panel:first-child, #toast-box, .auth-overlay { display: none !important; }
       .app-wrapper { max-width: 100%; box-shadow: none; }
       .billing-grid { grid-template-columns: 1fr; }
       .receipt-container { border: none; padding: 0; }
@@ -471,264 +638,340 @@
 </head>
 <body>
 
-<div class="app-wrapper">
-  
   <!-- Custom Floating Toast Message -->
   <div id="toast-box"></div>
 
-  <!-- Top Navigation (Desktop) -->
-  <header class="app-header" id="appHeader">
-    <div class="brand" onclick="switchView('view-dashboard')">🧵 રૂકસાના લેડીઝ ટેલર</div>
-    <nav class="desktop-nav">
-      <button class="nav-link active" id="deskNavDash" onclick="switchView('view-dashboard')">🏠 ડેશબોર્ડ</button>
-      <button class="nav-link" id="deskNavMeas" onclick="switchView('view-measurements')">📏 માપ ડાયરી</button>
-      <button class="nav-link" id="deskNavNew" onclick="openNewBill()">🧾 નવું બિલ</button>
-      <button class="nav-link" id="deskNavCust" onclick="switchView('view-customers')">👥 ગ્રાહકો</button>
-      <button class="nav-link" id="deskNavRep" onclick="switchView('view-reports')">📊 રિપોર્ટ્સ</button>
-    </nav>
-  </header>
-
-  <main class="main-content">
-    
-    <!-- 1. WELCOME SCREEN -->
-    <section class="view active" id="view-welcome">
-      <div class="welcome-container">
-        <div class="welcome-card">
-          <div class="welcome-icon-wrap">👗</div>
-          <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
-          <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ સિસ્ટમ</p>
-          <button class="btn-start" onclick="startApp()">
-            ▶️ શરૂ કરો (Start)
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. DASHBOARD VIEW -->
-    <section class="view" id="view-dashboard">
-      <div class="dashboard-banner">
-        <div>
-          <p style="font-size: 13px; opacity: 0.9;">આજનું કુલ વેચાણ (Today's Sale)</p>
-          <h1 id="dashTodayTotal" style="font-size: 34px; margin: 4px 0; font-weight: 800;">₹0</h1>
-          <span id="dashTodayCount" style="font-size: 13px; opacity: 0.9;">0 બિલ બનેલા</span>
-        </div>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <button class="btn-primary" style="background: white; color: var(--primary); width: auto; padding: 10px 18px; border-radius: 10px;" onclick="switchView('view-measurements')">📏 માપ સેવ કરો</button>
-          <button class="btn-primary" style="background: #10ac84; color: white; width: auto; padding: 10px 18px; border-radius: 10px;" onclick="openNewBill()">+ નવું બિલ</button>
-        </div>
-      </div>
-
-      <div class="menu-grid">
-        <div class="menu-card" onclick="switchView('view-measurements')">
-          <span class="icon">📏</span>
-          <h3>માપ ડાયરી</h3>
-          <p>ગ્રાહકના માપ અને વિગત સેવ કરો</p>
-        </div>
-        <div class="menu-card" onclick="openNewBill()">
-          <span class="icon">🧾</span>
-          <h3>નવી બિલ પહોંચ</h3>
-          <p>ગ્રાહક માટે નવું બિલ બનાવો</p>
-        </div>
-        <div class="menu-card" onclick="switchView('view-customers')">
-          <span class="icon">👥</span>
-          <h3>ગ્રાહકોની યાદી</h3>
-          <p>તમામ ગ્રાહકોના નંબર અને હિસાબ</p>
-        </div>
-        <div class="menu-card" onclick="switchView('view-reports')">
-          <span class="icon">📊</span>
-          <h3>કુલ હિસાબ રિપોર્ટ</h3>
-          <p>આવક અને વધુ વેચાતી આઇટમ્સ</p>
-        </div>
-        <div class="menu-card" onclick="clearAllData()">
-          <span class="icon">🗑️</span>
-          <h3 style="color:#ee5253;">ડેટા રીસેટ</h3>
-          <p>જૂનો બિલ અને માપ ડેટા સાફ કરો</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. MEASUREMENTS VIEW -->
-    <section class="view" id="view-measurements">
-      <div class="meas-grid-container">
-        
-        <!-- Left: Form -->
-        <div class="card-panel">
-          <div class="panel-title">
-            <span>📏 ગ્રાહકનું માપ લખો</span>
-            <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div>
-              <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
-              <input type="text" id="mCustName" class="form-control" placeholder="નામ (દા.ત. મીનાબેન)">
-            </div>
-            <div>
-              <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર: *</label>
-              <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર">
-            </div>
-          </div>
-
-          <label style="font-size: 12px; font-weight: 700;">કપડાંનો પ્રકાર:</label>
-          <select id="mClothType" class="form-control">
-            <option value="બ્લાઉઝ">👚 બ્લાઉઝ (Blouse)</option>
-            <option value="સાદો ડ્રેસ">👗 સાદો ડ્રેસ (Simple Dress)</option>
-            <option value="ફેન્સી ડ્રેસ">✨ ફેન્સી ડ્રેસ (Fancy Dress)</option>
-            <option value="કુર્તી / ટોપ">👚 કુર્તી / ટોપ (Kurti / Top)</option>
-            <option value="ચણિયાચોલી / લહેંગા">💃 ચણિયાચોલી / લહેંગા</option>
-            <option value="પેન્ટ / સલવાર">👖 પેન્ટ / સલવાર</option>
-            <option value="કોટસુટ">🧥 કોટસુટ</option>
-            <option value="અન્ય કામ">🪡 અન્ય સિલાઈ કામ</option>
-          </select>
-
-          <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">નીચે માપ લખો (ઇંચમાં):</p>
-          <div class="meas-fields-grid">
-            <div class="meas-field-box"><label>લંબાઈ</label><input type="text" id="m_len" placeholder='14"'></div>
-            <div class="meas-field-box"><label>છાતી (Chest)</label><input type="text" id="m_chest" placeholder='36"'></div>
-            <div class="meas-field-box"><label>કમર (Waist)</label><input type="text" id="m_waist" placeholder='30"'></div>
-            <div class="meas-field-box"><label>સીટ (Hip)</label><input type="text" id="m_seat" placeholder='38"'></div>
-            <div class="meas-field-box"><label>શોલ્ડર</label><input type="text" id="m_shoulder" placeholder='14"'></div>
-            <div class="meas-field-box"><label>બાય લંબાઈ</label><input type="text" id="m_sleeve" placeholder='6"'></div>
-            <div class="meas-field-box"><label>મોરી (ઘેર)</label><input type="text" id="m_mori" placeholder='12"'></div>
-            <div class="meas-field-box"><label>આગળ ગળો</label><input type="text" id="m_fneck" placeholder='6.5"'></div>
-            <div class="meas-field-box"><label>પાછળ ગળો</label><input type="text" id="m_bneck" placeholder='8"'></div>
-            <div class="meas-field-box"><label>પેન્ટ લંબાઈ</label><input type="text" id="m_plen" placeholder='37"'></div>
-          </div>
-
-          <label style="font-size: 12px; font-weight: 700; color: #444;">વધારાનું લખાણ / ખાસ ડિઝાઇન નોંધ:</label>
-          <textarea id="mExtraNotes" class="form-control" style="height: 75px; resize: vertical;" placeholder="દા.ત. પાછળ બોટ નેક, દોરી-લટકણ, અસ્તર ડબલ મૂકવું..."></textarea>
-
-          <input type="hidden" id="editingMeasId" value="">
-
-          <div style="display: flex; gap: 10px;">
-            <button class="btn-primary" style="background: #10ac84; flex: 2;" onclick="saveMeasurement()">💾 માપ સાચવો (Save)</button>
-            <button class="btn-primary" style="background: #8395a7; flex: 1;" onclick="resetMeasForm()">સાફ કરો</button>
-          </div>
-        </div>
-
-        <!-- Right: Saved List -->
-        <div class="card-panel">
-          <div class="panel-title">
-            <span>📋 સેવ કરેલા માપની યાદી</span>
-            <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
-          </div>
-
-          <input type="text" id="measSearchInput" class="form-control" placeholder="🔍 નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
-          <div id="measurementsListContainer" style="max-height: 520px; overflow-y: auto; padding-right: 2px;"></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 4. NEW BILL VIEW -->
-    <section class="view" id="view-new-bill">
-      <div class="billing-grid">
-        
-        <!-- Left: Selection -->
-        <div class="card-panel">
-          <div class="panel-title">૧. ગ્રાહક અને કામની પસંદગી</div>
-          
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <input type="text" id="custName" class="form-control" placeholder="ગ્રાહકનું નામ" oninput="updateLiveReceipt()">
-            <input type="tel" id="custPhone" class="form-control" placeholder="મોબાઈલ નંબર" oninput="updateLiveReceipt()">
-          </div>
-          
-          <label style="font-size: 12px; font-weight: 700;">ડિલિવરી આપવાની તારીખ:</label>
-          <input type="date" id="custDueDate" class="form-control" oninput="updateLiveReceipt()">
-
-          <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં અને સર્વિસ ઉમેરો:</p>
-          <div class="items-scroll-list" id="servicesContainer"></div>
-        </div>
-
-        <!-- Right: Live Receipt -->
-        <div class="card-panel">
-          <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
-
-          <div class="receipt-container" id="printableReceipt">
-            <div class="receipt-head">
-              <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
-              <p style="font-size: 11px;">પ્રો. રૂકસાના બેન | મો: 7572842641</p>
-              <p style="font-size: 10px; color: #555;">C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</p>
-            </div>
-
-            <div class="receipt-row"><span>બિલ નં: <b id="lblBillNo">#0001</b></span> <span id="lblDate"></span></div>
-            <div class="receipt-row"><span>ગ્રાહક: <b id="lblCustName">-</b></span> <span id="lblCustPhone">-</span></div>
-            <div class="receipt-row"><span>ડિલિવરી તારીખ: <b id="lblDueDate">-</b></span></div>
-
-            <table class="receipt-table">
-              <thead>
-                <tr><th>આઇટમ</th><th>નંગ</th><th>કિંમત</th><th style="text-align: right;">કુલ</th></tr>
-              </thead>
-              <tbody id="receiptTableBody">
-                <tr><td colspan="4" style="text-align:center; color:#999; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
-              </tbody>
-            </table>
-
-            <div class="receipt-row"><span>કુલ રકમ (Total):</span><b id="lblTotal">₹0</b></div>
-            <div class="receipt-row" style="align-items: center;">
-              <span>એડવાન્સ જમા:</span>
-              <input type="number" id="billAdvance" value="0" style="width: 90px; padding: 4px 6px; text-align: right; border: 1.5px solid #ccc; border-radius: 6px; font-size: 15px;" oninput="updateLiveReceipt()">
-            </div>
-            <div class="receipt-row receipt-total">
-              <span>બાકી રકમ (Due):</span>
-              <span id="lblDue" style="color: #ee5253;">₹0</span>
-            </div>
-
-            <div style="text-align: center; margin-top: 15px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 6px;">
-              પધારવા બદલ આભાર! ફરી પધારશો. 🙏
-            </div>
-          </div>
-
-          <div class="btn-actions no-print">
-            <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">📲 WhatsApp બિલ</button>
-            <button class="btn-print" onclick="window.print()">🖨️ Print પહોંચ</button>
-          </div>
-          <button class="btn-primary" style="margin-top: 12px; background: #10ac84;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 5. CUSTOMERS LIST -->
-    <section class="view" id="view-customers">
-      <div class="card-panel">
-        <div class="panel-title">👥 ગ્રાહકોની ડિજિટલ ડાયરી</div>
-        <input type="text" id="custSearchInput" class="form-control" placeholder="🔍 ગ્રાહકનું નામ અથવા નંબર શોધો..." oninput="renderCustomers()">
-        <div id="customersContainer"></div>
-      </div>
-    </section>
-
-    <!-- 6. REPORTS VIEW -->
-    <section class="view" id="view-reports">
-      <div class="card-panel">
-        <div class="panel-title">📊 કુલ હિસાબ અને વેચાણ રિપોર્ટ</div>
-        <div class="dashboard-banner" style="margin-bottom: 20px;">
-          <div>
-            <p style="font-size: 13px;">લાઈફટાઈમ કુલ આવક</p>
-            <h1 id="repLifetimeSales" style="font-size: 34px; margin: 4px 0;">₹0</h1>
-            <span id="repLifetimeBills">કુલ બિલો: 0</span>
-          </div>
-        </div>
-        <p style="font-weight: 700; margin-bottom: 12px; color: var(--primary);">સૌથી વધુ સીવેલી આઇટમ્સ:</p>
-        <div id="repTopItemsList"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Mobile Bottom Navigation -->
-  <div class="bottom-nav" id="bottomNav">
-    <button class="bottom-nav-btn active" id="mobNavDash" onclick="switchView('view-dashboard')"><span>🏠</span>હોમ</button>
-    <button class="bottom-nav-btn" id="mobNavMeas" onclick="switchView('view-measurements')"><span>📏</span>માપ</button>
-    <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBill()"><span>🧾</span>બિલ</button>
-    <button class="bottom-nav-btn" id="mobNavCust" onclick="switchView('view-customers')"><span>👥</span>ગ્રાહકો</button>
-    <button class="bottom-nav-btn" id="mobNavRep" onclick="switchView('view-reports')"><span>📊</span>રિપોર્ટ</button>
+  <!-- 1. GOOGLE LOGIN SCREEN -->
+  <div class="auth-overlay" id="screen-login">
+    <div class="auth-card">
+      <div class="auth-icon">👗</div>
+      <h2 style="color: var(--primary); margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h2>
+      <p style="color: var(--text-muted); font-size: 14px;">તમારા ખાતામાં પ્રવેશ કરો</p>
+      <button class="btn-google" onclick="handleGoogleLogin()">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
+        Google વડે લૉગિન કરો
+      </button>
+    </div>
   </div>
-</div>
+
+  <!-- 2. ACCESS DENIED SCREEN -->
+  <div class="auth-overlay" id="screen-denied" style="display: none;">
+    <div class="denied-container">
+      <div class="denied-icon-wrap">🛑</div>
+      <h1 class="denied-title">આ વેબસાઇટ તમારા માટે નથી</h1>
+      
+      <p class="denied-subtitle">
+        નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત અને ખાનગી હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત રાખવામાં આવ્યું છે. અન્ય કોઈ વ્યક્તિ તેનો ઉપયોગ કરી શકશે નહીં.
+      </p>
+
+      <div class="denied-user-pill">
+        <span>❌ તમારું એકાઉન્ટ:</span><br>
+        <b id="deniedUserEmail" style="color: #ff7675;">અજાણ્યું એકાઉન્ટ</b>
+      </div>
+
+      <button class="denied-btn" onclick="handleLogout()">
+        🔄 બીજા સાચા Google એકાઉન્ટથી પ્રવેશ કરો
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. MAIN APP WRAPPER -->
+  <div class="app-wrapper" id="appMainWrapper">
+    
+    <!-- Top Navigation (Desktop) -->
+    <header class="app-header" id="appHeader">
+      <div class="brand" onclick="switchView('view-dashboard')">🧵 રૂકસાના લેડીઝ ટેલર</div>
+      <nav class="desktop-nav">
+        <button class="nav-link active" id="deskNavDash" onclick="switchView('view-dashboard')">🏠 ડેશબોર્ડ</button>
+        <button class="nav-link" id="deskNavMeas" onclick="switchView('view-measurements')">📏 માપ ડાયરી</button>
+        <button class="nav-link" id="deskNavNew" onclick="openNewBill()">🧾 નવું બિલ</button>
+        <button class="nav-link" id="deskNavCust" onclick="switchView('view-customers')">👥 ગ્રાહકો</button>
+        <button class="nav-link" id="deskNavRep" onclick="switchView('view-reports')">📊 રિપોર્ટ્સ</button>
+        <button class="btn-logout" onclick="handleLogout()">Logout 🚪</button>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- 1. WELCOME SCREEN -->
+      <section class="view active" id="view-welcome">
+        <div class="welcome-container">
+          <div class="welcome-card">
+            <div class="welcome-icon-wrap">👗</div>
+            <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
+            <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ સિસ્ટમ</p>
+            <button class="btn-start" onclick="startApp()">
+              ▶️ શરૂ કરો (Start)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. DASHBOARD VIEW -->
+      <section class="view" id="view-dashboard">
+        <div class="dashboard-banner">
+          <div>
+            <p style="font-size: 13px; opacity: 0.9;">આજનું કુલ વેચાણ (Today's Sale)</p>
+            <h1 id="dashTodayTotal" style="font-size: 34px; margin: 4px 0; font-weight: 800;">₹0</h1>
+            <span id="dashTodayCount" style="font-size: 13px; opacity: 0.9;">0 બિલ બનેલા</span>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn-primary" style="background: white; color: var(--primary); width: auto; padding: 10px 18px; border-radius: 10px;" onclick="switchView('view-measurements')">📏 માપ સેવ કરો</button>
+            <button class="btn-primary" style="background: #10ac84; color: white; width: auto; padding: 10px 18px; border-radius: 10px;" onclick="openNewBill()">+ નવું બિલ</button>
+          </div>
+        </div>
+
+        <div class="menu-grid">
+          <div class="menu-card" onclick="switchView('view-measurements')">
+            <span class="icon">📏</span>
+            <h3>માપ ડાયરી</h3>
+            <p>ગ્રાહકના માપ અને વિગત સેવ કરો</p>
+          </div>
+          <div class="menu-card" onclick="openNewBill()">
+            <span class="icon">🧾</span>
+            <h3>નવી બિલ પહોંચ</h3>
+            <p>ગ્રાહક માટે નવું બિલ બનાવો</p>
+          </div>
+          <div class="menu-card" onclick="switchView('view-customers')">
+            <span class="icon">👥</span>
+            <h3>ગ્રાહકોની યાદી</h3>
+            <p>તમામ ગ્રાહકોના નંબર અને હિસાબ</p>
+          </div>
+          <div class="menu-card" onclick="switchView('view-reports')">
+            <span class="icon">📊</span>
+            <h3>કુલ હિસાબ રિપોર્ટ</h3>
+            <p>આવક અને વધુ વેચાતી આઇટમ્સ</p>
+          </div>
+          <div class="menu-card" onclick="clearAllData()">
+            <span class="icon">🗑️</span>
+            <h3 style="color:#ee5253;">ડેટા રીસેટ</h3>
+            <p>જૂનો બિલ અને માપ ડેટા સાફ કરો</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. MEASUREMENTS VIEW -->
+      <section class="view" id="view-measurements">
+        <div class="meas-grid-container">
+          
+          <!-- Left: Form -->
+          <div class="card-panel">
+            <div class="panel-title">
+              <span>📏 ગ્રાહકનું માપ લખો</span>
+              <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
+                <input type="text" id="mCustName" class="form-control" placeholder="નામ (દા.ત. મીનાબેન)">
+              </div>
+              <div>
+                <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર: *</label>
+                <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર">
+              </div>
+            </div>
+
+            <label style="font-size: 12px; font-weight: 700;">કપડાંનો પ્રકાર:</label>
+            <select id="mClothType" class="form-control">
+              <option value="બ્લાઉઝ">👚 બ્લાઉઝ (Blouse)</option>
+              <option value="સાદો ડ્રેસ">👗 સાદો ડ્રેસ (Simple Dress)</option>
+              <option value="ફેન્સી ડ્રેસ">✨ ફેન્સી ડ્રેસ (Fancy Dress)</option>
+              <option value="કુર્તી / ટોપ">👚 કુર્તી / ટોપ (Kurti / Top)</option>
+              <option value="ચણિયાચોલી / લહેંગા">💃 ચણિયાચોલી / લહેંગા</option>
+              <option value="પેન્ટ / સલવાર">👖 પેન્ટ / સલવાર</option>
+              <option value="કોટસુટ">🧥 કોટસુટ</option>
+              <option value="અન્ય કામ">🪡 અન્ય સિલાઈ કામ</option>
+            </select>
+
+            <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">નીચે માપ લખો (ઇંચમાં):</p>
+            <div class="meas-fields-grid">
+              <div class="meas-field-box"><label>લંબાઈ</label><input type="text" id="m_len" placeholder='14"'></div>
+              <div class="meas-field-box"><label>છાતી (Chest)</label><input type="text" id="m_chest" placeholder='36"'></div>
+              <div class="meas-field-box"><label>કમર (Waist)</label><input type="text" id="m_waist" placeholder='30"'></div>
+              <div class="meas-field-box"><label>સીટ (Hip)</label><input type="text" id="m_seat" placeholder='38"'></div>
+              <div class="meas-field-box"><label>શોલ્ડર</label><input type="text" id="m_shoulder" placeholder='14"'></div>
+              <div class="meas-field-box"><label>બાય લંબાઈ</label><input type="text" id="m_sleeve" placeholder='6"'></div>
+              <div class="meas-field-box"><label>મોરી (ઘેર)</label><input type="text" id="m_mori" placeholder='12"'></div>
+              <div class="meas-field-box"><label>આગળ ગળો</label><input type="text" id="m_fneck" placeholder='6.5"'></div>
+              <div class="meas-field-box"><label>પાછળ ગળો</label><input type="text" id="m_bneck" placeholder='8"'></div>
+              <div class="meas-field-box"><label>પેન્ટ લંબાઈ</label><input type="text" id="m_plen" placeholder='37"'></div>
+            </div>
+
+            <label style="font-size: 12px; font-weight: 700; color: #444;">વધારાનું લખાણ / ખાસ ડિઝાઇન નોંધ:</label>
+            <textarea id="mExtraNotes" class="form-control" style="height: 75px; resize: vertical;" placeholder="દા.ત. પાછળ બોટ નેક, દોરી-લટકણ, અસ્તર ડબલ મૂકવું..."></textarea>
+
+            <input type="hidden" id="editingMeasId" value="">
+
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-primary" style="background: #10ac84; flex: 2;" onclick="saveMeasurement()">💾 માપ સાચવો (Save)</button>
+              <button class="btn-primary" style="background: #8395a7; flex: 1;" onclick="resetMeasForm()">સાફ કરો</button>
+            </div>
+          </div>
+
+          <!-- Right: Saved List -->
+          <div class="card-panel">
+            <div class="panel-title">
+              <span>📋 સેવ કરેલા માપની યાદી</span>
+              <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
+            </div>
+
+            <input type="text" id="measSearchInput" class="form-control" placeholder="🔍 નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
+            <div id="measurementsListContainer" style="max-height: 520px; overflow-y: auto; padding-right: 2px;"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. NEW BILL VIEW -->
+      <section class="view" id="view-new-bill">
+        <div class="billing-grid">
+          
+          <!-- Left: Selection & Pricing -->
+          <div class="card-panel">
+            <div class="panel-title">૧. ગ્રાહક અને કામની પસંદગી</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <input type="text" id="custName" class="form-control" placeholder="ગ્રાહકનું નામ" oninput="updateLiveReceipt()">
+              <input type="tel" id="custPhone" class="form-control" placeholder="મોબાઈલ નંબર" oninput="updateLiveReceipt()">
+            </div>
+            
+            <label style="font-size: 12px; font-weight: 700;">ડિલિવરી આપવાની તારીખ:</label>
+            <input type="date" id="custDueDate" class="form-control" oninput="updateLiveReceipt()">
+
+            <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, કિંમત (ભાવ) અને નંગ નક્કી કરો:</p>
+            <div class="items-scroll-list" id="servicesContainer"></div>
+
+            <!-- નવી આઇટમ જાતે ઉમેરવાનું બોક્સ -->
+            <div class="custom-item-box">
+              <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">➕ અન્ય કોઈ નવું કામ ઉમેરવું હોય તો:</p>
+              <div style="display: grid; grid-template-columns: 1.8fr 1fr auto; gap: 8px;">
+                <input type="text" id="customItemName" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="કામનું નામ (દા.ત. લેસ/પીકો)">
+                <input type="number" id="customItemPrice" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="ભાવ ₹">
+                <button type="button" class="btn-primary" style="padding: 8px 14px; width: auto; font-size: 13px; border-radius: 8px;" onclick="addCustomService()">+ ઉમેરો</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Receipt -->
+          <div class="card-panel">
+            <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
+
+            <div class="receipt-container" id="printableReceipt">
+              <div class="receipt-head">
+                <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
+                <p style="font-size: 11px;">પ્રો. રૂકસાના બેન | મો: 7572842641</p>
+                <p style="font-size: 10px; color: #555;">C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</p>
+              </div>
+
+              <div class="receipt-row"><span>બિલ નં: <b id="lblBillNo">#0001</b></span> <span id="lblDate"></span></div>
+              <div class="receipt-row"><span>ગ્રાહક: <b id="lblCustName">-</b></span> <span id="lblCustPhone">-</span></div>
+              <div class="receipt-row"><span>ડિલિવરી તારીખ: <b id="lblDueDate">-</b></span></div>
+
+              <table class="receipt-table">
+                <thead>
+                  <tr><th>આઇટમ</th><th>નંગ</th><th>ભાવ</th><th style="text-align: right;">કુલ</th></tr>
+                </thead>
+                <tbody id="receiptTableBody">
+                  <tr><td colspan="4" style="text-align:center; color:#999; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
+                </tbody>
+              </table>
+
+              <div class="receipt-row"><span>કુલ રકમ (Total):</span><b id="lblTotal">₹0</b></div>
+              <div class="receipt-row" style="align-items: center;">
+                <span>એડવાન્સ જમા:</span>
+                <input type="number" id="billAdvance" value="0" style="width: 90px; padding: 4px 6px; text-align: right; border: 1.5px solid #ccc; border-radius: 6px; font-size: 15px;" oninput="updateLiveReceipt()">
+              </div>
+              <div class="receipt-row receipt-total">
+                <span>બાકી રકમ (Due):</span>
+                <span id="lblDue" style="color: #ee5253;">₹0</span>
+              </div>
+
+              <div style="text-align: center; margin-top: 15px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 6px;">
+                પધારવા બદલ આભાર! ફરી પધારશો. 🙏
+              </div>
+            </div>
+
+            <div class="btn-actions no-print">
+              <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">📲 WhatsApp બિલ</button>
+              <button class="btn-print" onclick="window.print()">🖨️ Print પહોંચ</button>
+            </div>
+            <button class="btn-primary" style="margin-top: 12px; background: #10ac84;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. CUSTOMERS LIST -->
+      <section class="view" id="view-customers">
+        <div class="card-panel">
+          <div class="panel-title">👥 ગ્રાહકોની ડિજિટલ ડાયરી</div>
+          <input type="text" id="custSearchInput" class="form-control" placeholder="🔍 ગ્રાહકનું નામ અથવા નંબર શોધો..." oninput="renderCustomers()">
+          <div id="customersContainer"></div>
+        </div>
+      </section>
+
+      <!-- 6. REPORTS VIEW -->
+      <section class="view" id="view-reports">
+        <div class="card-panel">
+          <div class="panel-title">📊 કુલ હિસાબ અને વેચાણ રિપોર્ટ</div>
+          <div class="dashboard-banner" style="margin-bottom: 20px;">
+            <div>
+              <p style="font-size: 13px;">લાઈફટાઈમ કુલ આવક</p>
+              <h1 id="repLifetimeSales" style="font-size: 34px; margin: 4px 0;">₹0</h1>
+              <span id="repLifetimeBills">કુલ બિલો: 0</span>
+            </div>
+          </div>
+          <p style="font-weight: 700; margin-bottom: 12px; color: var(--primary);">સૌથી વધુ સીવેલી આઇટમ્સ:</p>
+          <div id="repTopItemsList"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="bottom-nav" id="bottomNav">
+      <button class="bottom-nav-btn active" id="mobNavDash" onclick="switchView('view-dashboard')"><span>🏠</span>હોમ</button>
+      <button class="bottom-nav-btn" id="mobNavMeas" onclick="switchView('view-measurements')"><span>📏</span>માપ</button>
+      <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBill()"><span>🧾</span>બિલ</button>
+      <button class="bottom-nav-btn" id="mobNavCust" onclick="switchView('view-customers')"><span>👥</span>ગ્રાહકો</button>
+      <button class="bottom-nav-btn" id="mobNavRep" onclick="switchView('view-reports')"><span>📊</span>રિપોર્ટ</button>
+    </div>
+  </div>
 
 <script>
-  // Services Catalog
-  const servicesList = [
+  // =========================================================================
+  // ૧. FIREBASE CONFIGURATION
+  // =========================================================================
+ const firebaseConfig = {
+    apiKey: "AIzaSyBi0VfTe2LkhwOXAuICPEA9hqDzIZ3z9ww",
+    authDomain: "diploma-study-portal-db8b2.firebaseapp.com",
+    projectId: "diploma-study-portal-db8b2",
+    storageBucket: "diploma-study-portal-db8b2.firebasestorage.app",
+    messagingSenderId: "777546571624",
+    appId: "1:777546571624:web:6a8d0b5f3c990bebf480dd",
+    measurementId: "G-H1C1065TTV"
+  };
+
+  // =========================================================================
+  // ૨. મમ્મીનું GMAIL ID
+  // =========================================================================
+  const AUTHORIZED_EMAIL = "ruksanavahora941@gmail.com";
+
+  // Firebase Initialize
+  let auth = null, db = null;
+  if (firebaseConfig.apiKey && firebaseConfig.apiKey.trim() !== "") {
+    try {
+      firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      db = firebase.firestore();
+    } catch(e) {
+      console.log("Firebase Init Notice:", e);
+    }
+  }
+
+  // Master Services Catalog
+  let servicesList = [
     { id: 1, name: 'ફેન્સી ડ્રેસ', price: 1500, icon: '👗' },
     { id: 2, name: 'બ્લાઉઝ', price: 800, icon: '👚' },
     { id: 3, name: 'કોટસુટ', price: 2500, icon: '🧥' },
@@ -739,6 +982,7 @@
   ];
 
   let cart = {};
+  let itemPrices = {}; // દરેક આઇટમનો કસ્ટમ ભાવ
   let currentBillData = null;
   let billsDB = JSON.parse(localStorage.getItem('ruksana_tailor_bills') || '[]');
   let measDB = JSON.parse(localStorage.getItem('ruksana_tailor_measurements') || '[]');
@@ -753,6 +997,78 @@
     toastTimeout = setTimeout(() => {
       box.className = '';
     }, 2800);
+  }
+
+  // Google Authentication
+  if(auth) {
+    auth.onAuthStateChanged(user => {
+      const loginScreen = document.getElementById('screen-login');
+      const deniedScreen = document.getElementById('screen-denied');
+      const appWrapper = document.getElementById('appMainWrapper');
+
+      if (user) {
+        if (AUTHORIZED_EMAIL && user.email.toLowerCase() === AUTHORIZED_EMAIL.toLowerCase()) {
+          loginScreen.style.display = 'none';
+          deniedScreen.style.display = 'none';
+          appWrapper.style.display = 'flex';
+          showToast(`સ્વાગત છે, ${user.displayName || 'રૂકસાનાબેન'}!`, 'info');
+          loadFirestoreData();
+        } else {
+          loginScreen.style.display = 'none';
+          deniedScreen.style.display = 'flex';
+          appWrapper.style.display = 'none';
+          document.getElementById('deniedUserEmail').innerText = user.email;
+        }
+      } else {
+        loginScreen.style.display = 'flex';
+        deniedScreen.style.display = 'none';
+        appWrapper.style.display = 'none';
+      }
+    });
+  }
+
+  function handleGoogleLogin() {
+    if(!auth) {
+      alert("મહેરબાની કરીને Firebase Config કોડમાં તમારી સાચી API કી અને મમ્મીનું Gmail ઉમેરો!");
+      return;
+    }
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(err => {
+      showToast('લૉગિન ભૂલ: ' + err.message, 'error');
+    });
+  }
+
+  function handleLogout() {
+    if(auth) {
+      auth.signOut().then(() => {
+        showToast('લૉગ આઉટ થઈ ગયું!', 'info');
+      });
+    } else {
+      location.reload();
+    }
+  }
+
+  // Realtime Cloud Sync
+  function loadFirestoreData() {
+    if(!db) return;
+
+    db.collection("measurements").orderBy("dateRaw", "desc").onSnapshot(snapshot => {
+      if(!snapshot.empty) {
+        measDB = [];
+        snapshot.forEach(doc => measDB.push({ id: doc.id, ...doc.data() }));
+        localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
+        renderMeasurements();
+      }
+    });
+
+    db.collection("bills").orderBy("dateRaw", "desc").onSnapshot(snapshot => {
+      if(!snapshot.empty) {
+        billsDB = [];
+        snapshot.forEach(doc => billsDB.push({ id: doc.id, ...doc.data() }));
+        localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
+        refreshDashboardStats();
+      }
+    });
   }
 
   window.onload = function() {
@@ -794,7 +1110,7 @@
   // ==========================================
   // MEASUREMENTS MANAGEMENT
   // ==========================================
-  function saveMeasurement() {
+  async function saveMeasurement() {
     const name = document.getElementById('mCustName').value.trim();
     const phone = document.getElementById('mCustPhone').value.trim();
     const clothType = document.getElementById('mClothType').value;
@@ -807,11 +1123,11 @@
 
     const editId = document.getElementById('editingMeasId').value;
     const measData = {
-      id: editId ? parseInt(editId) : Date.now(),
       name: name,
       phone: phone,
       clothType: clothType,
       date: new Date().toLocaleDateString('gu-IN'),
+      dateRaw: Date.now(),
       notes: notes,
       specs: {
         len: document.getElementById('m_len').value.trim(),
@@ -828,11 +1144,14 @@
     };
 
     if(editId) {
-      const idx = measDB.findIndex(m => m.id === parseInt(editId));
-      if(idx !== -1) measDB[idx] = measData;
+      const idx = measDB.findIndex(m => String(m.id) === String(editId));
+      if(idx !== -1) measDB[idx] = { id: editId, ...measData };
+      if(db) db.collection("measurements").doc(String(editId)).set(measData, {merge:true}).catch(()=>{});
       showToast('માપ સફળતાપૂર્વક સુધારી લેવાયું!', 'success');
     } else {
-      measDB.unshift(measData);
+      const newId = String(Date.now());
+      measDB.unshift({ id: newId, ...measData });
+      if(db) db.collection("measurements").doc(newId).set(measData).catch(()=>{});
       showToast('ગ્રાહકનું માપ સાચવી લીધું!', 'success');
     }
 
@@ -905,10 +1224,10 @@
           ${m.notes ? `<div style="font-size:12px; background:#fff9e6; padding:6px 10px; border-radius:6px; margin: 6px 0; color:#665100;"><b>નોંધ:</b> ${m.notes}</div>` : ''}
 
           <div class="meas-card-actions">
-            <button class="btn-sm" style="background:#25D366; color:white;" onclick="sendMeasWhatsApp(${m.id})">📲 WhatsApp</button>
-            <button class="btn-sm" style="background:#3498db; color:white;" onclick="editMeasurement(${m.id})">✏️ એડિટ</button>
+            <button class="btn-sm" style="background:#25D366; color:white;" onclick="sendMeasWhatsApp('${m.id}')">📲 WhatsApp</button>
+            <button class="btn-sm" style="background:#3498db; color:white;" onclick="editMeasurement('${m.id}')">✏️ એડિટ</button>
             <button class="btn-sm" style="background:#9b59b6; color:white;" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}')">🧾 બિલ</button>
-            <button class="btn-sm" style="background:#ee5253; color:white;" onclick="deleteMeasurement(${m.id})">🗑️</button>
+            <button class="btn-sm" style="background:#ee5253; color:white;" onclick="deleteMeasurement('${m.id}')">🗑️</button>
           </div>
         </div>
       `;
@@ -916,7 +1235,7 @@
   }
 
   function editMeasurement(id) {
-    const item = measDB.find(m => m.id === id);
+    const item = measDB.find(m => String(m.id) === String(id));
     if(!item) return;
 
     document.getElementById('editingMeasId').value = item.id;
@@ -943,15 +1262,16 @@
 
   function deleteMeasurement(id) {
     if(confirm('શું તમે આ ગ્રાહકનું માપ કાઢી નાખવા માંગો છો?')) {
-      measDB = measDB.filter(m => m.id !== id);
+      measDB = measDB.filter(m => String(m.id) !== String(id));
       localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
+      if(db) db.collection("measurements").doc(String(id)).delete().catch(()=>{});
       renderMeasurements();
       showToast('માપ કાઢી નાખ્યું.', 'info');
     }
   }
 
   function sendMeasWhatsApp(id) {
-    const m = measDB.find(x => x.id === id);
+    const m = measDB.find(x => String(x.id) === String(id));
     if(!m) return;
 
     let phone = m.phone.replace(/\D/g, '');
@@ -993,11 +1313,18 @@
   }
 
   // ==========================================
-  // BILLING MANAGEMENT
+  // BILLING MANAGEMENT (EDITABLE PRICES)
   // ==========================================
   function openNewBill() {
     cart = {};
-    servicesList.forEach(s => cart[s.id] = 0);
+    itemPrices = {};
+    
+    // ડિફોલ્ટ પ્રાઈસ સેટ કરો
+    servicesList.forEach(s => {
+      cart[s.id] = 0;
+      itemPrices[s.id] = s.price;
+    });
+
     document.getElementById('custName').value = '';
     document.getElementById('custPhone').value = '';
     
@@ -1019,7 +1346,13 @@
           <div class="item-badge">${item.icon}</div>
           <div>
             <div style="font-weight:700; font-size:14.5px;">${item.name}</div>
-            <div style="color:var(--primary); font-size:12.5px; font-weight:700;">₹${item.price}</div>
+            <div class="price-edit-box">
+              <span style="color:var(--primary); font-weight:700; font-size:13px;">₹</span>
+              <input type="number" class="price-edit-input" 
+                value="${itemPrices[item.id] !== undefined ? itemPrices[item.id] : item.price}" 
+                oninput="updateServicePrice(${item.id}, this.value)"
+                title="કિંમત બદલવા માટે અહીં નવો ભાવ લખો">
+            </div>
           </div>
         </div>
         <div class="qty-group">
@@ -1029,6 +1362,38 @@
         </div>
       </div>
     `).join('');
+  }
+
+  // ભાવ જાતે બદલવાનું ફંક્શન
+  function updateServicePrice(id, newPrice) {
+    const p = Math.max(0, parseFloat(newPrice) || 0);
+    itemPrices[id] = p;
+    updateLiveReceipt();
+  }
+
+  // નવી વધારાની આઇટમ જાતે ઉમેરો
+  function addCustomService() {
+    const nameInput = document.getElementById('customItemName');
+    const priceInput = document.getElementById('customItemPrice');
+    const name = nameInput.value.trim();
+    const price = parseFloat(priceInput.value) || 0;
+
+    if(!name) {
+      showToast('કૃપા કરીને કામનું નામ લખો.', 'error');
+      return;
+    }
+
+    const newId = Date.now();
+    servicesList.push({ id: newId, name: name, price: price, icon: '🪡' });
+    itemPrices[newId] = price;
+    cart[newId] = 1; // ઉમેરતાં જ ૧ નંગ સિલેક્ટ કરી દો
+
+    nameInput.value = '';
+    priceInput.value = '';
+
+    renderServiceCards();
+    updateLiveReceipt();
+    showToast(`'${name}' બિલમાં ઉમેરાઈ ગયું!`, 'success');
   }
 
   function adjustQty(id, delta) {
@@ -1061,9 +1426,10 @@
 
     servicesList.forEach(s => {
       const q = cart[s.id] || 0;
+      const currentPrice = itemPrices[s.id] !== undefined ? itemPrices[s.id] : s.price;
       if(q > 0) {
-        itemsPurchased.push({ name: s.name, qty: q, price: s.price, total: q * s.price });
-        subtotal += q * s.price;
+        itemsPurchased.push({ name: s.name, qty: q, price: currentPrice, total: q * currentPrice });
+        subtotal += q * currentPrice;
       }
     });
 
@@ -1088,6 +1454,7 @@
     currentBillData = {
       billNo: billNo,
       date: todayStr,
+      dateRaw: Date.now(),
       dueDate: dueDate,
       customer: name,
       phone: phone,
@@ -1104,8 +1471,12 @@
       return;
     }
 
-    billsDB.unshift(currentBillData);
+    const newBillId = String(Date.now());
+    billsDB.unshift({ id: newBillId, ...currentBillData });
     localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
+
+    if(db) db.collection("bills").doc(newBillId).set(currentBillData).catch(()=>{});
+
     showToast('બિલ સેવ થઈ ગયું!', 'success');
     refreshDashboardStats();
     switchView('view-dashboard');
@@ -1128,7 +1499,7 @@
 
     let itemsStr = '';
     currentBillData.items.forEach(it => {
-      itemsStr += `• ${it.name} (${it.qty} નંગ) : ₹${it.total}\n`;
+      itemsStr += `• ${it.name} (${it.qty} નંગ @ ₹${it.price}) : ₹${it.total}\n`;
     });
 
     let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - બિલ પહોંચ*\n`;
