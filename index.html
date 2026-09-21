@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>રૂકસાના લેડીઝ ટેલર - સ્માર્ટ બુક અને બિલિંગ</title>
+  <style>
+    :root {
+      --primary: #5c0928;
+      --primary-hover: #7b0e37;
+      --primary-light: #fff0f4;
+      --accent: #d35400;
+      --bg: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-main: #222f3e;
+      --text-muted: #6a798a;
+      --border-color: #e3e8ef;
+      --whatsapp: #25D366;
+      --success: #10ac84;
+      --danger: #ee5253;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 8px 24px rgba(92, 9, 40, 0.08);
+      --shadow-lg: 0 12px 32px rgba(92, 9, 40, 0.14);
+      --radius: 12px;
+      --transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+
+    /* Custom Toast Notification */
+    #toast-box {
+      position: fixed;
+      top: -70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222f3e;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      z-index: 9999;
+      transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast-box.show {
+      top: 22px;
+      opacity: 1;
+    }
+    #toast-box.success { background: #10ac84; }
+    #toast-box.error { background: #ee5253; }
+    #toast-box.info { background: #2e86de; }
+
+    /* Main Container */
+    .app-wrapper { width: 100%; max-width: 1100px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; background: #ffffff; box-shadow: 0 0 30px rgba(0,0,0,0.04); position: relative; }
+
+    /* Desktop Navigation */
+    .app-header {
+      background: linear-gradient(135deg, var(--primary), #7d0d38);
+      color: white;
+      padding: 14px 24px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 4px 15px rgba(92, 9, 40, 0.15);
+    }
+    .app-header .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; cursor: pointer; letter-spacing: 0.3px; }
+    .desktop-nav { display: flex; gap: 8px; align-items: center; }
+    .nav-link {
+      background: transparent;
+      border: none;
+      color: #f7d6e1;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Mobile Bottom Navigation */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-color);
+      justify-content: space-around;
+      padding: 8px 0 10px;
+      z-index: 300;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+    }
+    .bottom-nav-btn {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      flex: 1;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+    .bottom-nav-btn.active { color: var(--primary); transform: translateY(-2px); }
+    .bottom-nav-btn span { font-size: 20px; transition: transform 0.2s; }
+    .bottom-nav-btn:active span { transform: scale(1.25); }
+
+    /* Content Area & View Animations */
+    .main-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .view { display: none; flex-direction: column; width: 100%; }
+    .view.active {
+      display: flex;
+      animation: viewSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes viewSlideUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 1. WELCOME SCREEN */
+    .welcome-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 82vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .welcome-card {
+      max-width: 440px;
+      width: 100%;
+      background: #ffffff;
+      padding: 50px 32px;
+      border-radius: 24px;
+      border: 1px solid #f7dbe4;
+      box-shadow: 0 15px 35px rgba(92, 9, 40, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), #e84393, var(--accent));
+    }
+    .welcome-icon-wrap {
+      width: 95px;
+      height: 95px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 45px;
+      animation: gentlePulse 2.5s infinite ease-in-out;
+      box-shadow: 0 8px 20px rgba(92, 9, 40, 0.1);
+    }
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    .welcome-title {
+      color: var(--primary);
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .welcome-sub {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+    .btn-start {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), #82103c);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(92, 9, 40, 0.25);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-start:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(92, 9, 40, 0.35);
+    }
+    .btn-start:active { transform: scale(0.98); }
+
+    /* Dashboard Layout */
+    .dashboard-banner {
+      background: linear-gradient(135deg, var(--primary), #8a103e);
+      color: white;
+      padding: 24px 26px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .menu-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      padding: 22px 18px;
+      border-radius: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #f0ccd8;
+    }
+    .menu-card:active { transform: scale(0.97); }
+    .menu-card .icon { font-size: 38px; margin-bottom: 12px; display: inline-block; transition: transform 0.2s; }
+    .menu-card:hover .icon { transform: scale(1.15); }
+    .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 5px; font-weight: 700; }
+    .menu-card p { font-size: 13px; color: var(--text-muted); }
+
+    /* Panels & Input Controls */
+    .card-panel {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 22px;
+    }
+    .panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      border-bottom: 1.5px solid #f4edf0;
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 16px; /* Prevents auto-zoom on mobile */
+      margin-bottom: 14px;
+      outline: none;
+      transition: var(--transition);
+      background: #fafbfc;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(92, 9, 40, 0.08);
+    }
+    .btn-primary {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    /* Measurement Grid */
+    .meas-grid-container { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 850px) {
+      .meas-grid-container { grid-template-columns: 1.2fr 1fr; align-items: start; }
+    }
+    .meas-fields-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+      background: #fff8f9;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px dashed #eec5d3;
+    }
+    .meas-field-box { display: flex; flex-direction: column; gap: 5px; }
+    .meas-field-box label { font-size: 12px; font-weight: 700; color: #495057; }
+    .meas-field-box input {
+      padding: 10px 6px;
+      border: 1px solid #ced6e0;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      text-align: center;
+      background: #ffffff;
+      transition: var(--transition);
+    }
+    .meas-field-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(92, 9, 40, 0.1);
+    }
+
+    /* Saved Measurement Cards */
+    .meas-card {
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #fff;
+      transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .meas-card:hover {
+      border-color: #df9bb3;
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+    .meas-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .meas-badge {
+      background: #ffebee;
+      color: var(--primary);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+    .meas-tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .meas-tag {
+      background: #f1f3f6;
+      font-size: 11.5px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #333;
+      font-weight: 500;
+    }
+    .meas-card-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+    .btn-sm:active { transform: scale(0.95); }
+
+    /* Billing Grid */
+    .billing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 850px) {
+      .billing-grid { grid-template-columns: 1.25fr 1fr; align-items: start; }
+    }
+    .items-scroll-list { max-height: 480px; overflow-y: auto; padding-right: 4px; }
+    .item-row-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      background: #fff;
+      transition: var(--transition);
+    }
+    .item-row-card:hover { border-color: #dab4c2; background: #fffdfd; }
+    .item-meta { display: flex; align-items: center; gap: 12px; }
+    .item-badge { font-size: 24px; background: #fff0f3; padding: 6px 10px; border-radius: 10px; }
+    .qty-group { display: flex; align-items: center; gap: 8px; }
+    .btn-qty {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #f8f9fa;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .btn-qty:active { transform: scale(0.9); }
+    .btn-qty.add { background: var(--primary); color: white; border: none; }
+    .qty-display { min-width: 22px; text-align: center; font-weight: 700; }
+
+    /* Receipt */
+    .receipt-container {
+      background: #fff;
+      border: 1.5px dashed #b58997;
+      border-radius: 14px;
+      padding: 22px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .receipt-head { text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 10px; margin-bottom: 12px; }
+    .receipt-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .receipt-table th { border-top: 1px dashed #888; border-bottom: 1px dashed #888; padding: 6px 0; text-align: left; }
+    .receipt-table td { padding: 6px 0; }
+    .receipt-row { display: flex; justify-content: space-between; margin: 5px 0; }
+    .receipt-total { border-top: 2px solid #222; font-size: 16px; font-weight: 800; padding-top: 8px; }
+
+    .btn-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-whatsapp:hover { background: #20b858; transform: translateY(-1px); }
+    .btn-print { background: #2c3e50; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-print:hover { background: #1a252f; transform: translateY(-1px); }
+    .data-list-card { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 10px; background: #fff; }
+
+    /* Mobile Screen Adjustments */
+    @media (max-width: 768px) {
+      .app-wrapper { border-radius: 0; box-shadow: none; }
+      .desktop-nav { display: none; }
+      .bottom-nav.nav-active { display: flex; }
+      .main-content { padding: 16px; padding-bottom: 95px; }
+      .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .items-scroll-list { max-height: none; }
+    }
+
+    @media print {
+      body { background: white; }
+      .app-header, .desktop-nav, .bottom-nav, .btn-actions, .no-print, .card-panel:first-child, #toast-box { display: none !important; }
+      .app-wrapper { max-width: 100%; box-shadow: none; }
+      .billing-grid { grid-template-columns: 1fr; }
+      .receipt-container { border: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+  
+  <!-- Custom Floating Toast Message -->
+  <div id="toast-box"></div>
+
+  <!-- Top Navigation (Desktop) -->
+  <header class="app-header" id="appHeader">
+    <div class="brand" onclick="switchView('view-dashboard')">🧵 રૂકસાના લેડીઝ ટેલર</div>
+    <nav class="desktop-nav">
+      <button class="nav-link active" id="deskNavDash" onclick="switchView('view-dashboard')">🏠 ડેશબોર્ડ</button>
+      <button class="nav-link" id="deskNavMeas" onclick="switchView('view-measurements')">📏 માપ ડાયરી</button>
+      <button class="nav-link" id="deskNavNew" onclick="openNewBill()">🧾 નવું બિલ</button>
+      <button class="nav-link" id="deskNavCust" onclick="switchView('view-customers')">👥 ગ્રાહકો</button>
+      <button class="nav-link" id="deskNavRep" onclick="switchView('view-reports')">📊 રિપોર્ટ્સ</button>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    
+    <!-- 1. WELCOME SCREEN -->
+    <section class="view active" id="view-welcome">
+      <div class="welcome-container">
+        <div class="welcome-card">
+          <div class="welcome-icon-wrap">👗</div>
+          <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
+          <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ સિસ્ટમ</p>
+          <button class="btn-start" onclick="startApp()">
+            ▶️ શરૂ કરો (Start)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DASHBOARD VIEW -->
+    <section class="view" id="view-dashboard">
+      <div class="dashboard-banner">
+        <div>
+          <p style="font-size: 13px; opacity: 0.9;">આજનું કુલ વેચાણ (Today's Sale)</p>
+          <h1 id="dashTodayTotal" style="font-size: 34px; margin: 4px 0; font-weight: 800;">₹0</h1>
+          <span id="dashTodayCount" style="font-size: 13px; opacity: 0.9;">0 બિલ બનેલા</span>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn-primary" style="background: white; color: var(--primary); width: auto; padding: 10px 18px; border-radius: 10px;" onclick="switchView('view-measurements')">📏 માપ સેવ કરો</button>
+          <button class="btn-primary" style="background: #10ac84; color: white; width: auto; padding: 10px 18px; border-radius: 10px;" onclick="openNewBill()">+ નવું બિલ</button>
+        </div>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-card" onclick="switchView('view-measurements')">
+          <span class="icon">📏</span>
+          <h3>માપ ડાયરી</h3>
+          <p>ગ્રાહકના માપ અને વિગત સેવ કરો</p>
+        </div>
+        <div class="menu-card" onclick="openNewBill()">
+          <span class="icon">🧾</span>
+          <h3>નવી બિલ પહોંચ</h3>
+          <p>ગ્રાહક માટે નવું બિલ બનાવો</p>
+        </div>
+        <div class="menu-card" onclick="switchView('view-customers')">
+          <span class="icon">👥</span>
+          <h3>ગ્રાહકોની યાદી</h3>
+          <p>તમામ ગ્રાહકોના નંબર અને હિસાબ</p>
+        </div>
+        <div class="menu-card" onclick="switchView('view-reports')">
+          <span class="icon">📊</span>
+          <h3>કુલ હિસાબ રિપોર્ટ</h3>
+          <p>આવક અને વધુ વેચાતી આઇટમ્સ</p>
+        </div>
+        <div class="menu-card" onclick="clearAllData()">
+          <span class="icon">🗑️</span>
+          <h3 style="color:#ee5253;">ડેટા રીસેટ</h3>
+          <p>જૂનો બિલ અને માપ ડેટા સાફ કરો</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MEASUREMENTS VIEW -->
+    <section class="view" id="view-measurements">
+      <div class="meas-grid-container">
+        
+        <!-- Left: Form -->
+        <div class="card-panel">
+          <div class="panel-title">
+            <span>📏 ગ્રાહકનું માપ લખો</span>
+            <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
+              <input type="text" id="mCustName" class="form-control" placeholder="નામ (દા.ત. મીનાબેન)">
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર: *</label>
+              <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર">
+            </div>
+          </div>
+
+          <label style="font-size: 12px; font-weight: 700;">કપડાંનો પ્રકાર:</label>
+          <select id="mClothType" class="form-control">
+            <option value="બ્લાઉઝ">👚 બ્લાઉઝ (Blouse)</option>
+            <option value="સાદો ડ્રેસ">👗 સાદો ડ્રેસ (Simple Dress)</option>
+            <option value="ફેન્સી ડ્રેસ">✨ ફેન્સી ડ્રેસ (Fancy Dress)</option>
+            <option value="કુર્તી / ટોપ">👚 કુર્તી / ટોપ (Kurti / Top)</option>
+            <option value="ચણિયાચોલી / લહેંગા">💃 ચણિયાચોલી / લહેંગા</option>
+            <option value="પેન્ટ / સલવાર">👖 પેન્ટ / સલવાર</option>
+            <option value="કોટસુટ">🧥 કોટસુટ</option>
+            <option value="અન્ય કામ">🪡 અન્ય સિલાઈ કામ</option>
+          </select>
+
+          <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">નીચે માપ લખો (ઇંચમાં):</p>
+          <div class="meas-fields-grid">
+            <div class="meas-field-box"><label>લંબાઈ</label><input type="text" id="m_len" placeholder='14"'></div>
+            <div class="meas-field-box"><label>છાતી (Chest)</label><input type="text" id="m_chest" placeholder='36"'></div>
+            <div class="meas-field-box"><label>કમર (Waist)</label><input type="text" id="m_waist" placeholder='30"'></div>
+            <div class="meas-field-box"><label>સીટ (Hip)</label><input type="text" id="m_seat" placeholder='38"'></div>
+            <div class="meas-field-box"><label>શોલ્ડર</label><input type="text" id="m_shoulder" placeholder='14"'></div>
+            <div class="meas-field-box"><label>બાય લંબાઈ</label><input type="text" id="m_sleeve" placeholder='6"'></div>
+            <div class="meas-field-box"><label>મોરી (ઘેર)</label><input type="text" id="m_mori" placeholder='12"'></div>
+            <div class="meas-field-box"><label>આગળ ગળો</label><input type="text" id="m_fneck" placeholder='6.5"'></div>
+            <div class="meas-field-box"><label>પાછળ ગળો</label><input type="text" id="m_bneck" placeholder='8"'></div>
+            <div class="meas-field-box"><label>પેન્ટ લંબાઈ</label><input type="text" id="m_plen" placeholder='37"'></div>
+          </div>
+
+          <label style="font-size: 12px; font-weight: 700; color: #444;">વધારાનું લખાણ / ખાસ ડિઝાઇન નોંધ:</label>
+          <textarea id="mExtraNotes" class="form-control" style="height: 75px; resize: vertical;" placeholder="દા.ત. પાછળ બોટ નેક, દોરી-લટકણ, અસ્તર ડબલ મૂકવું..."></textarea>
+
+          <input type="hidden" id="editingMeasId" value="">
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-primary" style="background: #10ac84; flex: 2;" onclick="saveMeasurement()">💾 માપ સાચવો (Save)</button>
+            <button class="btn-primary" style="background: #8395a7; flex: 1;" onclick="resetMeasForm()">સાફ કરો</button>
+          </div>
+        </div>
+
+        <!-- Right: Saved List -->
+        <div class="card-panel">
+          <div class="panel-title">
+            <span>📋 સેવ કરેલા માપની યાદી</span>
+            <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
+          </div>
+
+          <input type="text" id="measSearchInput" class="form-control" placeholder="🔍 નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
+          <div id="measurementsListContainer" style="max-height: 520px; overflow-y: auto; padding-right: 2px;"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. NEW BILL VIEW -->
+    <section class="view" id="view-new-bill">
+      <div class="billing-grid">
+        
+        <!-- Left: Selection -->
+        <div class="card-panel">
+          <div class="panel-title">૧. ગ્રાહક અને કામની પસંદગી</div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <input type="text" id="custName" class="form-control" placeholder="ગ્રાહકનું નામ" oninput="updateLiveReceipt()">
+            <input type="tel" id="custPhone" class="form-control" placeholder="મોબાઈલ નંબર" oninput="updateLiveReceipt()">
+          </div>
+          
+          <label style="font-size: 12px; font-weight: 700;">ડિલિવરી આપવાની તારીખ:</label>
+          <input type="date" id="custDueDate" class="form-control" oninput="updateLiveReceipt()">
+
+          <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં અને સર્વિસ ઉમેરો:</p>
+          <div class="items-scroll-list" id="servicesContainer"></div>
+        </div>
+
+        <!-- Right: Live Receipt -->
+        <div class="card-panel">
+          <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
+
+          <div class="receipt-container" id="printableReceipt">
+            <div class="receipt-head">
+              <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
+              <p style="font-size: 11px;">પ્રો. રૂકસાના બેન | મો: 7572842641</p>
+              <p style="font-size: 10px; color: #555;">C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</p>
+            </div>
+
+            <div class="receipt-row"><span>બિલ નં: <b id="lblBillNo">#0001</b></span> <span id="lblDate"></span></div>
+            <div class="receipt-row"><span>ગ્રાહક: <b id="lblCustName">-</b></span> <span id="lblCustPhone">-</span></div>
+            <div class="receipt-row"><span>ડિલિવરી તારીખ: <b id="lblDueDate">-</b></span></div>
+
+            <table class="receipt-table">
+              <thead>
+                <tr><th>આઇટમ</th><th>નંગ</th><th>કિંમત</th><th style="text-align: right;">કુલ</th></tr>
+              </thead>
+              <tbody id="receiptTableBody">
+                <tr><td colspan="4" style="text-align:center; color:#999; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
+              </tbody>
+            </table>
+
+            <div class="receipt-row"><span>કુલ રકમ (Total):</span><b id="lblTotal">₹0</b></div>
+            <div class="receipt-row" style="align-items: center;">
+              <span>એડવાન્સ જમા:</span>
+              <input type="number" id="billAdvance" value="0" style="width: 90px; padding: 4px 6px; text-align: right; border: 1.5px solid #ccc; border-radius: 6px; font-size: 15px;" oninput="updateLiveReceipt()">
+            </div>
+            <div class="receipt-row receipt-total">
+              <span>બાકી રકમ (Due):</span>
+              <span id="lblDue" style="color: #ee5253;">₹0</span>
+            </div>
+
+            <div style="text-align: center; margin-top: 15px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 6px;">
+              પધારવા બદલ આભાર! ફરી પધારશો. 🙏
+            </div>
+          </div>
+
+          <div class="btn-actions no-print">
+            <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">📲 WhatsApp બિલ</button>
+            <button class="btn-print" onclick="window.print()">🖨️ Print પહોંચ</button>
+          </div>
+          <button class="btn-primary" style="margin-top: 12px; background: #10ac84;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. CUSTOMERS LIST -->
+    <section class="view" id="view-customers">
+      <div class="card-panel">
+        <div class="panel-title">👥 ગ્રાહકોની ડિજિટલ ડાયરી</div>
+        <input type="text" id="custSearchInput" class="form-control" placeholder="🔍 ગ્રાહકનું નામ અથવા નંબર શોધો..." oninput="renderCustomers()">
+        <div id="customersContainer"></div>
+      </div>
+    </section>
+
+    <!-- 6. REPORTS VIEW -->
+    <section class="view" id="view-reports">
+      <div class="card-panel">
+        <div class="panel-title">📊 કુલ હિસાબ અને વેચાણ રિપોર્ટ</div>
+        <div class="dashboard-banner" style="margin-bottom: 20px;">
+          <div>
+            <p style="font-size: 13px;">લાઈફટાઈમ કુલ આવક</p>
+            <h1 id="repLifetimeSales" style="font-size: 34px; margin: 4px 0;">₹0</h1>
+            <span id="repLifetimeBills">કુલ બિલો: 0</span>
+          </div>
+        </div>
+        <p style="font-weight: 700; margin-bottom: 12px; color: var(--primary);">સૌથી વધુ સીવેલી આઇટમ્સ:</p>
+        <div id="repTopItemsList"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <div class="bottom-nav" id="bottomNav">
+    <button class="bottom-nav-btn active" id="mobNavDash" onclick="switchView('view-dashboard')"><span>🏠</span>હોમ</button>
+    <button class="bottom-nav-btn" id="mobNavMeas" onclick="switchView('view-measurements')"><span>📏</span>માપ</button>
+    <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBill()"><span>🧾</span>બિલ</button>
+    <button class="bottom-nav-btn" id="mobNavCust" onclick="switchView('view-customers')"><span>👥</span>ગ્રાહકો</button>
+    <button class="bottom-nav-btn" id="mobNavRep" onclick="switchView('view-reports')"><span>📊</span>રિપોર્ટ</button>
+  </div>
+</div>
+
+<script>
+  // Services Catalog
+  const servicesList = [
+    { id: 1, name: 'ફેન્સી ડ્રેસ', price: 1500, icon: '👗' },
+    { id: 2, name: 'બ્લાઉઝ', price: 800, icon: '👚' },
+    { id: 3, name: 'કોટસુટ', price: 2500, icon: '🧥' },
+    { id: 4, name: 'લેડીઝ શર્ટ', price: 900, icon: '👔' },
+    { id: 5, name: 'ફેન્સી ટોપ', price: 1200, icon: '✨' },
+    { id: 6, name: 'ફ્રોક', price: 1300, icon: '💃' },
+    { id: 7, name: 'રિપેરિંગ કામ', price: 150, icon: '🪡' }
+  ];
+
+  let cart = {};
+  let currentBillData = null;
+  let billsDB = JSON.parse(localStorage.getItem('ruksana_tailor_bills') || '[]');
+  let measDB = JSON.parse(localStorage.getItem('ruksana_tailor_measurements') || '[]');
+
+  // Toast Function
+  let toastTimeout;
+  function showToast(text, type = 'success') {
+    const box = document.getElementById('toast-box');
+    box.className = `${type} show`;
+    box.innerHTML = `${type === 'success' ? '✅' : type === 'error' ? '⚠️' : 'ℹ️'} ${text}`;
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      box.className = '';
+    }, 2800);
+  }
+
+  window.onload = function() {
+    refreshDashboardStats();
+    renderMeasurements();
+  };
+
+  function startApp() {
+    document.getElementById('appHeader').style.display = 'flex';
+    document.getElementById('bottomNav').classList.add('nav-active');
+    switchView('view-dashboard');
+    showToast('રૂકસાના લેડીઝ ટેલરમાં સ્વાગત છે!', 'info');
+  }
+
+  function switchView(viewId) {
+    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+    const target = document.getElementById(viewId);
+    if(target) target.classList.add('active');
+
+    // Desktop
+    document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+    if(viewId === 'view-dashboard') { document.getElementById('deskNavDash')?.classList.add('active'); refreshDashboardStats(); }
+    if(viewId === 'view-measurements') { document.getElementById('deskNavMeas')?.classList.add('active'); renderMeasurements(); }
+    if(viewId === 'view-new-bill') document.getElementById('deskNavNew')?.classList.add('active');
+    if(viewId === 'view-customers') { document.getElementById('deskNavCust')?.classList.add('active'); renderCustomers(); }
+    if(viewId === 'view-reports') { document.getElementById('deskNavRep')?.classList.add('active'); renderReports(); }
+
+    // Mobile
+    document.querySelectorAll('.bottom-nav-btn').forEach(el => el.classList.remove('active'));
+    if(viewId === 'view-dashboard') document.getElementById('mobNavDash')?.classList.add('active');
+    if(viewId === 'view-measurements') document.getElementById('mobNavMeas')?.classList.add('active');
+    if(viewId === 'view-new-bill') document.getElementById('mobNavNew')?.classList.add('active');
+    if(viewId === 'view-customers') document.getElementById('mobNavCust')?.classList.add('active');
+    if(viewId === 'view-reports') document.getElementById('mobNavRep')?.classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ==========================================
+  // MEASUREMENTS MANAGEMENT
+  // ==========================================
+  function saveMeasurement() {
+    const name = document.getElementById('mCustName').value.trim();
+    const phone = document.getElementById('mCustPhone').value.trim();
+    const clothType = document.getElementById('mClothType').value;
+    const notes = document.getElementById('mExtraNotes').value.trim();
+
+    if(!name || !phone) {
+      showToast('કૃપા કરીને ગ્રાહકનું નામ અને મોબાઈલ નંબર લખો.', 'error');
+      return;
+    }
+
+    const editId = document.getElementById('editingMeasId').value;
+    const measData = {
+      id: editId ? parseInt(editId) : Date.now(),
+      name: name,
+      phone: phone,
+      clothType: clothType,
+      date: new Date().toLocaleDateString('gu-IN'),
+      notes: notes,
+      specs: {
+        len: document.getElementById('m_len').value.trim(),
+        chest: document.getElementById('m_chest').value.trim(),
+        waist: document.getElementById('m_waist').value.trim(),
+        seat: document.getElementById('m_seat').value.trim(),
+        shoulder: document.getElementById('m_shoulder').value.trim(),
+        sleeve: document.getElementById('m_sleeve').value.trim(),
+        mori: document.getElementById('m_mori').value.trim(),
+        fneck: document.getElementById('m_fneck').value.trim(),
+        bneck: document.getElementById('m_bneck').value.trim(),
+        plen: document.getElementById('m_plen').value.trim()
+      }
+    };
+
+    if(editId) {
+      const idx = measDB.findIndex(m => m.id === parseInt(editId));
+      if(idx !== -1) measDB[idx] = measData;
+      showToast('માપ સફળતાપૂર્વક સુધારી લેવાયું!', 'success');
+    } else {
+      measDB.unshift(measData);
+      showToast('ગ્રાહકનું માપ સાચવી લીધું!', 'success');
+    }
+
+    localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
+    resetMeasForm();
+    renderMeasurements();
+  }
+
+  function resetMeasForm() {
+    document.getElementById('mCustName').value = '';
+    document.getElementById('mCustPhone').value = '';
+    document.getElementById('mClothType').selectedIndex = 0;
+    document.getElementById('mExtraNotes').value = '';
+    document.getElementById('editingMeasId').value = '';
+    document.getElementById('measEditNotice').innerText = '';
+
+    const ids = ['m_len', 'm_chest', 'm_waist', 'm_seat', 'm_shoulder', 'm_sleeve', 'm_mori', 'm_fneck', 'm_bneck', 'm_plen'];
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+  }
+
+  function renderMeasurements() {
+    const q = (document.getElementById('measSearchInput')?.value || '').toLowerCase();
+    const container = document.getElementById('measurementsListContainer');
+    const badge = document.getElementById('measCountBadge');
+    if(!container) return;
+
+    const filtered = measDB.filter(m => 
+      (m.name && m.name.toLowerCase().includes(q)) || 
+      (m.phone && m.phone.includes(q)) || 
+      (m.clothType && m.clothType.toLowerCase().includes(q))
+    );
+
+    if(badge) badge.innerText = `${filtered.length} માપ`;
+
+    if(filtered.length === 0) {
+      container.innerHTML = `<p style="text-align:center; color:#999; padding: 25px;">કોઈ માપ મળ્યા નથી. ડાબી બાજુથી નવું માપ ઉમેરો.</p>`;
+      return;
+    }
+
+    container.innerHTML = filtered.map(m => {
+      let specChips = [];
+      if(m.specs.len) specChips.push(`લંબાઈ: ${m.specs.len}`);
+      if(m.specs.chest) specChips.push(`છાતી: ${m.specs.chest}`);
+      if(m.specs.waist) specChips.push(`કમર: ${m.specs.waist}`);
+      if(m.specs.seat) specChips.push(`સીટ: ${m.specs.seat}`);
+      if(m.specs.shoulder) specChips.push(`શોલ્ડર: ${m.specs.shoulder}`);
+      if(m.specs.sleeve) specChips.push(`બાય: ${m.specs.sleeve}`);
+      if(m.specs.mori) specChips.push(`મોરી: ${m.specs.mori}`);
+      if(m.specs.fneck) specChips.push(`આગળ ગળો: ${m.specs.fneck}`);
+      if(m.specs.bneck) specChips.push(`પાછળ ગળો: ${m.specs.bneck}`);
+      if(m.specs.plen) specChips.push(`પેન્ટ: ${m.specs.plen}`);
+
+      return `
+        <div class="meas-card">
+          <div class="meas-card-header">
+            <div>
+              <b style="font-size:15px; color:var(--primary);">${m.name}</b>
+              <div style="font-size:12px; color:#555;">📞 ${m.phone} | તારીખ: ${m.date}</div>
+            </div>
+            <span class="meas-badge">${m.clothType}</span>
+          </div>
+
+          <div class="meas-tag-list">
+            ${specChips.length > 0 ? specChips.map(c => `<span class="meas-tag">${c}</span>`).join('') : '<span style="font-size:11px; color:#999;">કોઈ માપ નોંધેલ નથી</span>'}
+          </div>
+
+          ${m.notes ? `<div style="font-size:12px; background:#fff9e6; padding:6px 10px; border-radius:6px; margin: 6px 0; color:#665100;"><b>નોંધ:</b> ${m.notes}</div>` : ''}
+
+          <div class="meas-card-actions">
+            <button class="btn-sm" style="background:#25D366; color:white;" onclick="sendMeasWhatsApp(${m.id})">📲 WhatsApp</button>
+            <button class="btn-sm" style="background:#3498db; color:white;" onclick="editMeasurement(${m.id})">✏️ એડિટ</button>
+            <button class="btn-sm" style="background:#9b59b6; color:white;" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}')">🧾 બિલ</button>
+            <button class="btn-sm" style="background:#ee5253; color:white;" onclick="deleteMeasurement(${m.id})">🗑️</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function editMeasurement(id) {
+    const item = measDB.find(m => m.id === id);
+    if(!item) return;
+
+    document.getElementById('editingMeasId').value = item.id;
+    document.getElementById('mCustName').value = item.name;
+    document.getElementById('mCustPhone').value = item.phone;
+    document.getElementById('mClothType').value = item.clothType;
+    document.getElementById('mExtraNotes').value = item.notes || '';
+
+    document.getElementById('m_len').value = item.specs.len || '';
+    document.getElementById('m_chest').value = item.specs.chest || '';
+    document.getElementById('m_waist').value = item.specs.waist || '';
+    document.getElementById('m_seat').value = item.specs.seat || '';
+    document.getElementById('m_shoulder').value = item.specs.shoulder || '';
+    document.getElementById('m_sleeve').value = item.specs.sleeve || '';
+    document.getElementById('m_mori').value = item.specs.mori || '';
+    document.getElementById('m_fneck').value = item.specs.fneck || '';
+    document.getElementById('m_bneck').value = item.specs.bneck || '';
+    document.getElementById('m_plen').value = item.specs.plen || '';
+
+    document.getElementById('measEditNotice').innerText = `(સુધારી રહ્યા છો: ${item.name})`;
+    showToast(`${item.name} ના માપ ફોર્મમાં આવી ગયા છે.`, 'info');
+    window.scrollTo({ top: 100, behavior: 'smooth' });
+  }
+
+  function deleteMeasurement(id) {
+    if(confirm('શું તમે આ ગ્રાહકનું માપ કાઢી નાખવા માંગો છો?')) {
+      measDB = measDB.filter(m => m.id !== id);
+      localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
+      renderMeasurements();
+      showToast('માપ કાઢી નાખ્યું.', 'info');
+    }
+  }
+
+  function sendMeasWhatsApp(id) {
+    const m = measDB.find(x => x.id === id);
+    if(!m) return;
+
+    let phone = m.phone.replace(/\D/g, '');
+    if(phone.startsWith('0') && phone.length === 11) phone = phone.substring(1);
+    if(phone.length === 10) phone = '91' + phone;
+
+    let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - ગ્રાહકનું માપ*\n`;
+    msg += `--------------------------------\n`;
+    msg += `👤 ગ્રાહક: ${m.name}\n`;
+    msg += `📱 મોબાઈલ: ${m.phone}\n`;
+    msg += `👗 કપડાંનો પ્રકાર: ${m.clothType}\n`;
+    msg += `📅 તારીખ: ${m.date}\n`;
+    msg += `--------------------------------\n`;
+    msg += `*માપની વિગત:*\n`;
+    if(m.specs.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
+    if(m.specs.chest) msg += `• છાતી: ${m.specs.chest}\n`;
+    if(m.specs.waist) msg += `• કમર: ${m.specs.waist}\n`;
+    if(m.specs.seat) msg += `• સીટ: ${m.specs.seat}\n`;
+    if(m.specs.shoulder) msg += `• શોલ્ડર: ${m.specs.shoulder}\n`;
+    if(m.specs.sleeve) msg += `• બાય લંબાઈ: ${m.specs.sleeve}\n`;
+    if(m.specs.mori) msg += `• મોરી: ${m.specs.mori}\n`;
+    if(m.specs.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
+    if(m.specs.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
+    if(m.specs.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
+    if(m.notes) msg += `\n📝 *ખાસ નોંધ:* ${m.notes}\n`;
+    msg += `--------------------------------\n`;
+    msg += `📍 C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
+    msg += `📞 7572842641`;
+
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  function billFromMeas(name, phone) {
+    openNewBill();
+    document.getElementById('custName').value = name;
+    document.getElementById('custPhone').value = phone;
+    updateLiveReceipt();
+    showToast(`નવા બિલમાં ${name} ઉમેરાઈ ગયા!`, 'info');
+  }
+
+  // ==========================================
+  // BILLING MANAGEMENT
+  // ==========================================
+  function openNewBill() {
+    cart = {};
+    servicesList.forEach(s => cart[s.id] = 0);
+    document.getElementById('custName').value = '';
+    document.getElementById('custPhone').value = '';
+    
+    const d = new Date();
+    d.setDate(d.getDate() + 4);
+    document.getElementById('custDueDate').value = d.toISOString().split('T')[0];
+    document.getElementById('billAdvance').value = 0;
+
+    renderServiceCards();
+    updateLiveReceipt();
+    switchView('view-new-bill');
+  }
+
+  function renderServiceCards() {
+    const list = document.getElementById('servicesContainer');
+    list.innerHTML = servicesList.map(item => `
+      <div class="item-row-card">
+        <div class="item-meta">
+          <div class="item-badge">${item.icon}</div>
+          <div>
+            <div style="font-weight:700; font-size:14.5px;">${item.name}</div>
+            <div style="color:var(--primary); font-size:12.5px; font-weight:700;">₹${item.price}</div>
+          </div>
+        </div>
+        <div class="qty-group">
+          <button class="btn-qty" onclick="adjustQty(${item.id}, -1)">-</button>
+          <span class="qty-display" id="qty-val-${item.id}">${cart[item.id] || 0}</span>
+          <button class="btn-qty add" onclick="adjustQty(${item.id}, 1)">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function adjustQty(id, delta) {
+    const val = (cart[id] || 0) + delta;
+    if(val >= 0) {
+      cart[id] = val;
+      const displayEl = document.getElementById(`qty-val-${id}`);
+      if(displayEl) displayEl.innerText = val;
+      updateLiveReceipt();
+    }
+  }
+
+  function updateLiveReceipt() {
+    const name = document.getElementById('custName').value.trim() || '-';
+    const phone = document.getElementById('custPhone').value.trim() || '-';
+    const dueDate = document.getElementById('custDueDate').value || '-';
+    const advance = parseFloat(document.getElementById('billAdvance').value) || 0;
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const billNo = String(billsDB.length + 1).padStart(4, '0');
+
+    document.getElementById('lblBillNo').innerText = '#' + billNo;
+    document.getElementById('lblDate').innerText = todayStr;
+    document.getElementById('lblCustName').innerText = name;
+    document.getElementById('lblCustPhone').innerText = phone;
+    document.getElementById('lblDueDate').innerText = dueDate;
+
+    let itemsPurchased = [];
+    let subtotal = 0;
+
+    servicesList.forEach(s => {
+      const q = cart[s.id] || 0;
+      if(q > 0) {
+        itemsPurchased.push({ name: s.name, qty: q, price: s.price, total: q * s.price });
+        subtotal += q * s.price;
+      }
+    });
+
+    const tbody = document.getElementById('receiptTableBody');
+    if(itemsPurchased.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#999; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>`;
+    } else {
+      tbody.innerHTML = itemsPurchased.map(i => `
+        <tr>
+          <td>${i.name}</td>
+          <td>${i.qty}</td>
+          <td>₹${i.price}</td>
+          <td style="text-align:right;">₹${i.total}</td>
+        </tr>
+      `).join('');
+    }
+
+    const due = Math.max(0, subtotal - advance);
+    document.getElementById('lblTotal').innerText = '₹' + subtotal;
+    document.getElementById('lblDue').innerText = '₹' + due;
+
+    currentBillData = {
+      billNo: billNo,
+      date: todayStr,
+      dueDate: dueDate,
+      customer: name,
+      phone: phone,
+      items: itemsPurchased,
+      total: subtotal,
+      advance: advance,
+      due: due
+    };
+  }
+
+  function saveCurrentBill() {
+    if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
+      showToast('ગ્રાહકનું નામ અને ઓછામાં ઓછી ૧ આઇટમ ઉમેરો.', 'error');
+      return;
+    }
+
+    billsDB.unshift(currentBillData);
+    localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
+    showToast('બિલ સેવ થઈ ગયું!', 'success');
+    refreshDashboardStats();
+    switchView('view-dashboard');
+  }
+
+  function sendWhatsAppReceipt() {
+    if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
+      showToast('પહેલાં ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
+      return;
+    }
+
+    let phone = currentBillData.phone.replace(/\D/g, '');
+    if(!phone || phone.length < 10) {
+      showToast('કૃપા કરીને સાચો મોબાઈલ નંબર દાખલ કરો.', 'error');
+      return;
+    }
+
+    if(phone.startsWith('0') && phone.length === 11) phone = phone.substring(1);
+    if(phone.length === 10) phone = '91' + phone;
+
+    let itemsStr = '';
+    currentBillData.items.forEach(it => {
+      itemsStr += `• ${it.name} (${it.qty} નંગ) : ₹${it.total}\n`;
+    });
+
+    let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - બિલ પહોંચ*\n`;
+    msg += `--------------------------------\n`;
+    msg += `🧾 બિલ નં: #${currentBillData.billNo}\n`;
+    msg += `👤 ગ્રાહક: ${currentBillData.customer}\n`;
+    msg += `📅 ડિલિવરી: ${currentBillData.dueDate}\n`;
+    msg += `--------------------------------\n`;
+    msg += `*કામની વિગત:*\n${itemsStr}`;
+    msg += `--------------------------------\n`;
+    msg += `કુલ રકમ: ₹${currentBillData.total}\n`;
+    msg += `એડવાન્સ જમા: ₹${currentBillData.advance}\n`;
+    msg += `*બાકી ચૂકવવાપાત્ર: ₹${currentBillData.due}*\n`;
+    msg += `--------------------------------\n`;
+    msg += `📍 C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
+    msg += `📞 7572842641\n\n`;
+    msg += `_પધારવા બદલ આભાર!_ 🙏`;
+
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  function renderCustomers() {
+    const q = (document.getElementById('custSearchInput')?.value || '').toLowerCase();
+    const container = document.getElementById('customersContainer');
+    let map = {};
+
+    billsDB.forEach(b => {
+      const key = (b.phone && b.phone !== '-') ? b.phone : b.customer;
+      if(!map[key]) {
+        map[key] = { name: b.customer, phone: b.phone, lastDate: b.date, orders: 1 };
+      } else {
+        map[key].orders++;
+      }
+    });
+
+    const list = Object.values(map).filter(c => 
+      (c.name && c.name.toLowerCase().includes(q)) || 
+      (c.phone && c.phone.includes(q))
+    );
+
+    if(list.length === 0) {
+      container.innerHTML = `<p style="text-align:center; color:#999; padding:20px;">કોઈ ગ્રાહક મળ્યા નથી.</p>`;
+      return;
+    }
+
+    container.innerHTML = list.map(c => `
+      <div class="data-list-card">
+        <div>
+          <b style="color:var(--primary); font-size:15px;">${c.name}</b>
+          <div style="font-size:12px; color:#666;">📞 ${c.phone} | છેલ્લો ઓર્ડર: ${c.lastDate}</div>
+        </div>
+        <span style="background:#eef1f6; padding:5px 12px; border-radius:15px; font-weight:700; font-size:12px;">${c.orders} બિલ</span>
+      </div>
+    `).join('');
+  }
+
+  function renderReports() {
+    let revenue = 0;
+    let counts = {};
+
+    billsDB.forEach(b => {
+      revenue += b.total;
+      b.items.forEach(it => {
+        counts[it.name] = (counts[it.name] || 0) + it.qty;
+      });
+    });
+
+    document.getElementById('repLifetimeSales').innerText = '₹' + revenue;
+    document.getElementById('repLifetimeBills').innerText = `કુલ બિલો: ${billsDB.length}`;
+
+    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+    const container = document.getElementById('repTopItemsList');
+
+    if(sorted.length === 0) {
+      container.innerHTML = '<p style="color:#888; font-size:13px; text-align:center; padding:15px;">હજુ સુધી કોઈ બિલ બન્યા નથી.</p>';
+      return;
+    }
+
+    container.innerHTML = sorted.map(([item, qty]) => `
+      <div class="data-list-card">
+        <span style="font-weight:600;">${item}</span>
+        <b style="color:var(--primary);">${qty} નંગ</b>
+      </div>
+    `).join('');
+  }
+
+  function refreshDashboardStats() {
+    const today = new Date().toISOString().split('T')[0];
+    const todayBills = billsDB.filter(b => b.date === today);
+    const sum = todayBills.reduce((acc, b) => acc + b.total, 0);
+
+    document.getElementById('dashTodayTotal').innerText = '₹' + sum;
+    document.getElementById('dashTodayCount').innerText = `${todayBills.length} બિલ બનેલા`;
+  }
+
+  function clearAllData() {
+    if(confirm('શું તમે ખરેખર બધો ડેટા (બધા બિલ અને સેવ કરેલા માપ) ડિલીટ કરવા માંગો છો?')) {
+      localStorage.removeItem('ruksana_tailor_bills');
+      localStorage.removeItem('ruksana_tailor_measurements');
+      billsDB = [];
+      measDB = [];
+      refreshDashboardStats();
+      renderMeasurements();
+      showToast('તમામ ડેટા સફળતાપૂર્વક સાફ થઈ ગયો છે.', 'info');
+      switchView('view-dashboard');
+    }
+  }
+</script>
+</body>
+</html>
