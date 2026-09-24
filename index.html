@@ -10,6 +10,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
+  <!-- PDF Generator Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <style>
     :root {
       --primary: #5c0928;
@@ -115,7 +118,6 @@
       width: 100%;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border: 1.5px solid rgba(255, 255, 255, 0.15);
       border-radius: 28px;
       padding: 40px 26px;
@@ -137,54 +139,11 @@
       box-shadow: 0 0 30px rgba(238, 82, 83, 0.35);
       animation: alertBounce 2s infinite ease-in-out;
     }
-    @keyframes alertBounce {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-    .denied-title {
-      font-size: 26px;
-      font-weight: 800;
-      color: #ff6b6b;
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
-    }
-    .denied-subtitle {
-      font-size: 14px;
-      color: #ffccd2;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .denied-user-pill {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px dashed rgba(255, 107, 107, 0.6);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 13px;
-      color: #f1f2f6;
-      margin-bottom: 24px;
-      word-break: break-all;
-    }
-    .denied-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #ee5253, #c0392b);
-      color: white;
-      border: none;
-      padding: 15px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(238, 82, 83, 0.3);
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .denied-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(238, 82, 83, 0.45);
-    }
+    @keyframes alertBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+    .denied-title { font-size: 26px; font-weight: 800; color: #ff6b6b; margin-bottom: 10px; }
+    .denied-subtitle { font-size: 14px; color: #ffccd2; line-height: 1.6; margin-bottom: 20px; }
+    .denied-user-pill { background: rgba(0, 0, 0, 0.35); border: 1px dashed rgba(255, 107, 107, 0.6); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #f1f2f6; margin-bottom: 24px; word-break: break-all; }
+    .denied-btn { width: 100%; background: linear-gradient(135deg, #ee5253, #c0392b); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px; }
 
     /* Main Container */
     .app-wrapper { width: 100%; max-width: 1100px; margin: 0 auto; min-height: 100vh; display: none; flex-direction: column; background: #ffffff; box-shadow: 0 0 30px rgba(0,0,0,0.04); position: relative; }
@@ -202,27 +161,10 @@
       z-index: 200;
       box-shadow: 0 4px 15px rgba(92, 9, 40, 0.15);
     }
-    .app-header .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; cursor: pointer; letter-spacing: 0.3px; }
+    .app-header .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; cursor: pointer; }
     .desktop-nav { display: flex; gap: 8px; align-items: center; }
-    .nav-link {
-      background: transparent;
-      border: none;
-      color: #f7d6e1;
-      padding: 8px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: var(--transition);
-    }
-    .nav-link:hover, .nav-link.active {
-      background: rgba(255,255,255,0.2);
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
+    .nav-link { background: transparent; border: none; color: #f7d6e1; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: var(--transition); }
+    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.2); color: #ffffff; transform: translateY(-1px); }
     .btn-logout { background: #ee5253; color: white; border: none; padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px; margin-left: 6px; }
 
     /* Mobile Bottom Navigation */
@@ -232,102 +174,69 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border-color);
       justify-content: space-around;
       padding: 8px 0 10px;
       z-index: 300;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
     }
-    .bottom-nav-btn {
-      background: none;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      font-size: 11px;
-      color: var(--text-muted);
-      cursor: pointer;
-      flex: 1;
-      font-weight: 700;
-      transition: var(--transition);
-    }
+    .bottom-nav-btn { background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; color: var(--text-muted); cursor: pointer; flex: 1; font-weight: 700; transition: var(--transition); }
     .bottom-nav-btn.active { color: var(--primary); transform: translateY(-2px); }
-    .bottom-nav-btn span { font-size: 20px; transition: transform 0.2s; }
-    .bottom-nav-btn:active span { transform: scale(1.25); }
+    .bottom-nav-btn span { font-size: 20px; }
 
     /* Content Area & Animations */
     .main-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
     .view { display: none; flex-direction: column; width: 100%; }
-    .view.active {
-      display: flex;
-      animation: viewSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes viewSlideUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .view.active { display: flex; animation: viewSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes viewSlideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Welcome Screen */
+    /* =========================================================
+       RESPONSIVE & MOBILE-FRIENDLY WELCOME SCREEN
+    ========================================================= */
     .welcome-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 82vh;
+      min-height: 100vh;
+      min-height: 100dvh;
       text-align: center;
       padding: 20px;
+      width: 100%;
     }
     .welcome-card {
       max-width: 440px;
       width: 100%;
       background: #ffffff;
-      padding: 50px 32px;
-      border-radius: 24px;
-      border: 1px solid #f7dbe4;
-      box-shadow: 0 15px 35px rgba(92, 9, 40, 0.08);
+      padding: 48px 28px;
+      border-radius: 28px;
+      border: 1.5px solid #f7dbe4;
+      box-shadow: 0 20px 45px rgba(92, 9, 40, 0.08);
       position: relative;
       overflow: hidden;
     }
     .welcome-card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 6px;
       background: linear-gradient(90deg, var(--primary), #e84393, var(--accent));
     }
     .welcome-icon-wrap {
-      width: 95px;
-      height: 95px;
+      width: 96px;
+      height: 96px;
       background: var(--primary-light);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 20px;
-      font-size: 45px;
-      animation: gentlePulse 2.5s infinite ease-in-out;
-      box-shadow: 0 8px 20px rgba(92, 9, 40, 0.1);
+      font-size: 46px;
+      box-shadow: 0 10px 24px rgba(92, 9, 40, 0.1);
     }
-    @keyframes gentlePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-    }
-    .welcome-title {
-      color: var(--primary);
-      font-size: 30px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-    .welcome-sub {
-      color: var(--text-muted);
-      font-size: 15px;
-      margin-bottom: 32px;
-    }
+    .welcome-title { color: var(--primary); font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .welcome-sub { color: var(--text-muted); font-size: 15px; margin-bottom: 34px; line-height: 1.4; }
     .btn-start {
       width: 100%;
       background: linear-gradient(135deg, var(--primary), #82103c);
@@ -338,193 +247,184 @@
       font-size: 18px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(92, 9, 40, 0.25);
+      box-shadow: 0 8px 24px rgba(92, 9, 40, 0.25);
       transition: var(--transition);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
     }
-    .btn-start:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(92, 9, 40, 0.35);
+    .btn-start:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(92, 9, 40, 0.32); }
+
+    @media (max-width: 480px) {
+      .welcome-container { padding: 14px; min-height: 92vh; }
+      .welcome-card { padding: 38px 20px; border-radius: 22px; }
+      .welcome-icon-wrap { width: 84px; height: 84px; font-size: 40px; margin-bottom: 16px; }
+      .welcome-title { font-size: 25px; }
+      .welcome-sub { font-size: 14px; margin-bottom: 28px; }
+      .btn-start { padding: 15px; font-size: 17px; }
     }
-    .btn-start:active { transform: scale(0.98); }
 
     /* Dashboard Layout */
-    .dashboard-banner {
-      background: linear-gradient(135deg, var(--primary), #8a103e);
-      color: white;
-      padding: 24px 26px;
-      border-radius: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-md);
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
-    .menu-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      padding: 22px 18px;
-      border-radius: 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: var(--shadow-sm);
-    }
-    .menu-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: #f0ccd8;
-    }
-    .menu-card:active { transform: scale(0.97); }
-    .menu-card .icon { font-size: 38px; margin-bottom: 12px; display: inline-block; transition: transform 0.2s; }
-    .menu-card:hover .icon { transform: scale(1.15); }
+    .dashboard-banner { background: linear-gradient(135deg, var(--primary), #8a103e); color: white; padding: 24px 26px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; box-shadow: var(--shadow-md); }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .menu-card { background: white; border: 1px solid var(--border-color); padding: 22px 18px; border-radius: 16px; text-align: center; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-sm); }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #f0ccd8; }
+    .menu-card .icon { font-size: 38px; margin-bottom: 12px; display: inline-block; }
     .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 5px; font-weight: 700; }
     .menu-card p { font-size: 13px; color: var(--text-muted); }
 
     /* Panels & Inputs */
-    .card-panel {
-      background: white;
-      border: 1px solid var(--border-color);
+    .card-panel { background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; box-shadow: var(--shadow-sm); margin-bottom: 22px; }
+    .panel-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 1.5px solid #f4edf0; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .form-control { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 16px; margin-bottom: 14px; outline: none; transition: var(--transition); background: #fafbfc; }
+    .form-control:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(92, 9, 40, 0.08); }
+    .btn-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 13px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+
+    /* Measurement Grid Form */
+    .meas-grid-container { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 850px) { .meas-grid-container { grid-template-columns: 1.2fr 1fr; align-items: start; } }
+    .meas-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 14px; background: #fff8f9; padding: 14px; border-radius: 12px; border: 1px dashed #eec5d3; }
+    .meas-field-box { display: flex; flex-direction: column; gap: 5px; }
+    .meas-field-box label { font-size: 12px; font-weight: 700; color: #495057; }
+    .meas-field-box input { padding: 10px 6px; border: 1px solid #ced6e0; border-radius: 8px; font-size: 15px; outline: none; text-align: center; background: #ffffff; }
+
+    /* Smart Measurement Cards */
+    .smart-meas-card {
+      border: 1.5px solid #eee1e6;
       border-radius: 16px;
-      padding: 22px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 22px;
+      margin-bottom: 12px;
+      background: #ffffff;
+      transition: var(--transition);
+      box-shadow: 0 3px 10px rgba(92, 9, 40, 0.03);
+      position: relative;
     }
-    .panel-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 16px;
-      border-bottom: 1.5px solid #f4edf0;
-      padding-bottom: 10px;
+    .smart-meas-card:hover {
+      border-color: #c988a2;
+      box-shadow: 0 6px 18px rgba(92, 9, 40, 0.08);
+    }
+    .smart-meas-header {
+      padding: 14px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .form-control {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 16px;
-      margin-bottom: 14px;
-      outline: none;
-      transition: var(--transition);
-      background: #fafbfc;
-    }
-    .form-control:focus {
-      border-color: var(--primary);
-      background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(92, 9, 40, 0.08);
-    }
-    .btn-primary {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
       cursor: pointer;
-      transition: var(--transition);
+      user-select: none;
     }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
-    .btn-primary:active { transform: scale(0.98); }
-
-    /* Measurement Grid */
-    .meas-grid-container { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width: 850px) {
-      .meas-grid-container { grid-template-columns: 1.2fr 1fr; align-items: start; }
-    }
-    .meas-fields-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-      background: #fff8f9;
-      padding: 14px;
+    .meas-user-info { display: flex; align-items: center; gap: 12px; flex: 1; }
+    .meas-avatar {
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
-      border: 1px dashed #eec5d3;
+      background: #fff0f4;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      border: 1px solid #f9d2de;
     }
-    .meas-field-box { display: flex; flex-direction: column; gap: 5px; }
-    .meas-field-box label { font-size: 12px; font-weight: 700; color: #495057; }
-    .meas-field-box input {
-      padding: 10px 6px;
-      border: 1px solid #ced6e0;
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-      text-align: center;
-      background: #ffffff;
-      transition: var(--transition);
-    }
-    .meas-field-box input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(92, 9, 40, 0.1);
-    }
-
-    /* Saved Measurement Cards */
-    .meas-card {
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-      background: #fff;
-      transition: var(--transition);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    }
-    .meas-card:hover {
-      border-color: #df9bb3;
-      box-shadow: var(--shadow-sm);
-      transform: translateY(-2px);
-    }
-    .meas-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .meas-badge {
-      background: #ffebee;
+    .meas-badge-pill {
+      background: #fff0f4;
       color: var(--primary);
       font-size: 11px;
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 20px;
       font-weight: 700;
+      display: inline-block;
+      margin-left: 6px;
     }
-    .meas-tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-    .meas-tag {
-      background: #f1f3f6;
-      font-size: 11.5px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      color: #333;
-      font-weight: 500;
-    }
-    .meas-card-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
-    .btn-sm {
-      padding: 7px 12px;
-      font-size: 12px;
-      border-radius: 8px;
+
+    /* 3-Dot Dropdown */
+    .meas-action-wrap { position: relative; display: flex; align-items: center; gap: 4px; }
+    .btn-3dot {
+      background: transparent;
       border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       cursor: pointer;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: bold;
+      color: #718093;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: var(--transition);
     }
-    .btn-sm:active { transform: scale(0.95); }
+    .btn-3dot:hover { background: #f1f2f6; color: var(--primary); }
+    .meas-dropdown-menu {
+      position: absolute;
+      top: 42px;
+      right: 0;
+      background: white;
+      border: 1px solid #e1e8ef;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 500;
+      width: 175px;
+      display: none;
+      flex-direction: column;
+      padding: 6px;
+      animation: viewSlideUp 0.2s ease-out;
+    }
+    .meas-dropdown-menu.show { display: flex; }
+    .meas-drop-item {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2f3640;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .meas-drop-item:hover { background: #fff0f4; color: var(--primary); }
+    .meas-drop-item.delete:hover { background: #ffebee; color: #ee5253; }
+
+    .meas-expand-body {
+      display: none;
+      padding: 0 16px 16px 16px;
+      border-top: 1px dashed #f0d5df;
+      margin-top: 2px;
+      animation: viewSlideUp 0.3s ease-out;
+    }
+    .meas-expand-body.open { display: block; }
+    .meas-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .meas-grid-item {
+      background: #fdf6f8;
+      border: 1px solid #fae3eb;
+      padding: 8px 6px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .meas-grid-item .title { font-size: 10.5px; color: #7f8c8d; font-weight: 600; margin-bottom: 2px; }
+    .meas-grid-item .val { font-size: 14px; color: var(--primary); font-weight: 800; }
+    .meas-notes-box {
+      margin-top: 10px;
+      background: #fff9e6;
+      border: 1px solid #ffeaa7;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #634d00;
+    }
 
     /* Billing Grid */
     .billing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width: 850px) {
-      .billing-grid { grid-template-columns: 1.25fr 1fr; align-items: start; }
-    }
+    @media (min-width: 850px) { .billing-grid { grid-template-columns: 1.25fr 1fr; align-items: start; } }
     .items-scroll-list { max-height: 480px; overflow-y: auto; padding-right: 4px; }
-    
-    /* Service Card with Editable Price */
     .item-row-card {
       display: flex;
       align-items: center;
@@ -540,61 +440,15 @@
     .item-row-card:hover { border-color: #dab4c2; background: #fffdfd; }
     .item-meta { display: flex; align-items: center; gap: 10px; flex: 1; }
     .item-badge { font-size: 24px; background: #fff0f3; padding: 6px 10px; border-radius: 10px; }
-    
-    /* Price Editable Input */
-    .price-edit-box {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 4px;
-    }
-    .price-edit-input {
-      width: 85px;
-      padding: 4px 8px;
-      border: 1.5px solid #ced6e0;
-      border-radius: 8px;
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 14px;
-      outline: none;
-      transition: var(--transition);
-      background: #ffffff;
-    }
-    .price-edit-input:focus {
-      border-color: var(--primary);
-      background: #fff8f9;
-      box-shadow: 0 0 0 3px rgba(92, 9, 40, 0.08);
-    }
-
+    .price-edit-box { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+    .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #ced6e0; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; background: #ffffff; }
     .qty-group { display: flex; align-items: center; gap: 8px; }
-    .btn-qty {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: #f8f9fa;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 17px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-    }
-    .btn-qty:active { transform: scale(0.9); }
+    .btn-qty { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border-color); background: #f8f9fa; font-weight: 700; cursor: pointer; font-size: 17px; display: flex; align-items: center; justify-content: center; }
     .btn-qty.add { background: var(--primary); color: white; border: none; }
     .qty-display { min-width: 22px; text-align: center; font-weight: 700; }
+    .custom-item-box { background: #fff8f9; border: 1.5px dashed #eec5d3; border-radius: 12px; padding: 12px; margin-top: 14px; }
 
-    /* Custom Item Box */
-    .custom-item-box {
-      background: #fff8f9;
-      border: 1.5px dashed #eec5d3;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 14px;
-    }
-
-    /* Receipt */
+    /* Receipt Box */
     .receipt-container {
       background: #fff;
       border: 1.5px dashed #b58997;
@@ -602,6 +456,7 @@
       padding: 22px;
       font-size: 13px;
       line-height: 1.6;
+      position: relative;
     }
     .receipt-head { text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 10px; margin-bottom: 12px; }
     .receipt-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
@@ -610,12 +465,84 @@
     .receipt-row { display: flex; justify-content: space-between; margin: 5px 0; }
     .receipt-total { border-top: 2px solid #222; font-size: 16px; font-weight: 800; padding-top: 8px; }
 
+    /* Action Buttons */
     .btn-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
     .btn-whatsapp:hover { background: #20b858; transform: translateY(-1px); }
-    .btn-print { background: #2c3e50; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
-    .btn-print:hover { background: #1a252f; transform: translateY(-1px); }
+    .btn-pdf { background: #2980b9; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-pdf:hover { background: #1f618d; transform: translateY(-1px); }
     .data-list-card { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 10px; background: #fff; }
+
+    /* Horizontal Month Filter (Reports) */
+    .report-filter-wrapper {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .report-year-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .year-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .year-badge-wrap label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .year-select-dropdown {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 13.5px;
+      outline: none;
+      cursor: pointer;
+    }
+    .report-chips-scroll {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .report-chips-scroll::-webkit-scrollbar { display: none; }
+    .filter-chip-btn {
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .filter-chip-btn:hover {
+      border-color: #c988a2;
+      background: #fff8f9;
+    }
+    .filter-chip-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(92, 9, 40, 0.22);
+    }
 
     /* Mobile Screen Adjustments */
     @media (max-width: 768px) {
@@ -625,14 +552,6 @@
       .main-content { padding: 16px; padding-bottom: 95px; }
       .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; }
       .items-scroll-list { max-height: none; }
-    }
-
-    @media print {
-      body { background: white; }
-      .app-header, .desktop-nav, .bottom-nav, .btn-actions, .no-print, .card-panel:first-child, #toast-box, .auth-overlay { display: none !important; }
-      .app-wrapper { max-width: 100%; box-shadow: none; }
-      .billing-grid { grid-template-columns: 1fr; }
-      .receipt-container { border: none; padding: 0; }
     }
   </style>
 </head>
@@ -648,7 +567,7 @@
       <h2 style="color: var(--primary); margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h2>
       <p style="color: var(--text-muted); font-size: 14px;">તમારા ખાતામાં પ્રવેશ કરો</p>
       <button class="btn-google" onclick="handleGoogleLogin()">
-        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
+        <svg width="20" height="20" viewBox="0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
         Google વડે લૉગિન કરો
       </button>
     </div>
@@ -659,19 +578,12 @@
     <div class="denied-container">
       <div class="denied-icon-wrap">🛑</div>
       <h1 class="denied-title">આ વેબસાઇટ તમારા માટે નથી</h1>
-      
-      <p class="denied-subtitle">
-        નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત અને ખાનગી હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત રાખવામાં આવ્યું છે. અન્ય કોઈ વ્યક્તિ તેનો ઉપયોગ કરી શકશે નહીં.
-      </p>
-
+      <p class="denied-subtitle">નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત અને ખાનગી હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત રાખવામાં આવ્યું છે.</p>
       <div class="denied-user-pill">
         <span>❌ તમારું એકાઉન્ટ:</span><br>
         <b id="deniedUserEmail" style="color: #ff7675;">અજાણ્યું એકાઉન્ટ</b>
       </div>
-
-      <button class="denied-btn" onclick="handleLogout()">
-        🔄 બીજા સાચા Google એકાઉન્ટથી પ્રવેશ કરો
-      </button>
+      <button class="denied-btn" onclick="handleLogout()">🔄 બીજા સાચા Google એકાઉન્ટથી પ્રવેશ કરો</button>
     </div>
   </div>
 
@@ -693,21 +605,19 @@
 
     <main class="main-content">
       
-      <!-- 1. WELCOME SCREEN -->
+      <!-- 1. WELCOME SCREEN (MOBILE-FIRST) -->
       <section class="view active" id="view-welcome">
         <div class="welcome-container">
           <div class="welcome-card">
             <div class="welcome-icon-wrap">👗</div>
             <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
-            <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ સિસ્ટમ</p>
-            <button class="btn-start" onclick="startApp()">
-              ▶️ શરૂ કરો (Start)
-            </button>
+            <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ મેનેજમેન્ટ સિસ્ટમ</p>
+            <button class="btn-start" onclick="startApp()">▶️ શરૂ કરો (Start)</button>
           </div>
         </div>
       </section>
 
-      <!-- 2. DASHBOARD VIEW -->
+      <!-- 2. DASHBOARD VIEW (RESET CARD REMOVED) -->
       <section class="view" id="view-dashboard">
         <div class="dashboard-banner">
           <div>
@@ -741,11 +651,6 @@
             <span class="icon">📊</span>
             <h3>કુલ હિસાબ રિપોર્ટ</h3>
             <p>આવક અને વધુ વેચાતી આઇટમ્સ</p>
-          </div>
-          <div class="menu-card" onclick="clearAllData()">
-            <span class="icon">🗑️</span>
-            <h3 style="color:#ee5253;">ડેટા રીસેટ</h3>
-            <p>જૂનો બિલ અને માપ ડેટા સાફ કરો</p>
           </div>
         </div>
       </section>
@@ -817,7 +722,7 @@
             </div>
 
             <input type="text" id="measSearchInput" class="form-control" placeholder="🔍 નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
-            <div id="measurementsListContainer" style="max-height: 520px; overflow-y: auto; padding-right: 2px;"></div>
+            <div id="measurementsListContainer" style="max-height: 540px; overflow-y: auto; padding-right: 2px;"></div>
           </div>
 
         </div>
@@ -842,7 +747,6 @@
             <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, કિંમત (ભાવ) અને નંગ નક્કી કરો:</p>
             <div class="items-scroll-list" id="servicesContainer"></div>
 
-            <!-- નવી આઇટમ જાતે ઉમેરવાનું બોક્સ -->
             <div class="custom-item-box">
               <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">➕ અન્ય કોઈ નવું કામ ઉમેરવું હોય તો:</p>
               <div style="display: grid; grid-template-columns: 1.8fr 1fr auto; gap: 8px;">
@@ -857,6 +761,7 @@
           <div class="card-panel">
             <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
 
+            <!-- Receipt Box -->
             <div class="receipt-container" id="printableReceipt">
               <div class="receipt-head">
                 <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
@@ -892,9 +797,10 @@
               </div>
             </div>
 
-            <div class="btn-actions no-print">
+            <!-- PDF and WhatsApp Action Buttons -->
+            <div class="btn-actions">
               <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">📲 WhatsApp બિલ</button>
-              <button class="btn-print" onclick="window.print()">🖨️ Print પહોંચ</button>
+              <button class="btn-pdf" onclick="downloadBillPDF()">📥 PDF ડાઉનલોડ</button>
             </div>
             <button class="btn-primary" style="margin-top: 12px; background: #10ac84;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
           </div>
@@ -915,15 +821,44 @@
       <section class="view" id="view-reports">
         <div class="card-panel">
           <div class="panel-title">📊 કુલ હિસાબ અને વેચાણ રિપોર્ટ</div>
+          
+          <!-- Month & Year Selector Row -->
+          <div class="report-filter-wrapper">
+            <div class="report-year-row">
+              <div class="year-badge-wrap">
+                <label>📅 વર્ષ:</label>
+                <select id="reportYearSelect" class="year-select-dropdown" onchange="handleYearChange()"></select>
+              </div>
+              <span id="reportFilterLabel" style="font-size: 13px; color: var(--primary); font-weight: 800;"></span>
+            </div>
+
+            <!-- Horizontal Scrollable Month Chips -->
+            <div class="report-chips-scroll" id="reportChipsContainer"></div>
+          </div>
+
+          <!-- Clean Banner Without Due Box -->
           <div class="dashboard-banner" style="margin-bottom: 20px;">
-            <div>
-              <p style="font-size: 13px;">લાઈફટાઈમ કુલ આવક</p>
-              <h1 id="repLifetimeSales" style="font-size: 34px; margin: 4px 0;">₹0</h1>
-              <span id="repLifetimeBills">કુલ બિલો: 0</span>
+            <div style="width: 100%;">
+              <p id="repBannerPeriodTitle" style="font-size: 13.5px; opacity: 0.95;">કુલ આવક</p>
+              <h1 id="repLifetimeSales" style="font-size: 34px; margin: 6px 0; font-weight: 800;">₹0</h1>
+              
+              <div style="margin-top: 10px; display: inline-block; background: rgba(255, 255, 255, 0.18); padding: 6px 16px; border-radius: 20px;">
+                <span style="font-size: 12.5px; opacity: 0.95;">કુલ બિલોની સંખ્યા: </span>
+                <b id="repLifetimeBills" style="font-size: 15px; margin-left: 4px;">0 બિલ</b>
+              </div>
             </div>
           </div>
+
           <p style="font-weight: 700; margin-bottom: 12px; color: var(--primary);">સૌથી વધુ સીવેલી આઇટમ્સ:</p>
           <div id="repTopItemsList"></div>
+
+          <!-- DEDICATED REPORT-ONLY RESET BUTTON (MEASUREMENTS REMAIN 100% SAFE) -->
+          <div style="margin-top: 32px; padding-top: 18px; border-top: 1.5px dashed var(--border-color); text-align: center;">
+            <button type="button" onclick="clearBillsReportData()" style="background: #fff0f3; color: #ee5253; border: 1.5px solid #ffccd2; padding: 11px 20px; border-radius: 12px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition);">
+              🗑️ જૂનો બિલ હિસાબ સાફ કરો (Reset Bills)
+            </button>
+            <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">(નોંધ: ગ્રાહકોના સેવ કરેલા માપ ક્યારેય ડિલીટ નહીં થાય, તે સુરક્ષિત રહેશે)</p>
+          </div>
         </div>
       </section>
 
@@ -941,9 +876,9 @@
 
 <script>
   // =========================================================================
-  // ૧. FIREBASE CONFIGURATION
+  // ૧. FIREBASE CONFIGURATION (Tamari keys ahi mukjo)
   // =========================================================================
- const firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyBi0VfTe2LkhwOXAuICPEA9hqDzIZ3z9ww",
     authDomain: "diploma-study-portal-db8b2.firebaseapp.com",
     projectId: "diploma-study-portal-db8b2",
@@ -982,10 +917,15 @@
   ];
 
   let cart = {};
-  let itemPrices = {}; // દરેક આઇટમનો કસ્ટમ ભાવ
+  let itemPrices = {};
   let currentBillData = null;
   let billsDB = JSON.parse(localStorage.getItem('ruksana_tailor_bills') || '[]');
   let measDB = JSON.parse(localStorage.getItem('ruksana_tailor_measurements') || '[]');
+
+  // Active Report Filter State
+  const now = new Date();
+  let currentReportYear = String(now.getFullYear());
+  let currentReportMonth = 'all';
 
   // Toast Function
   let toastTimeout;
@@ -1067,6 +1007,7 @@
         snapshot.forEach(doc => billsDB.push({ id: doc.id, ...doc.data() }));
         localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
         refreshDashboardStats();
+        renderReports();
       }
     });
   }
@@ -1074,7 +1015,14 @@
   window.onload = function() {
     refreshDashboardStats();
     renderMeasurements();
+    renderReports();
   };
+
+  window.addEventListener('click', function(e) {
+    if (!e.target.closest('.meas-action-wrap')) {
+      document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
+    }
+  });
 
   function startApp() {
     document.getElementById('appHeader').style.display = 'flex';
@@ -1195,43 +1143,94 @@
     }
 
     container.innerHTML = filtered.map(m => {
-      let specChips = [];
-      if(m.specs.len) specChips.push(`લંબાઈ: ${m.specs.len}`);
-      if(m.specs.chest) specChips.push(`છાતી: ${m.specs.chest}`);
-      if(m.specs.waist) specChips.push(`કમર: ${m.specs.waist}`);
-      if(m.specs.seat) specChips.push(`સીટ: ${m.specs.seat}`);
-      if(m.specs.shoulder) specChips.push(`શોલ્ડર: ${m.specs.shoulder}`);
-      if(m.specs.sleeve) specChips.push(`બાય: ${m.specs.sleeve}`);
-      if(m.specs.mori) specChips.push(`મોરી: ${m.specs.mori}`);
-      if(m.specs.fneck) specChips.push(`આગળ ગળો: ${m.specs.fneck}`);
-      if(m.specs.bneck) specChips.push(`પાછળ ગળો: ${m.specs.bneck}`);
-      if(m.specs.plen) specChips.push(`પેન્ટ: ${m.specs.plen}`);
+      const initial = m.name.charAt(0).toUpperCase();
+      const specList = [
+        { title: 'લંબાઈ', val: m.specs.len },
+        { title: 'છાતી', val: m.specs.chest },
+        { title: 'કમર', val: m.specs.waist },
+        { title: 'સીટ', val: m.specs.seat },
+        { title: 'શોલ્ડર', val: m.specs.shoulder },
+        { title: 'બાય લંબાઈ', val: m.specs.sleeve },
+        { title: 'મોરી (ઘેર)', val: m.specs.mori },
+        { title: 'આગળ ગળો', val: m.specs.fneck },
+        { title: 'પાછળ ગળો', val: m.specs.bneck },
+        { title: 'પેન્ટ લંબાઈ', val: m.specs.plen }
+      ].filter(s => s.val && s.val.trim() !== '');
 
       return `
-        <div class="meas-card">
-          <div class="meas-card-header">
-            <div>
-              <b style="font-size:15px; color:var(--primary);">${m.name}</b>
-              <div style="font-size:12px; color:#555;">📞 ${m.phone} | તારીખ: ${m.date}</div>
+        <div class="smart-meas-card" id="meas-card-${m.id}">
+          <div class="smart-meas-header" onclick="toggleMeasCard('${m.id}', event)">
+            <div class="meas-user-info">
+              <div class="meas-avatar">${initial}</div>
+              <div>
+                <div style="font-weight: 800; font-size: 15px; color: var(--text-main); display:flex; align-items:center;">
+                  ${m.name}
+                  <span class="meas-badge-pill">${m.clothType}</span>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                  📞 ${m.phone} • <span style="font-size:11px;">${m.date}</span>
+                </div>
+              </div>
             </div>
-            <span class="meas-badge">${m.clothType}</span>
+
+            <div class="meas-action-wrap" onclick="event.stopPropagation()">
+              <button class="btn-3dot" title="ઓપ્શન્સ" onclick="toggle3DotMenu('${m.id}', event)">⋮</button>
+              <div class="meas-dropdown-menu" id="menu-${m.id}">
+                <button class="meas-drop-item" onclick="editMeasurement('${m.id}'); hideAllMenus();">
+                  ✏️ માપ સુધારો
+                </button>
+                <button class="meas-drop-item" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}'); hideAllMenus();">
+                  🧾 બિલ બનાવો
+                </button>
+                <button class="meas-drop-item" onclick="sendMeasWhatsApp('${m.id}'); hideAllMenus();">
+                  📲 WhatsApp
+                </button>
+                <button class="meas-drop-item delete" onclick="deleteMeasurement('${m.id}'); hideAllMenus();">
+                  🗑️ ડિલીટ કરો
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div class="meas-tag-list">
-            ${specChips.length > 0 ? specChips.map(c => `<span class="meas-tag">${c}</span>`).join('') : '<span style="font-size:11px; color:#999;">કોઈ માપ નોંધેલ નથી</span>'}
-          </div>
+          <div class="meas-expand-body" id="expand-${m.id}">
+            <div style="font-size: 11.5px; font-weight: 700; color: var(--primary); margin-top: 8px;">
+              📏 તમામ માપની વિગત (ઇંચમાં):
+            </div>
+            <div class="meas-details-grid">
+              ${specList.length > 0 ? specList.map(s => `
+                <div class="meas-grid-item">
+                  <div class="title">${s.title}</div>
+                  <div class="val">${s.val}"</div>
+                </div>
+              `).join('') : '<p style="grid-column: 1/-1; font-size: 12px; color:#999; text-align:center;">કોઈ માપ નોંધેલ નથી</p>'}
+            </div>
 
-          ${m.notes ? `<div style="font-size:12px; background:#fff9e6; padding:6px 10px; border-radius:6px; margin: 6px 0; color:#665100;"><b>નોંધ:</b> ${m.notes}</div>` : ''}
-
-          <div class="meas-card-actions">
-            <button class="btn-sm" style="background:#25D366; color:white;" onclick="sendMeasWhatsApp('${m.id}')">📲 WhatsApp</button>
-            <button class="btn-sm" style="background:#3498db; color:white;" onclick="editMeasurement('${m.id}')">✏️ એડિટ</button>
-            <button class="btn-sm" style="background:#9b59b6; color:white;" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}')">🧾 બિલ</button>
-            <button class="btn-sm" style="background:#ee5253; color:white;" onclick="deleteMeasurement('${m.id}')">🗑️</button>
+            ${m.notes ? `
+              <div class="meas-notes-box">
+                <b>📝 ખાસ નોંધ:</b> ${m.notes}
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
     }).join('');
+  }
+
+  function toggleMeasCard(id, event) {
+    const body = document.getElementById(`expand-${id}`);
+    if(body) body.classList.toggle('open');
+  }
+
+  function toggle3DotMenu(id, event) {
+    event.stopPropagation();
+    const menu = document.getElementById(`menu-${id}`);
+    const isOpen = menu.classList.contains('show');
+    hideAllMenus();
+    if (!isOpen) menu.classList.add('show');
+  }
+
+  function hideAllMenus() {
+    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
   }
 
   function editMeasurement(id) {
@@ -1279,12 +1278,12 @@
     if(phone.length === 10) phone = '91' + phone;
 
     let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - ગ્રાહકનું માપ*\n`;
-    msg += `--------------------------------\n`;
+    msg += `------------------------------------\n`;
     msg += `👤 ગ્રાહક: ${m.name}\n`;
     msg += `📱 મોબાઈલ: ${m.phone}\n`;
-    msg += `👗 કપડાંનો પ્રકાર: ${m.clothType}\n`;
+    msg += `👗 પ્રકાર: ${m.clothType}\n`;
     msg += `📅 તારીખ: ${m.date}\n`;
-    msg += `--------------------------------\n`;
+    msg += `------------------------------------\n`;
     msg += `*માપની વિગત:*\n`;
     if(m.specs.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
     if(m.specs.chest) msg += `• છાતી: ${m.specs.chest}\n`;
@@ -1296,8 +1295,8 @@
     if(m.specs.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
     if(m.specs.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
     if(m.specs.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
-    if(m.notes) msg += `\n📝 *ખાસ નોંધ:* ${m.notes}\n`;
-    msg += `--------------------------------\n`;
+    if(m.notes) msg += `\n📝 *નોંધ:* ${m.notes}\n`;
+    msg += `------------------------------------\n`;
     msg += `📍 C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
     msg += `📞 7572842641`;
 
@@ -1313,13 +1312,11 @@
   }
 
   // ==========================================
-  // BILLING MANAGEMENT (EDITABLE PRICES)
+  // BILLING MANAGEMENT
   // ==========================================
   function openNewBill() {
     cart = {};
     itemPrices = {};
-    
-    // ડિફોલ્ટ પ્રાઈસ સેટ કરો
     servicesList.forEach(s => {
       cart[s.id] = 0;
       itemPrices[s.id] = s.price;
@@ -1364,14 +1361,12 @@
     `).join('');
   }
 
-  // ભાવ જાતે બદલવાનું ફંક્શન
   function updateServicePrice(id, newPrice) {
     const p = Math.max(0, parseFloat(newPrice) || 0);
     itemPrices[id] = p;
     updateLiveReceipt();
   }
 
-  // નવી વધારાની આઇટમ જાતે ઉમેરો
   function addCustomService() {
     const nameInput = document.getElementById('customItemName');
     const priceInput = document.getElementById('customItemPrice');
@@ -1386,7 +1381,7 @@
     const newId = Date.now();
     servicesList.push({ id: newId, name: name, price: price, icon: '🪡' });
     itemPrices[newId] = price;
-    cart[newId] = 1; // ઉમેરતાં જ ૧ નંગ સિલેક્ટ કરી દો
+    cart[newId] = 1;
 
     nameInput.value = '';
     priceInput.value = '';
@@ -1479,9 +1474,120 @@
 
     showToast('બિલ સેવ થઈ ગયું!', 'success');
     refreshDashboardStats();
+    renderReports();
     switchView('view-dashboard');
   }
 
+  // =========================================================================
+  // PDF DOWNLOAD FUNCTION
+  // =========================================================================
+  function downloadBillPDF() {
+    if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
+      showToast('પહેલાં ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
+      return;
+    }
+
+    showToast('PDF ડાઉનલોડ થઈ રહી છે...', 'info');
+
+    const safeCustName = currentBillData.customer.replace(/[^a-zA-Z0-9\u0A80-\u0AFF]/g, '_');
+    
+    let itemsRows = '';
+    currentBillData.items.forEach(it => {
+      itemsRows += `
+        <tr style="border-bottom: 1px solid #eee;">
+          <td style="padding: 7px 4px; font-size: 13px;">${it.name}</td>
+          <td style="padding: 7px 4px; text-align: center; font-size: 13px;">${it.qty}</td>
+          <td style="padding: 7px 4px; text-align: center; font-size: 13px;">₹${it.price}</td>
+          <td style="padding: 7px 4px; text-align: right; font-size: 13px; font-weight: bold;">₹${it.total}</td>
+        </tr>
+      `;
+    });
+
+    const printWrapper = document.createElement('div');
+    printWrapper.style.width = '450px';
+    printWrapper.style.padding = '22px';
+    printWrapper.style.background = '#ffffff';
+    printWrapper.style.color = '#222f3e';
+    printWrapper.style.fontFamily = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+    printWrapper.style.border = '2px dashed #b58997';
+    printWrapper.style.borderRadius = '12px';
+    printWrapper.style.boxSizing = 'border-box';
+
+    printWrapper.innerHTML = `
+      <div style="text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 10px; margin-bottom: 12px;">
+        <h2 style="color: #5c0928; margin: 0; font-size: 20px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
+        <p style="margin: 4px 0 2px; font-size: 12px;">પ્રો. રૂકસાના બેન | મો: 7572842641</p>
+        <p style="margin: 0; font-size: 11px; color: #555;">C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin: 4px 0;">
+        <span>બિલ નં: <b>#${currentBillData.billNo}</b></span>
+        <span>તારીખ: <b>${currentBillData.date}</b></span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin: 4px 0;">
+        <span>ગ્રાહક: <b>${currentBillData.customer}</b></span>
+        <span>મો: <b>${currentBillData.phone}</b></span>
+      </div>
+      <div style="font-size: 12.5px; margin: 4px 0 10px;">
+        <span>ડિલિવરી તારીખ: <b>${currentBillData.dueDate}</b></span>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
+        <thead>
+          <tr style="border-top: 1px dashed #888; border-bottom: 1px dashed #888;">
+            <th style="padding: 6px 4px; text-align: left; font-size: 12px;">આઇટમ</th>
+            <th style="padding: 6px 4px; text-align: center; font-size: 12px;">નંગ</th>
+            <th style="padding: 6px 4px; text-align: center; font-size: 12px;">ભાવ</th>
+            <th style="padding: 6px 4px; text-align: right; font-size: 12px;">કુલ</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsRows}
+        </tbody>
+      </table>
+
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;">
+        <span>કુલ રકમ (Total):</span>
+        <b>₹${currentBillData.total}</b>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;">
+        <span>એડવાન્સ જમા:</span>
+        <b>₹${currentBillData.advance}</b>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 800; border-top: 2px solid #222; padding-top: 6px; margin-top: 6px;">
+        <span>બાકી રકમ (Due):</span>
+        <span style="color: #ee5253;">₹${currentBillData.due}</span>
+      </div>
+
+      <div style="text-align: center; margin-top: 16px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 8px;">
+        પધારવા બદલ આભાર! ફરી પધારશો. 🙏
+      </div>
+    `;
+
+    const opt = {
+      margin:       8,
+      filename:     `Bill_${currentBillData.billNo}_${safeCustName}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { 
+        scale: 2, 
+        useCORS: true, 
+        scrollY: 0, 
+        scrollX: 0 
+      },
+      jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(printWrapper).save().then(() => {
+      showToast('PDF સંપૂર્ણ ડાઉનલોડ થઈ ગઈ! 📄', 'success');
+    }).catch(err => {
+      console.error(err);
+      showToast('PDF બનાવવામાં ખામી આવી.', 'error');
+    });
+  }
+
+  // =========================================================================
+  // WHATSAPP RECEIPT
+  // =========================================================================
   function sendWhatsAppReceipt() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
       showToast('પહેલાં ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
@@ -1498,25 +1604,27 @@
     if(phone.length === 10) phone = '91' + phone;
 
     let itemsStr = '';
-    currentBillData.items.forEach(it => {
-      itemsStr += `• ${it.name} (${it.qty} નંગ @ ₹${it.price}) : ₹${it.total}\n`;
+    currentBillData.items.forEach((it, idx) => {
+      itemsStr += `▪️ *${it.name}*\n    નંગ: ${it.qty}  |  ભાવ: ₹${it.price}  |  કુલ: *₹${it.total}*\n`;
     });
 
-    let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - બિલ પહોંચ*\n`;
-    msg += `--------------------------------\n`;
-    msg += `🧾 બિલ નં: #${currentBillData.billNo}\n`;
-    msg += `👤 ગ્રાહક: ${currentBillData.customer}\n`;
-    msg += `📅 ડિલિવરી: ${currentBillData.dueDate}\n`;
-    msg += `--------------------------------\n`;
-    msg += `*કામની વિગત:*\n${itemsStr}`;
-    msg += `--------------------------------\n`;
-    msg += `કુલ રકમ: ₹${currentBillData.total}\n`;
-    msg += `એડવાન્સ જમા: ₹${currentBillData.advance}\n`;
-    msg += `*બાકી ચૂકવવાપાત્ર: ₹${currentBillData.due}*\n`;
-    msg += `--------------------------------\n`;
-    msg += `📍 C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
-    msg += `📞 7572842641\n\n`;
-    msg += `_પધારવા બદલ આભાર!_ 🙏`;
+    let msg = `🧵 *રૂકસાના લેડીઝ ટેલર*\n`;
+    msg += `પ્રો. રૂકસાના બેન | મો: 7572842641\n`;
+    msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
+    msg += `------------------------------------\n`;
+    msg += `🧾 *બિલ નં:* #${currentBillData.billNo}\n`;
+    msg += `📅 *તારીખ:* ${currentBillData.date}\n`;
+    msg += `👤 *ગ્રાહક:* ${currentBillData.customer}\n`;
+    msg += `📱 *મોબાઈલ:* ${currentBillData.phone}\n`;
+    msg += `🗓️ *ડિલિવરી તારીખ:* ${currentBillData.dueDate}\n`;
+    msg += `------------------------------------\n`;
+    msg += `*કામ અને હિસાબની વિગત:*\n\n${itemsStr}`;
+    msg += `------------------------------------\n`;
+    msg += `💰 *કુલ રકમ (Total):* ₹${currentBillData.total}\n`;
+    msg += `💵 *એડવાન્સ જમા:* ₹${currentBillData.advance}\n`;
+    msg += `🔴 *બાકી રકમ (Due):* *₹${currentBillData.due}*\n`;
+    msg += `------------------------------------\n`;
+    msg += `🙏 _પધારવા બદલ આભાર! ફરી પધારશો._`;
 
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
   }
@@ -1556,25 +1664,170 @@
     `).join('');
   }
 
+  // =========================================================================
+  // SMART DATE PARSER
+  // =========================================================================
+  function getBillDateDetails(b) {
+    if (b.dateRaw) {
+      const d = new Date(b.dateRaw);
+      if (!isNaN(d.getTime())) {
+        return {
+          year: String(d.getFullYear()),
+          month: String(d.getMonth() + 1).padStart(2, '0')
+        };
+      }
+    }
+    if (b.date && typeof b.date === 'string') {
+      const parts = b.date.trim().split(/[-/.]/);
+      if (parts.length === 3) {
+        if (parts[0].length === 4) {
+          return { year: parts[0], month: parts[1].padStart(2, '0') };
+        } else if (parts[2].length === 4) {
+          return { year: parts[2], month: parts[1].padStart(2, '0') };
+        }
+      }
+    }
+    const fallback = new Date();
+    return {
+      year: String(fallback.getFullYear()),
+      month: String(fallback.getMonth() + 1).padStart(2, '0')
+    };
+  }
+
+  // =========================================================================
+  // YOUTUBE STUDIO STYLE MONTH/YEAR FILTER FOR REPORTS
+  // =========================================================================
+  const MONTH_NAMES_GUJ = [
+    { num: '01', short: 'Jan', full: 'જાન્યુઆરી' },
+    { num: '02', short: 'Feb', full: 'ફેબ્રુઆરી' },
+    { num: '03', short: 'Mar', full: 'માર્ચ' },
+    { num: '04', short: 'Apr', full: 'એપ્રિલ' },
+    { num: '05', short: 'May', full: 'મે' },
+    { num: '06', short: 'Jun', full: 'જૂન' },
+    { num: '07', short: 'Jul', full: 'જુલાઈ' },
+    { num: '08', short: 'Aug', full: 'ઓગસ્ટ' },
+    { num: '09', short: 'Sep', full: 'સપ્ટેમ્બર' },
+    { num: '10', short: 'Oct', full: 'ઓક્ટોબર' },
+    { num: '11', short: 'Nov', full: 'નવેમ્બર' },
+    { num: '12', short: 'Dec', full: 'ડિસેમ્બર' }
+  ];
+
+  function initReportYearOptions() {
+    const yearSelect = document.getElementById('reportYearSelect');
+    if(!yearSelect) return;
+
+    let yearsSet = new Set();
+    const currentRealYear = String(new Date().getFullYear());
+    yearsSet.add(currentRealYear);
+
+    billsDB.forEach(b => {
+      const dt = getBillDateDetails(b);
+      if(dt && dt.year) yearsSet.add(dt.year);
+    });
+
+    const sortedYears = Array.from(yearsSet).sort((a,b) => b - a);
+    
+    if(!sortedYears.includes(currentReportYear)) {
+      currentReportYear = sortedYears[0] || currentRealYear;
+    }
+
+    yearSelect.innerHTML = sortedYears.map(yr => `
+      <option value="${yr}" ${yr === currentReportYear ? 'selected' : ''}>${yr}</option>
+    `).join('');
+  }
+
+  function handleYearChange() {
+    const yearSelect = document.getElementById('reportYearSelect');
+    if(yearSelect) {
+      currentReportYear = yearSelect.value;
+      renderReports();
+    }
+  }
+
+  function setReportFilter(periodType) {
+    currentReportMonth = periodType;
+    renderReports();
+  }
+
   function renderReports() {
+    initReportYearOptions();
+
+    const chipsContainer = document.getElementById('reportChipsContainer');
+    if(chipsContainer) {
+      let chipsHtml = '';
+
+      chipsHtml += `
+        <button class="filter-chip-btn ${currentReportMonth === 'all' ? 'active' : ''}" onclick="setReportFilter('all')">
+          🌐 Lifetime (કુલ)
+        </button>
+      `;
+
+      chipsHtml += `
+        <button class="filter-chip-btn ${currentReportMonth === 'year' ? 'active' : ''}" onclick="setReportFilter('year')">
+          📅 ${currentReportYear} આખું વર્ષ
+        </button>
+      `;
+
+      MONTH_NAMES_GUJ.forEach(m => {
+        const isActive = (currentReportMonth === m.num);
+        chipsHtml += `
+          <button class="filter-chip-btn ${isActive ? 'active' : ''}" onclick="setReportFilter('${m.num}')">
+            ${m.short} (${m.full})
+          </button>
+        `;
+      });
+
+      chipsContainer.innerHTML = chipsHtml;
+    }
+
+    let filteredBills = [];
+    let periodTitle = '';
+
+    if (currentReportMonth === 'all') {
+      filteredBills = billsDB;
+      periodTitle = `લાઈફટાઈમ (કુલ હિસાબ)`;
+    } else if (currentReportMonth === 'year') {
+      filteredBills = billsDB.filter(b => {
+        const dt = getBillDateDetails(b);
+        return dt.year === currentReportYear;
+      });
+      periodTitle = `${currentReportYear} ના આખા વર્ષની આવક`;
+    } else {
+      filteredBills = billsDB.filter(b => {
+        const dt = getBillDateDetails(b);
+        return dt.year === currentReportYear && dt.month === currentReportMonth;
+      });
+      const mObj = MONTH_NAMES_GUJ.find(x => x.num === currentReportMonth);
+      const mName = mObj ? mObj.full : currentReportMonth;
+      periodTitle = `${mName} ${currentReportYear} ની આવક`;
+    }
+
+    const filterLabel = document.getElementById('reportFilterLabel');
+    if(filterLabel) filterLabel.innerText = periodTitle;
+
+    const bannerTitle = document.getElementById('repBannerPeriodTitle');
+    if(bannerTitle) bannerTitle.innerText = periodTitle;
+
     let revenue = 0;
     let counts = {};
 
-    billsDB.forEach(b => {
-      revenue += b.total;
-      b.items.forEach(it => {
-        counts[it.name] = (counts[it.name] || 0) + it.qty;
-      });
+    filteredBills.forEach(b => {
+      revenue += (parseFloat(b.total) || 0);
+      if(Array.isArray(b.items)) {
+        b.items.forEach(it => {
+          counts[it.name] = (counts[it.name] || 0) + (it.qty || 1);
+        });
+      }
     });
 
     document.getElementById('repLifetimeSales').innerText = '₹' + revenue;
-    document.getElementById('repLifetimeBills').innerText = `કુલ બિલો: ${billsDB.length}`;
+    document.getElementById('repLifetimeBills').innerText = `${filteredBills.length} બિલ`;
 
     const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
     const container = document.getElementById('repTopItemsList');
 
     if(sorted.length === 0) {
-      container.innerHTML = '<p style="color:#888; font-size:13px; text-align:center; padding:15px;">હજુ સુધી કોઈ બિલ બન્યા નથી.</p>';
+      container.innerHTML = `<p style="color:#888; font-size:13px; text-align:center; padding:18px;">આ સમયગાળામાં કોઈ બિલ બનેલા નથી.</p>`;
       return;
     }
 
@@ -1588,23 +1841,35 @@
 
   function refreshDashboardStats() {
     const today = new Date().toISOString().split('T')[0];
-    const todayBills = billsDB.filter(b => b.date === today);
-    const sum = todayBills.reduce((acc, b) => acc + b.total, 0);
+    const todayBills = billsDB.filter(b => {
+      const dt = getBillDateDetails(b);
+      const todayParts = today.split('-');
+      return dt.year === todayParts[0] && dt.month === todayParts[1] && (b.date === today || (b.dateRaw && new Date(b.dateRaw).toISOString().split('T')[0] === today));
+    });
+    const sum = todayBills.reduce((acc, b) => acc + (parseFloat(b.total) || 0), 0);
 
     document.getElementById('dashTodayTotal').innerText = '₹' + sum;
     document.getElementById('dashTodayCount').innerText = `${todayBills.length} બિલ બનેલા`;
   }
 
-  function clearAllData() {
-    if(confirm('શું તમે ખરેખર બધો ડેટા (બધા બિલ અને સેવ કરેલા માપ) ડિલીટ કરવા માંગો છો?')) {
+  // =========================================================================
+  // RESET ONLY BILLS & REPORTS (MEASUREMENTS ARE 100% PROTECTED)
+  // =========================================================================
+  function clearBillsReportData() {
+    if(confirm('શું તમે ખરેખર ફક્ત જૂના બિલ અને હિસાબનો ડેટા સાફ કરવા માંગો છો?\n\n(ગ્રાહકોના સેવ કરેલા તમામ માપ સુરક્ષિત રહેશે, તે ડિલીટ નહીં થાય)')) {
       localStorage.removeItem('ruksana_tailor_bills');
-      localStorage.removeItem('ruksana_tailor_measurements');
       billsDB = [];
-      measDB = [];
+
+      // Cloud cleanup only for bills collection
+      if(db) {
+        db.collection("bills").get().then(snap => {
+          snap.forEach(doc => doc.ref.delete());
+        }).catch(err => console.log("Firestore bills delete error:", err));
+      }
+
       refreshDashboardStats();
-      renderMeasurements();
-      showToast('તમામ ડેટા સફળતાપૂર્વક સાફ થઈ ગયો છે.', 'info');
-      switchView('view-dashboard');
+      renderReports();
+      showToast('જૂનો બિલ હિસાબ સાફ થઈ ગયો છે! (માપ સુરક્ષિત છે)', 'info');
     }
   }
 </script>
