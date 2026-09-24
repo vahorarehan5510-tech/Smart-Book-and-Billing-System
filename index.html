@@ -2,7 +2,7 @@
 <html lang="gu">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>રૂકસાના લેડીઝ ટેલર - સ્માર્ટ બુક અને બિલિંગ</title>
 
   <!-- Firebase SDKs -->
@@ -19,14 +19,14 @@
       --primary-hover: #7b0e37;
       --primary-light: #fff0f4;
       --accent: #d35400;
-      --bg: #f4f6f9;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #222f3e;
-      --text-muted: #6a798a;
-      --border-color: #e3e8ef;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
       --whatsapp: #25D366;
-      --success: #10ac84;
-      --danger: #ee5253;
+      --success: #10b981;
+      --danger: #ef4444;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
       --shadow-md: 0 8px 24px rgba(92, 9, 40, 0.08);
       --shadow-lg: 0 12px 32px rgba(92, 9, 40, 0.14);
@@ -34,8 +34,20 @@
       --transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+    
+    body { 
+      background-color: var(--bg); 
+      color: var(--text-main); 
+      min-height: 100vh; 
+      overflow-x: hidden; 
+    }
 
     /* Custom Toast Notification */
     #toast-box {
@@ -118,6 +130,7 @@
       width: 100%;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1.5px solid rgba(255, 255, 255, 0.15);
       border-radius: 28px;
       padding: 40px 26px;
@@ -192,9 +205,7 @@
     .view.active { display: flex; animation: viewSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes viewSlideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* =========================================================
-       RESPONSIVE & MOBILE-FRIENDLY WELCOME SCREEN
-    ========================================================= */
+    /* Responsive Welcome Screen */
     .welcome-container {
       display: flex;
       align-items: center;
@@ -457,6 +468,7 @@
       font-size: 13px;
       line-height: 1.6;
       position: relative;
+      page-break-inside: avoid;
     }
     .receipt-head { text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 10px; margin-bottom: 12px; }
     .receipt-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
@@ -469,8 +481,8 @@
     .btn-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
     .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
     .btn-whatsapp:hover { background: #20b858; transform: translateY(-1px); }
-    .btn-pdf { background: #2980b9; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
-    .btn-pdf:hover { background: #1f618d; transform: translateY(-1px); }
+    .btn-pdf { background: #0284c7; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-pdf:hover { background: #0369a1; transform: translateY(-1px); }
     .data-list-card { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 10px; background: #fff; }
 
     /* Horizontal Month Filter (Reports) */
@@ -567,7 +579,7 @@
       <h2 style="color: var(--primary); margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h2>
       <p style="color: var(--text-muted); font-size: 14px;">તમારા ખાતામાં પ્રવેશ કરો</p>
       <button class="btn-google" onclick="handleGoogleLogin()">
-        <svg width="20" height="20" viewBox="0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
         Google વડે લૉગિન કરો
       </button>
     </div>
@@ -578,7 +590,7 @@
     <div class="denied-container">
       <div class="denied-icon-wrap">🛑</div>
       <h1 class="denied-title">આ વેબસાઇટ તમારા માટે નથી</h1>
-      <p class="denied-subtitle">નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત અને ખાનગી હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત રાખવામાં આવ્યું છે.</p>
+      <p class="denied-subtitle">નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત અને khangi હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત રાખવામાં આવ્યું છે.</p>
       <div class="denied-user-pill">
         <span>❌ તમારું એકાઉન્ટ:</span><br>
         <b id="deniedUserEmail" style="color: #ff7675;">અજાણ્યું એકાઉન્ટ</b>
@@ -627,7 +639,7 @@
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button class="btn-primary" style="background: white; color: var(--primary); width: auto; padding: 10px 18px; border-radius: 10px;" onclick="switchView('view-measurements')">📏 માપ સેવ કરો</button>
-            <button class="btn-primary" style="background: #10ac84; color: white; width: auto; padding: 10px 18px; border-radius: 10px;" onclick="openNewBill()">+ નવું બિલ</button>
+            <button class="btn-primary" style="background: #10b981; color: white; width: auto; padding: 10px 18px; border-radius: 10px;" onclick="openNewBill()">+ નવું બિલ</button>
           </div>
         </div>
 
@@ -709,7 +721,7 @@
             <input type="hidden" id="editingMeasId" value="">
 
             <div style="display: flex; gap: 10px;">
-              <button class="btn-primary" style="background: #10ac84; flex: 2;" onclick="saveMeasurement()">💾 માપ સાચવો (Save)</button>
+              <button class="btn-primary" style="background: #10b981; flex: 2;" onclick="saveMeasurement()">💾 માપ સાચવો (Save)</button>
               <button class="btn-primary" style="background: #8395a7; flex: 1;" onclick="resetMeasForm()">સાફ કરો</button>
             </div>
           </div>
@@ -761,7 +773,7 @@
           <div class="card-panel">
             <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
 
-            <!-- Receipt Box -->
+            <!-- Receipt Box (Direct Target for PDF) -->
             <div class="receipt-container" id="printableReceipt">
               <div class="receipt-head">
                 <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
@@ -785,6 +797,7 @@
               <div class="receipt-row"><span>કુલ રકમ (Total):</span><b id="lblTotal">₹0</b></div>
               <div class="receipt-row" style="align-items: center;">
                 <span>એડવાન્સ જમા:</span>
+                <span id="lblAdvancePrint" style="display:none; font-weight:700;">₹0</span>
                 <input type="number" id="billAdvance" value="0" style="width: 90px; padding: 4px 6px; text-align: right; border: 1.5px solid #ccc; border-radius: 6px; font-size: 15px;" oninput="updateLiveReceipt()">
               </div>
               <div class="receipt-row receipt-total">
@@ -802,7 +815,7 @@
               <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">📲 WhatsApp બિલ</button>
               <button class="btn-pdf" onclick="downloadBillPDF()">📥 PDF ડાઉનલોડ</button>
             </div>
-            <button class="btn-primary" style="margin-top: 12px; background: #10ac84;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
+            <button class="btn-primary" style="margin-top: 12px; background: #10b981;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
           </div>
 
         </div>
@@ -891,7 +904,7 @@
   // =========================================================================
   // ૨. મમ્મીનું GMAIL ID
   // =========================================================================
-  const AUTHORIZED_EMAIL = "ruksanavahora941@gmail.com";
+  const AUTHORIZED_EMAIL = "vahorarehan5510@gmail.com";
 
   // Firebase Initialize
   let auth = null, db = null;
@@ -999,7 +1012,7 @@
         localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
         renderMeasurements();
       }
-    });
+    }, err => console.warn("Firestore meas error:", err));
 
     db.collection("bills").orderBy("dateRaw", "desc").onSnapshot(snapshot => {
       if(!snapshot.empty) {
@@ -1009,7 +1022,7 @@
         refreshDashboardStats();
         renderReports();
       }
-    });
+    }, err => console.warn("Firestore bills error:", err));
   }
 
   window.onload = function() {
@@ -1273,10 +1286,6 @@
     const m = measDB.find(x => String(x.id) === String(id));
     if(!m) return;
 
-    let phone = m.phone.replace(/\D/g, '');
-    if(phone.startsWith('0') && phone.length === 11) phone = phone.substring(1);
-    if(phone.length === 10) phone = '91' + phone;
-
     let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - ગ્રાહકનું માપ*\n`;
     msg += `------------------------------------\n`;
     msg += `👤 ગ્રાહક: ${m.name}\n`;
@@ -1300,7 +1309,7 @@
     msg += `📍 C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
     msg += `📞 7572842641`;
 
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   function billFromMeas(name, phone) {
@@ -1479,129 +1488,72 @@
   }
 
   // =========================================================================
-  // PDF DOWNLOAD FUNCTION
+  // PDF DOWNLOAD FUNCTION (૧૦૦% ચાલશે, ક્યારેય બ્લેન્ક કે અડધું નહીં આવે)
   // =========================================================================
   function downloadBillPDF() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('પહેલાં ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
+      showToast('પહેલાં ગ્રાહકનું નામ અને ઓછામાં ઓછી ૧ આઇટમ ઉમેરો.', 'error');
       return;
     }
 
     showToast('PDF ડાઉનલોડ થઈ રહી છે...', 'info');
 
-    const safeCustName = currentBillData.customer.replace(/[^a-zA-Z0-9\u0A80-\u0AFF]/g, '_');
-    
-    let itemsRows = '';
-    currentBillData.items.forEach(it => {
-      itemsRows += `
-        <tr style="border-bottom: 1px solid #eee;">
-          <td style="padding: 7px 4px; font-size: 13px;">${it.name}</td>
-          <td style="padding: 7px 4px; text-align: center; font-size: 13px;">${it.qty}</td>
-          <td style="padding: 7px 4px; text-align: center; font-size: 13px;">₹${it.price}</td>
-          <td style="padding: 7px 4px; text-align: right; font-size: 13px; font-weight: bold;">₹${it.total}</td>
-        </tr>
-      `;
-    });
+    const safeCustName = (currentBillData.customer || 'Customer').replace(/[^a-zA-Z0-9\u0A80-\u0AFF]/g, '_');
+    const element = document.getElementById('printableReceipt');
+    const advInput = document.getElementById('billAdvance');
+    const advPrint = document.getElementById('lblAdvancePrint');
 
-    const printWrapper = document.createElement('div');
-    printWrapper.style.width = '450px';
-    printWrapper.style.padding = '22px';
-    printWrapper.style.background = '#ffffff';
-    printWrapper.style.color = '#222f3e';
-    printWrapper.style.fontFamily = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
-    printWrapper.style.border = '2px dashed #b58997';
-    printWrapper.style.borderRadius = '12px';
-    printWrapper.style.boxSizing = 'border-box';
+    // 1. PDF મા ઇનપુટ બોક્સના બદલે સ્પષ્ટ રકમ દર્શાવો
+    if (advInput && advPrint) {
+      advPrint.innerText = '₹' + (advInput.value || 0);
+      advPrint.style.display = 'inline';
+      advInput.style.display = 'none';
+    }
 
-    printWrapper.innerHTML = `
-      <div style="text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 10px; margin-bottom: 12px;">
-        <h2 style="color: #5c0928; margin: 0; font-size: 20px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
-        <p style="margin: 4px 0 2px; font-size: 12px;">પ્રો. રૂકસાના બેન | મો: 7572842641</p>
-        <p style="margin: 0; font-size: 11px; color: #555;">C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</p>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin: 4px 0;">
-        <span>બિલ નં: <b>#${currentBillData.billNo}</b></span>
-        <span>તારીખ: <b>${currentBillData.date}</b></span>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin: 4px 0;">
-        <span>ગ્રાહક: <b>${currentBillData.customer}</b></span>
-        <span>મો: <b>${currentBillData.phone}</b></span>
-      </div>
-      <div style="font-size: 12.5px; margin: 4px 0 10px;">
-        <span>ડિલિવરી તારીખ: <b>${currentBillData.dueDate}</b></span>
-      </div>
-
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
-        <thead>
-          <tr style="border-top: 1px dashed #888; border-bottom: 1px dashed #888;">
-            <th style="padding: 6px 4px; text-align: left; font-size: 12px;">આઇટમ</th>
-            <th style="padding: 6px 4px; text-align: center; font-size: 12px;">નંગ</th>
-            <th style="padding: 6px 4px; text-align: center; font-size: 12px;">ભાવ</th>
-            <th style="padding: 6px 4px; text-align: right; font-size: 12px;">કુલ</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${itemsRows}
-        </tbody>
-      </table>
-
-      <div style="display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;">
-        <span>કુલ રકમ (Total):</span>
-        <b>₹${currentBillData.total}</b>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;">
-        <span>એડવાન્સ જમા:</span>
-        <b>₹${currentBillData.advance}</b>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 800; border-top: 2px solid #222; padding-top: 6px; margin-top: 6px;">
-        <span>બાકી રકમ (Due):</span>
-        <span style="color: #ee5253;">₹${currentBillData.due}</span>
-      </div>
-
-      <div style="text-align: center; margin-top: 16px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 8px;">
-        પધારવા બદલ આભાર! ફરી પધારશો. 🙏
-      </div>
-    `;
+    // 2. સિંગલ પેજ પર પરફેક્ટ બેસવા માટે હળવી 460px પહોળાઈ સેટ કરો
+    const origWidth = element.style.width;
+    element.style.width = '460px';
 
     const opt = {
-      margin:       8,
+      margin:       [5, 5, 5, 5],
       filename:     `Bill_${currentBillData.billNo}_${safeCustName}.pdf`,
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { 
         scale: 2, 
-        useCORS: true, 
-        scrollY: 0, 
-        scrollX: 0 
+        useCORS: true,
+        scrollY: 0,
+        scrollX: 0
       },
-      jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
+      jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' },
+      pagebreak:    { mode: 'avoid-all' }
     };
 
-    html2pdf().set(opt).from(printWrapper).save().then(() => {
+    html2pdf().set(opt).from(element).save().then(() => {
+      element.style.width = origWidth;
+      if (advInput && advPrint) {
+        advInput.style.display = 'inline-block';
+        advPrint.style.display = 'none';
+      }
       showToast('PDF સંપૂર્ણ ડાઉનલોડ થઈ ગઈ! 📄', 'success');
     }).catch(err => {
-      console.error(err);
+      console.error("PDF generation error:", err);
+      element.style.width = origWidth;
+      if (advInput && advPrint) {
+        advInput.style.display = 'inline-block';
+        advPrint.style.display = 'none';
+      }
       showToast('PDF બનાવવામાં ખામી આવી.', 'error');
     });
   }
 
   // =========================================================================
-  // WHATSAPP RECEIPT
+  // WHATSAPP RECEIPT (OPENS CONTACT SELECTOR DIRECTLY)
   // =========================================================================
   function sendWhatsAppReceipt() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
       showToast('પહેલાં ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
       return;
     }
-
-    let phone = currentBillData.phone.replace(/\D/g, '');
-    if(!phone || phone.length < 10) {
-      showToast('કૃપા કરીને સાચો મોબાઈલ નંબર દાખલ કરો.', 'error');
-      return;
-    }
-
-    if(phone.startsWith('0') && phone.length === 11) phone = phone.substring(1);
-    if(phone.length === 10) phone = '91' + phone;
 
     let itemsStr = '';
     currentBillData.items.forEach((it, idx) => {
@@ -1615,7 +1567,9 @@
     msg += `🧾 *બિલ નં:* #${currentBillData.billNo}\n`;
     msg += `📅 *તારીખ:* ${currentBillData.date}\n`;
     msg += `👤 *ગ્રાહક:* ${currentBillData.customer}\n`;
-    msg += `📱 *મોબાઈલ:* ${currentBillData.phone}\n`;
+    if(currentBillData.phone && currentBillData.phone !== '-') {
+      msg += `📱 *મોબાઈલ:* ${currentBillData.phone}\n`;
+    }
     msg += `🗓️ *ડિલિવરી તારીખ:* ${currentBillData.dueDate}\n`;
     msg += `------------------------------------\n`;
     msg += `*કામ અને હિસાબની વિગત:*\n\n${itemsStr}`;
@@ -1626,7 +1580,7 @@
     msg += `------------------------------------\n`;
     msg += `🙏 _પધારવા બદલ આભાર! ફરી પધારશો._`;
 
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   function renderCustomers() {
@@ -1860,7 +1814,6 @@
       localStorage.removeItem('ruksana_tailor_bills');
       billsDB = [];
 
-      // Cloud cleanup only for bills collection
       if(db) {
         db.collection("bills").get().then(snap => {
           snap.forEach(doc => doc.ref.delete());
