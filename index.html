@@ -21,7 +21,7 @@
       --accent: #d35400;
       --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
       --border-color: #e2e8f0;
       --whatsapp: #25D366;
@@ -29,9 +29,9 @@
       --danger: #ef4444;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
       --shadow-md: 0 8px 24px rgba(92, 9, 40, 0.08);
-      --shadow-lg: 0 12px 32px rgba(92, 9, 40, 0.14);
-      --radius: 12px;
-      --transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      --shadow-lg: 0 16px 36px rgba(92, 9, 40, 0.16);
+      --radius: 14px;
+      --transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     * { 
@@ -49,19 +49,27 @@
       overflow-x: hidden; 
     }
 
+    .icon-svg {
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
     /* Custom Toast Notification */
     #toast-box {
       position: fixed;
       top: -70px;
       left: 50%;
       transform: translateX(-50%);
-      background: #222f3e;
+      background: #1e293b;
       color: white;
       padding: 12px 24px;
       border-radius: 30px;
       font-size: 14px;
       font-weight: 600;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       z-index: 99999;
       transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
       display: flex;
@@ -72,9 +80,9 @@
       white-space: nowrap;
     }
     #toast-box.show { top: 22px; opacity: 1; }
-    #toast-box.success { background: #10ac84; }
-    #toast-box.error { background: #ee5253; }
-    #toast-box.info { background: #2e86de; }
+    #toast-box.success { background: #10b981; }
+    #toast-box.error { background: #ef4444; }
+    #toast-box.info { background: #0284c7; }
 
     /* Authentication Overlays */
     .auth-overlay {
@@ -86,6 +94,7 @@
       justify-content: center;
       padding: 20px;
       z-index: 9999;
+      animation: fadeIn 0.4s ease-out;
     }
     .auth-card {
       max-width: 420px;
@@ -94,11 +103,46 @@
       padding: 40px 26px;
       border-radius: 24px;
       border: 1.5px solid #f7dbe4;
-      box-shadow: 0 15px 35px rgba(92, 9, 40, 0.08);
+      box-shadow: var(--shadow-lg);
       text-align: center;
-      animation: viewSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .auth-icon { font-size: 60px; margin-bottom: 12px; }
+
+    /* Special Unique Animation for Login Logo */
+    .login-brand-logo {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 16px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #fff0f5 0%, #fdf2f8 50%, #fce7f3 100%);
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
+      animation: loginSwingGlow 4s ease-in-out infinite;
+    }
+    .login-brand-logo svg {
+      width: 54px;
+      height: 54px;
+      filter: drop-shadow(0 4px 6px rgba(157, 23, 77, 0.25));
+    }
+
+    @keyframes loginSwingGlow {
+      0%, 100% {
+        transform: rotate(0deg) scale(1);
+        box-shadow: 0 10px 25px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
+      }
+      25% {
+        transform: rotate(-4deg) scale(1.03);
+        box-shadow: 0 14px 30px rgba(225, 29, 72, 0.28), inset 0 0 0 2px #f43f5e;
+      }
+      75% {
+        transform: rotate(4deg) scale(1.03);
+        box-shadow: 0 14px 30px rgba(225, 29, 72, 0.28), inset 0 0 0 2px #f43f5e;
+      }
+    }
+
     .btn-google {
       width: 100%;
       background: #ffffff;
@@ -117,7 +161,13 @@
       transition: var(--transition);
       margin-top: 22px;
     }
-    .btn-google:hover { background: #f8f9fa; border-color: #c6c9cc; transform: translateY(-1px); }
+    .btn-google:hover { 
+      background: #f8f9fa; 
+      border-color: #c6c9cc; 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .btn-google:active { transform: translateY(0); }
 
     /* Access Denied Screen */
     #screen-denied {
@@ -136,49 +186,97 @@
       padding: 40px 26px;
       text-align: center;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-      animation: viewSlideUp 0.4s ease-out;
+      animation: scaleUp 0.4s ease-out;
     }
     .denied-icon-wrap {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       background: rgba(238, 82, 83, 0.2);
       border: 2px solid #ee5253;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 45px;
       margin: 0 auto 20px;
       box-shadow: 0 0 30px rgba(238, 82, 83, 0.35);
       animation: alertBounce 2s infinite ease-in-out;
     }
-    @keyframes alertBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-    .denied-title { font-size: 26px; font-weight: 800; color: #ff6b6b; margin-bottom: 10px; }
+    .denied-title { font-size: 24px; font-weight: 800; color: #ff6b6b; margin-bottom: 10px; }
     .denied-subtitle { font-size: 14px; color: #ffccd2; line-height: 1.6; margin-bottom: 20px; }
     .denied-user-pill { background: rgba(0, 0, 0, 0.35); border: 1px dashed rgba(255, 107, 107, 0.6); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #f1f2f6; margin-bottom: 24px; word-break: break-all; }
     .denied-btn { width: 100%; background: linear-gradient(135deg, #ee5253, #c0392b); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .denied-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(238,82,83,0.4); }
 
     /* Main Container */
-    .app-wrapper { width: 100%; max-width: 1100px; margin: 0 auto; min-height: 100vh; display: none; flex-direction: column; background: #ffffff; box-shadow: 0 0 30px rgba(0,0,0,0.04); position: relative; }
+    .app-wrapper { 
+      width: 100%; 
+      max-width: 1180px; 
+      margin: 0 auto; 
+      min-height: 100vh; 
+      display: none; 
+      flex-direction: column; 
+      background: #ffffff; 
+      box-shadow: 0 0 40px rgba(0,0,0,0.03); 
+      position: relative; 
+    }
 
     /* Desktop Navigation */
     .app-header {
       background: linear-gradient(135deg, var(--primary), #7d0d38);
       color: white;
-      padding: 14px 24px;
+      padding: 12px 28px;
       display: none;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 200;
-      box-shadow: 0 4px 15px rgba(92, 9, 40, 0.15);
+      box-shadow: 0 4px 20px rgba(92, 9, 40, 0.15);
     }
-    .app-header .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; cursor: pointer; }
+    .app-header .brand { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      font-size: 19px; 
+      font-weight: 800; 
+      cursor: pointer; 
+      transition: var(--transition); 
+      letter-spacing: 0.3px; 
+    }
+    .header-logo-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff0f5, #fce7f3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      animation: floatSoft 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .header-logo-badge svg {
+      width: 24px;
+      height: 24px;
+    }
     .desktop-nav { display: flex; gap: 8px; align-items: center; }
-    .nav-link { background: transparent; border: none; color: #f7d6e1; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: var(--transition); }
-    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.2); color: #ffffff; transform: translateY(-1px); }
-    .btn-logout { background: #ee5253; color: white; border: none; padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px; margin-left: 6px; }
+    .nav-link { 
+      background: transparent; 
+      border: none; 
+      color: #f7d6e1; 
+      padding: 8px 16px; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      font-size: 14px; 
+      font-weight: 600; 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      transition: var(--transition); 
+    }
+    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.18); color: #ffffff; transform: translateY(-1px); }
+    .btn-logout { background: #ee5253; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; margin-left: 8px; transition: var(--transition); display: flex; align-items: center; gap: 6px; }
+    .btn-logout:hover { background: #c0392b; transform: scale(1.03); }
 
     /* Mobile Bottom Navigation */
     .bottom-nav {
@@ -187,33 +285,71 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid var(--border-color);
       justify-content: space-around;
-      padding: 8px 0 10px;
+      padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
       z-index: 300;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
     }
-    .bottom-nav-btn { background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; color: var(--text-muted); cursor: pointer; flex: 1; font-weight: 700; transition: var(--transition); }
+    .bottom-nav-btn { 
+      background: none; 
+      border: none; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      gap: 4px; 
+      font-size: 11px; 
+      color: var(--text-muted); 
+      cursor: pointer; 
+      flex: 1; 
+      font-weight: 700; 
+      transition: var(--transition); 
+    }
     .bottom-nav-btn.active { color: var(--primary); transform: translateY(-2px); }
-    .bottom-nav-btn span { font-size: 20px; }
+    .bottom-nav-btn .icon-svg { width: 24px; height: 24px; transition: var(--transition); }
+    .bottom-nav-btn.active .icon-svg { transform: scale(1.15); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
 
     /* Content Area & Animations */
     .main-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
     .view { display: none; flex-direction: column; width: 100%; }
     .view.active { display: flex; animation: viewSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    @keyframes viewSlideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    
+    @keyframes viewSlideUp { 
+      from { opacity: 0; transform: translateY(16px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleUp {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes alertBounce { 
+      0%, 100% { transform: scale(1); } 
+      50% { transform: scale(1.06); } 
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 8px 24px rgba(92, 9, 40, 0.15); }
+      50% { box-shadow: 0 14px 32px rgba(92, 9, 40, 0.28); }
+    }
 
-    /* Responsive Welcome Screen */
+    /* Welcome Screen Styles */
     .welcome-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      min-height: 100dvh;
+      min-height: 85vh;
       text-align: center;
-      padding: 20px;
+      padding: 16px;
       width: 100%;
     }
     .welcome-card {
@@ -223,31 +359,50 @@
       padding: 48px 28px;
       border-radius: 28px;
       border: 1.5px solid #f7dbe4;
-      box-shadow: 0 20px 45px rgba(92, 9, 40, 0.08);
+      box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
+      animation: scaleUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .welcome-card::before {
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 6px;
-      background: linear-gradient(90deg, var(--primary), #e84393, var(--accent));
+      background: linear-gradient(90deg, #ec4899, #8b5cf6, #f59e0b);
     }
-    .welcome-icon-wrap {
-      width: 96px;
-      height: 96px;
-      background: var(--primary-light);
-      border-radius: 50%;
+
+    /* Tailor Animation Logo for Welcome */
+    .welcome-brand-logo {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 46px;
-      box-shadow: 0 10px 24px rgba(92, 9, 40, 0.1);
+      border-radius: 28px;
+      background: linear-gradient(135deg, #fff0f5 0%, #fdf2f8 50%, #fce7f3 100%);
+      box-shadow: 0 12px 30px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
+      animation: floatSoft 3.5s ease-in-out infinite;
     }
-    .welcome-title { color: var(--primary); font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-    .welcome-sub { color: var(--text-muted); font-size: 15px; margin-bottom: 34px; line-height: 1.4; }
+    .welcome-brand-logo svg {
+      width: 62px;
+      height: 62px;
+      filter: drop-shadow(0 4px 8px rgba(157, 23, 77, 0.2));
+    }
+    .welcome-title { 
+      color: var(--primary); 
+      font-size: 28px; 
+      font-weight: 800; 
+      margin-bottom: 8px; 
+    }
+    .welcome-sub { 
+      color: var(--text-muted); 
+      font-size: 15px; 
+      margin-bottom: 34px; 
+      line-height: 1.4; 
+    }
     .btn-start {
       width: 100%;
       background: linear-gradient(135deg, var(--primary), #82103c);
@@ -255,7 +410,7 @@
       border: none;
       padding: 16px;
       border-radius: 14px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 8px 24px rgba(92, 9, 40, 0.25);
@@ -264,41 +419,101 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      animation: pulseGlow 2.5s infinite;
     }
     .btn-start:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(92, 9, 40, 0.32); }
-
-    @media (max-width: 480px) {
-      .welcome-container { padding: 14px; min-height: 92vh; }
-      .welcome-card { padding: 38px 20px; border-radius: 22px; }
-      .welcome-icon-wrap { width: 84px; height: 84px; font-size: 40px; margin-bottom: 16px; }
-      .welcome-title { font-size: 25px; }
-      .welcome-sub { font-size: 14px; margin-bottom: 28px; }
-      .btn-start { padding: 15px; font-size: 17px; }
-    }
+    .btn-start:active { transform: translateY(0); }
 
     /* Dashboard Layout */
-    .dashboard-banner { background: linear-gradient(135deg, var(--primary), #8a103e); color: white; padding: 24px 26px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; box-shadow: var(--shadow-md); }
-    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-    .menu-card { background: white; border: 1px solid var(--border-color); padding: 22px 18px; border-radius: 16px; text-align: center; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-sm); }
-    .menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #f0ccd8; }
-    .menu-card .icon { font-size: 38px; margin-bottom: 12px; display: inline-block; }
-    .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 5px; font-weight: 700; }
-    .menu-card p { font-size: 13px; color: var(--text-muted); }
+    .dashboard-banner { 
+      background: linear-gradient(135deg, var(--primary), #8a103e); 
+      color: white; 
+      padding: 24px 28px; 
+      border-radius: 20px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 24px; 
+      box-shadow: var(--shadow-md); 
+      transition: var(--transition);
+    }
+    .dashboard-banner:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .menu-card { 
+      background: white; 
+      border: 1px solid var(--border-color); 
+      padding: 24px 20px; 
+      border-radius: 18px; 
+      text-align: center; 
+      cursor: pointer; 
+      transition: var(--transition); 
+      box-shadow: var(--shadow-sm); 
+      position: relative;
+    }
+    .menu-card:hover { 
+      transform: translateY(-4px); 
+      box-shadow: var(--shadow-md); 
+      border-color: #f0ccd8; 
+    }
+    .menu-card .menu-icon-wrap { 
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      transition: var(--transition);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    }
+    .menu-card:hover .menu-icon-wrap { transform: scale(1.1) rotate(4deg); }
+    .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 6px; font-weight: 700; }
+    .menu-card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
 
     /* Panels & Inputs */
-    .card-panel { background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; box-shadow: var(--shadow-sm); margin-bottom: 22px; }
-    .panel-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 1.5px solid #f4edf0; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .form-control { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 16px; margin-bottom: 14px; outline: none; transition: var(--transition); background: #fafbfc; }
+    .card-panel { 
+      background: white; 
+      border: 1px solid var(--border-color); 
+      border-radius: 18px; 
+      padding: 22px; 
+      box-shadow: var(--shadow-sm); 
+      margin-bottom: 22px; 
+      transition: var(--transition);
+    }
+    .card-panel:hover { box-shadow: var(--shadow-md); }
+    .panel-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 1.5px solid #f4edf0; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .form-control { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 12px; font-size: 15px; margin-bottom: 14px; outline: none; transition: var(--transition); background: #fafbfc; }
     .form-control:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(92, 9, 40, 0.08); }
-    .btn-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 13px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-primary { 
+      width: 100%; 
+      background: var(--primary); 
+      color: white; 
+      border: none; 
+      padding: 13px 18px; 
+      border-radius: 12px; 
+      font-size: 15px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition); 
+    }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(92, 9, 40, 0.2); }
+    .btn-primary:active { transform: translateY(0); }
 
     /* Measurement Grid Form */
     .meas-grid-container { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width: 850px) { .meas-grid-container { grid-template-columns: 1.2fr 1fr; align-items: start; } }
-    .meas-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 14px; background: #fff8f9; padding: 14px; border-radius: 12px; border: 1px dashed #eec5d3; }
-    .meas-field-box { display: flex; flex-direction: column; gap: 5px; }
-    .meas-field-box label { font-size: 12px; font-weight: 700; color: #495057; }
-    .meas-field-box input { padding: 10px 6px; border: 1px solid #ced6e0; border-radius: 8px; font-size: 15px; outline: none; text-align: center; background: #ffffff; }
+    @media (min-width: 850px) { .meas-grid-container { grid-template-columns: 1.15fr 1fr; align-items: start; } }
+    .meas-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; margin-bottom: 14px; background: #fff8f9; padding: 14px; border-radius: 14px; border: 1px dashed #eec5d3; }
+    .meas-field-box { display: flex; flex-direction: column; gap: 4px; }
+    .meas-field-box label { font-size: 12px; font-weight: 700; color: #475569; }
+    .meas-field-box input { padding: 9px 6px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; text-align: center; background: #ffffff; transition: var(--transition); }
+    .meas-field-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(92,9,40,0.08); }
 
     /* Smart Measurement Cards */
     .smart-meas-card {
@@ -307,12 +522,13 @@
       margin-bottom: 12px;
       background: #ffffff;
       transition: var(--transition);
-      box-shadow: 0 3px 10px rgba(92, 9, 40, 0.03);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       position: relative;
     }
     .smart-meas-card:hover {
       border-color: #c988a2;
-      box-shadow: 0 6px 18px rgba(92, 9, 40, 0.08);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
     .smart-meas-header {
       padding: 14px 16px;
@@ -324,17 +540,17 @@
     }
     .meas-user-info { display: flex; align-items: center; gap: 12px; flex: 1; }
     .meas-avatar {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
-      background: #fff0f4;
-      color: var(--primary);
+      background: linear-gradient(135deg, #f43f5e, #be123c);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
-      border: 1px solid #f9d2de;
+      box-shadow: 0 4px 10px rgba(190, 18, 60, 0.25);
     }
     .meas-badge-pill {
       background: #fff0f4;
@@ -356,9 +572,7 @@
       height: 36px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 20px;
-      font-weight: bold;
-      color: #718093;
+      color: #64748b;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -372,13 +586,13 @@
       background: white;
       border: 1px solid #e1e8ef;
       border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      box-shadow: var(--shadow-lg);
       z-index: 500;
       width: 175px;
       display: none;
       flex-direction: column;
       padding: 6px;
-      animation: viewSlideUp 0.2s ease-out;
+      animation: scaleUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .meas-dropdown-menu.show { display: flex; }
     .meas-drop-item {
@@ -394,17 +608,17 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      transition: background 0.15s;
+      transition: var(--transition);
     }
     .meas-drop-item:hover { background: #fff0f4; color: var(--primary); }
-    .meas-drop-item.delete:hover { background: #ffebee; color: #ee5253; }
+    .meas-drop-item.delete:hover { background: #fee2e2; color: #ef4444; }
 
     .meas-expand-body {
       display: none;
       padding: 0 16px 16px 16px;
       border-top: 1px dashed #f0d5df;
       margin-top: 2px;
-      animation: viewSlideUp 0.3s ease-out;
+      animation: viewSlideUp 0.25s ease-out;
     }
     .meas-expand-body.open { display: block; }
     .meas-details-grid {
@@ -420,16 +634,16 @@
       border-radius: 10px;
       text-align: center;
     }
-    .meas-grid-item .title { font-size: 10.5px; color: #7f8c8d; font-weight: 600; margin-bottom: 2px; }
+    .meas-grid-item .title { font-size: 11px; color: #64748b; font-weight: 600; margin-bottom: 2px; }
     .meas-grid-item .val { font-size: 14px; color: var(--primary); font-weight: 800; }
     .meas-notes-box {
       margin-top: 10px;
       background: #fff9e6;
       border: 1px solid #ffeaa7;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      color: #634d00;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      color: #713f12;
     }
 
     /* Billing Grid */
@@ -440,37 +654,47 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px;
+      padding: 12px 14px;
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 14px;
       margin-bottom: 10px;
       background: #fff;
       transition: var(--transition);
       gap: 8px;
     }
     .item-row-card:hover { border-color: #dab4c2; background: #fffdfd; }
-    .item-meta { display: flex; align-items: center; gap: 10px; flex: 1; }
-    .item-badge { font-size: 24px; background: #fff0f3; padding: 6px 10px; border-radius: 10px; }
+    .item-meta { display: flex; align-items: center; gap: 12px; flex: 1; }
+    .item-badge { 
+      width: 44px;
+      height: 44px;
+      border-radius: 12px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
     .price-edit-box { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
-    .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #ced6e0; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; background: #ffffff; }
+    .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; background: #ffffff; }
     .qty-group { display: flex; align-items: center; gap: 8px; }
-    .btn-qty { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border-color); background: #f8f9fa; font-weight: 700; cursor: pointer; font-size: 17px; display: flex; align-items: center; justify-content: center; }
+    .btn-qty { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border-color); background: #f8fafc; font-weight: 700; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+    .btn-qty:hover { background: #e2e8f0; }
     .btn-qty.add { background: var(--primary); color: white; border: none; }
-    .qty-display { min-width: 22px; text-align: center; font-weight: 700; }
-    .custom-item-box { background: #fff8f9; border: 1.5px dashed #eec5d3; border-radius: 12px; padding: 12px; margin-top: 14px; }
+    .btn-qty.add:hover { background: var(--primary-hover); }
+    .qty-display { min-width: 24px; text-align: center; font-weight: 700; font-size: 14px; }
+    .custom-item-box { background: #fff8f9; border: 1.5px dashed #eec5d3; border-radius: 14px; padding: 14px; margin-top: 14px; }
 
     /* Receipt Box */
     .receipt-container {
       background: #fff;
       border: 1.5px dashed #b58997;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 22px;
       font-size: 13px;
       line-height: 1.6;
       position: relative;
       page-break-inside: avoid;
     }
-    .receipt-head { text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 10px; margin-bottom: 12px; }
+    .receipt-head { text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 12px; margin-bottom: 12px; }
     .receipt-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
     .receipt-table th { border-top: 1px dashed #888; border-bottom: 1px dashed #888; padding: 6px 0; text-align: left; }
     .receipt-table td { padding: 6px 0; }
@@ -479,11 +703,12 @@
 
     /* Action Buttons */
     .btn-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-whatsapp:hover { background: #20b858; transform: translateY(-1px); }
-    .btn-pdf { background: #0284c7; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-pdf { background: #0284c7; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-pdf:hover { background: #0369a1; transform: translateY(-1px); }
-    .data-list-card { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 10px; background: #fff; }
+    .data-list-card { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 14px; margin-bottom: 10px; background: #fff; transition: var(--transition); }
+    .data-list-card:hover { border-color: #c988a2; }
 
     /* Horizontal Month Filter (Reports) */
     .report-filter-wrapper {
@@ -553,7 +778,60 @@
       background: var(--primary);
       color: #ffffff;
       border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(92, 9, 40, 0.22);
+      box-shadow: 0 4px 14px rgba(92, 9, 40, 0.25);
+    }
+
+    /* QR Payment Stand Card */
+    .qr-stand-card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 2px solid #ecd4de;
+      border-radius: 24px;
+      padding: 26px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+    .qr-stand-card:hover { box-shadow: var(--shadow-lg); }
+    .qr-img-wrapper {
+      width: 220px;
+      height: 220px;
+      margin: 16px auto;
+      padding: 10px;
+      border: 2px dashed var(--primary);
+      border-radius: 18px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .quick-amount-chips {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .chip-amt {
+      background: #fff0f4;
+      border: 1px solid #f2cad8;
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .chip-amt:hover {
+      background: var(--primary);
+      color: #fff;
     }
 
     /* Mobile Screen Adjustments */
@@ -561,9 +839,10 @@
       .app-wrapper { border-radius: 0; box-shadow: none; }
       .desktop-nav { display: none; }
       .bottom-nav.nav-active { display: flex; }
-      .main-content { padding: 16px; padding-bottom: 95px; }
-      .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .main-content { padding: 14px; padding-bottom: 95px; }
+      .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; border-radius: 16px; }
       .items-scroll-list { max-height: none; }
+      .card-panel { padding: 16px; border-radius: 16px; }
     }
   </style>
 </head>
@@ -572,10 +851,30 @@
   <!-- Custom Floating Toast Message -->
   <div id="toast-box"></div>
 
-  <!-- 1. GOOGLE LOGIN SCREEN -->
+  <!-- 1. GOOGLE LOGIN SCREEN WITH BRAND LOGO & SWING ANIMATION -->
   <div class="auth-overlay" id="screen-login">
     <div class="auth-card">
-      <div class="auth-icon">👗</div>
+      <div class="login-brand-logo">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logTailorG" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ec4899" />
+              <stop offset="100%" stop-color="#9d174d" />
+            </linearGradient>
+            <linearGradient id="logGoldG" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#d97706" />
+            </linearGradient>
+          </defs>
+          <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#logTailorG)" />
+          <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#logTailorG)" />
+          <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#logGoldG)" />
+          <path d="M18 40H27V42H18V40Z" fill="url(#logGoldG)" />
+          <circle cx="46" cy="24" r="5" fill="url(#logGoldG)" />
+          <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#logGoldG)" />
+          <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24"/>
+        </svg>
+      </div>
       <h2 style="color: var(--primary); margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h2>
       <p style="color: var(--text-muted); font-size: 14px;">તમારા ખાતામાં પ્રવેશ કરો</p>
       <button class="btn-google" onclick="handleGoogleLogin()">
@@ -588,48 +887,123 @@
   <!-- 2. ACCESS DENIED SCREEN -->
   <div class="auth-overlay" id="screen-denied" style="display: none;">
     <div class="denied-container">
-      <div class="denied-icon-wrap">🛑</div>
+      <div class="denied-icon-wrap">
+        <svg class="icon-svg" style="width: 44px; height: 44px;" viewBox="0 0 24 24">
+          <path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+      </div>
       <h1 class="denied-title">આ વેબસાઇટ તમારા માટે નથી</h1>
-      <p class="denied-subtitle">નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત અને khangi હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત રાખવામાં આવ્યું છે.</p>
+      <p class="denied-subtitle">નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત છે.</p>
       <div class="denied-user-pill">
-        <span>❌ તમારું એકાઉન્ટ:</span><br>
+        <span>તમારું એકાઉન્ટ:</span><br>
         <b id="deniedUserEmail" style="color: #ff7675;">અજાણ્યું એકાઉન્ટ</b>
       </div>
-      <button class="denied-btn" onclick="handleLogout()">🔄 બીજા સાચા Google એકાઉન્ટથી પ્રવેશ કરો</button>
+      <button class="denied-btn" onclick="handleLogout()">બીજા સાચા Google એકાઉન્ટથી પ્રવેશ કરો</button>
     </div>
   </div>
 
   <!-- 3. MAIN APP WRAPPER -->
   <div class="app-wrapper" id="appMainWrapper">
     
-    <!-- Top Navigation (Desktop) -->
+    <!-- Top Navigation (Desktop) with Animation Brand Logo -->
     <header class="app-header" id="appHeader">
-      <div class="brand" onclick="switchView('view-dashboard')">🧵 રૂકસાના લેડીઝ ટેલર</div>
+      <div class="brand" onclick="switchView('view-dashboard')">
+        <div class="header-logo-badge">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hTailorG" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ec4899" />
+                <stop offset="100%" stop-color="#9d174d" />
+              </linearGradient>
+              <linearGradient id="hGoldG" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fbbf24" />
+                <stop offset="100%" stop-color="#d97706" />
+              </linearGradient>
+            </defs>
+            <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#hTailorG)" />
+            <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#hTailorG)" />
+            <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#hGoldG)" />
+            <path d="M18 40H27V42H18V40Z" fill="url(#hGoldG)" />
+            <circle cx="46" cy="24" r="5" fill="url(#hGoldG)" />
+            <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#hGoldG)" />
+            <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24"/>
+          </svg>
+        </div>
+        <span>રૂકસાના લેડીઝ ટેલર</span>
+      </div>
       <nav class="desktop-nav">
-        <button class="nav-link active" id="deskNavDash" onclick="switchView('view-dashboard')">🏠 ડેશબોર્ડ</button>
-        <button class="nav-link" id="deskNavMeas" onclick="switchView('view-measurements')">📏 માપ ડાયરી</button>
-        <button class="nav-link" id="deskNavNew" onclick="openNewBill()">🧾 નવું બિલ</button>
-        <button class="nav-link" id="deskNavCust" onclick="switchView('view-customers')">👥 ગ્રાહકો</button>
-        <button class="nav-link" id="deskNavRep" onclick="switchView('view-reports')">📊 રિપોર્ટ્સ</button>
-        <button class="btn-logout" onclick="handleLogout()">Logout 🚪</button>
+        <button class="nav-link active" id="deskNavDash" onclick="switchView('view-dashboard')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#38bdf8" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> ડેશબોર્ડ
+        </button>
+        <button class="nav-link" id="deskNavMeas" onclick="switchView('view-measurements')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg> માપ ડાયરી
+        </button>
+        <button class="nav-link" id="deskNavNew" onclick="openNewBill()">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg> નવું બિલ
+        </button>
+        <button class="nav-link" id="deskNavQr" onclick="switchView('view-qr-pay')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#a855f7" d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v3h-3zm-5 0h3v3h-3zm2 3h3v3h-3zm3 0h3v3h-3zm-2 3h3v3h-3zm-3-3h3v3h-3z"/></svg> સ્કેનર
+        </button>
+        <button class="nav-link" id="deskNavRep" onclick="switchView('view-reports')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#fb7185" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> રિપોર્ટ્સ
+        </button>
+        <button class="btn-logout" onclick="handleLogout()">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          લૉગઆઉટ
+        </button>
       </nav>
     </header>
 
     <main class="main-content">
       
-      <!-- 1. WELCOME SCREEN (MOBILE-FIRST) -->
+      <!-- 1. WELCOME SCREEN -->
       <section class="view active" id="view-welcome">
         <div class="welcome-container">
           <div class="welcome-card">
-            <div class="welcome-icon-wrap">👗</div>
+            
+            <!-- Tailor Shop Identity Icon -->
+            <div class="welcome-brand-logo">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="tailorG1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ec4899" />
+                    <stop offset="100%" stop-color="#9d174d" />
+                  </linearGradient>
+                  <linearGradient id="goldG1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fbbf24" />
+                    <stop offset="100%" stop-color="#d97706" />
+                  </linearGradient>
+                </defs>
+                <!-- Sewing Machine Base -->
+                <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#tailorG1)" />
+                <!-- Machine Arm & Body -->
+                <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#tailorG1)" />
+                <!-- Needle & Presser Foot -->
+                <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#goldG1)" />
+                <path d="M18 40H27V42H18V40Z" fill="url(#goldG1)" />
+                <!-- Machine Handwheel -->
+                <circle cx="46" cy="24" r="5" fill="url(#goldG1)" />
+                <circle cx="46" cy="24" r="2" fill="#ffffff" />
+                <!-- Thread Spool Top -->
+                <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#goldG1)" />
+                <!-- Fashion Sparkles -->
+                <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24" opacity="0.9"/>
+                <path d="M50 36L51 33L54 34L51 35L50 38L49 35L46 34L49 33L50 36Z" fill="#ec4899" opacity="0.8"/>
+              </svg>
+            </div>
+
             <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
             <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ મેનેજમેન્ટ સિસ્ટમ</p>
-            <button class="btn-start" onclick="startApp()">▶️ શરૂ કરો (Start)</button>
+            
+            <button class="btn-start" onclick="startApp()">
+              <svg class="icon-svg" style="fill: #ffffff; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              શરૂ કરો (Start)
+            </button>
           </div>
         </div>
       </section>
 
-      <!-- 2. DASHBOARD VIEW (RESET CARD REMOVED) -->
+      <!-- 2. DASHBOARD VIEW -->
       <section class="view" id="view-dashboard">
         <div class="dashboard-banner">
           <div>
@@ -638,29 +1012,51 @@
             <span id="dashTodayCount" style="font-size: 13px; opacity: 0.9;">0 બિલ બનેલા</span>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn-primary" style="background: white; color: var(--primary); width: auto; padding: 10px 18px; border-radius: 10px;" onclick="switchView('view-measurements')">📏 માપ સેવ કરો</button>
-            <button class="btn-primary" style="background: #10b981; color: white; width: auto; padding: 10px 18px; border-radius: 10px;" onclick="openNewBill()">+ નવું બિલ</button>
+            <button class="btn-primary" style="background: white; color: var(--primary); width: auto;" onclick="switchView('view-measurements')">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
+              માપ સેવ કરો
+            </button>
+            <button class="btn-primary" style="background: #10b981; color: white; width: auto;" onclick="openNewBill()">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              નવું બિલ
+            </button>
           </div>
         </div>
 
         <div class="menu-grid">
           <div class="menu-card" onclick="switchView('view-measurements')">
-            <span class="icon">📏</span>
+            <div class="menu-icon-wrap" style="background: #fef3c7;">
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
+                <path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/>
+              </svg>
+            </div>
             <h3>માપ ડાયરી</h3>
             <p>ગ્રાહકના માપ અને વિગત સેવ કરો</p>
           </div>
           <div class="menu-card" onclick="openNewBill()">
-            <span class="icon">🧾</span>
+            <div class="menu-icon-wrap" style="background: #d1fae5;">
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
+                <path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+              </svg>
+            </div>
             <h3>નવી બિલ પહોંચ</h3>
             <p>ગ્રાહક માટે નવું બિલ બનાવો</p>
           </div>
           <div class="menu-card" onclick="switchView('view-customers')">
-            <span class="icon">👥</span>
+            <div class="menu-icon-wrap" style="background: #e0f2fe;">
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
+                <path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+              </svg>
+            </div>
             <h3>ગ્રાહકોની યાદી</h3>
             <p>તમામ ગ્રાહકોના નંબર અને હિસાબ</p>
           </div>
           <div class="menu-card" onclick="switchView('view-reports')">
-            <span class="icon">📊</span>
+            <div class="menu-icon-wrap" style="background: #fce7f3;">
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
+                <path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+              </svg>
+            </div>
             <h3>કુલ હિસાબ રિપોર્ટ</h3>
             <p>આવક અને વધુ વેચાતી આઇટમ્સ</p>
           </div>
@@ -674,7 +1070,10 @@
           <!-- Left: Form -->
           <div class="card-panel">
             <div class="panel-title">
-              <span>📏 ગ્રાહકનું માપ લખો</span>
+              <span style="display:flex; align-items:center; gap:8px;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
+                ગ્રાહકનું માપ લખો
+              </span>
               <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
             </div>
 
@@ -691,25 +1090,25 @@
 
             <label style="font-size: 12px; font-weight: 700;">કપડાંનો પ્રકાર:</label>
             <select id="mClothType" class="form-control">
-              <option value="બ્લાઉઝ">👚 બ્લાઉઝ (Blouse)</option>
-              <option value="સાદો ડ્રેસ">👗 સાદો ડ્રેસ (Simple Dress)</option>
-              <option value="ફેન્સી ડ્રેસ">✨ ફેન્સી ડ્રેસ (Fancy Dress)</option>
-              <option value="કુર્તી / ટોપ">👚 કુર્તી / ટોપ (Kurti / Top)</option>
-              <option value="ચણિયાચોલી / લહેંગા">💃 ચણિયાચોલી / લહેંગા</option>
-              <option value="પેન્ટ / સલવાર">👖 પેન્ટ / સલવાર</option>
-              <option value="કોટસુટ">🧥 કોટસુટ</option>
-              <option value="અન્ય કામ">🪡 અન્ય સિલાઈ કામ</option>
+              <option value="બ્લાઉઝ">બ્લાઉઝ (Blouse)</option>
+              <option value="સાદો ડ્રેસ">સાદો ડ્રેસ (Simple Dress)</option>
+              <option value="ફેન્સી ડ્રેસ">ફેન્સી ડ્રેસ (Fancy Dress)</option>
+              <option value="કુર્તી / ટોપ">કુર્તી / ટોપ (Kurti / Top)</option>
+              <option value="ચણિયાચોલી / લહેંગા">ચણિયાચોલી / લહેંગા</option>
+              <option value="પેન્ટ / સલવાર">પેન્ટ / સલવાર</option>
+              <option value="કોટસુટ">કોટસુટ</option>
+              <option value="અન્ય કામ">અન્ય સિલાઈ કામ</option>
             </select>
 
             <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">નીચે માપ લખો (ઇંચમાં):</p>
             <div class="meas-fields-grid">
               <div class="meas-field-box"><label>લંબાઈ</label><input type="text" id="m_len" placeholder='14"'></div>
-              <div class="meas-field-box"><label>છાતી (Chest)</label><input type="text" id="m_chest" placeholder='36"'></div>
-              <div class="meas-field-box"><label>કમર (Waist)</label><input type="text" id="m_waist" placeholder='30"'></div>
-              <div class="meas-field-box"><label>સીટ (Hip)</label><input type="text" id="m_seat" placeholder='38"'></div>
+              <div class="meas-field-box"><label>છાતી</label><input type="text" id="m_chest" placeholder='36"'></div>
+              <div class="meas-field-box"><label>કમર</label><input type="text" id="m_waist" placeholder='30"'></div>
+              <div class="meas-field-box"><label>સીટ</label><input type="text" id="m_seat" placeholder='38"'></div>
               <div class="meas-field-box"><label>શોલ્ડર</label><input type="text" id="m_shoulder" placeholder='14"'></div>
               <div class="meas-field-box"><label>બાય લંબાઈ</label><input type="text" id="m_sleeve" placeholder='6"'></div>
-              <div class="meas-field-box"><label>મોરી (ઘેર)</label><input type="text" id="m_mori" placeholder='12"'></div>
+              <div class="meas-field-box"><label>મોરી</label><input type="text" id="m_mori" placeholder='12"'></div>
               <div class="meas-field-box"><label>આગળ ગળો</label><input type="text" id="m_fneck" placeholder='6.5"'></div>
               <div class="meas-field-box"><label>પાછળ ગળો</label><input type="text" id="m_bneck" placeholder='8"'></div>
               <div class="meas-field-box"><label>પેન્ટ લંબાઈ</label><input type="text" id="m_plen" placeholder='37"'></div>
@@ -721,19 +1120,28 @@
             <input type="hidden" id="editingMeasId" value="">
 
             <div style="display: flex; gap: 10px;">
-              <button class="btn-primary" style="background: #10b981; flex: 2;" onclick="saveMeasurement()">💾 માપ સાચવો (Save)</button>
-              <button class="btn-primary" style="background: #8395a7; flex: 1;" onclick="resetMeasForm()">સાફ કરો</button>
+              <button class="btn-primary" style="background: #10b981; flex: 2;" onclick="saveMeasurement()">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+                માપ સાચવો (Save)
+              </button>
+              <button class="btn-primary" style="background: #64748b; flex: 1;" onclick="resetMeasForm()">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                સાફ કરો
+              </button>
             </div>
           </div>
 
           <!-- Right: Saved List -->
           <div class="card-panel">
             <div class="panel-title">
-              <span>📋 સેવ કરેલા માપની યાદી</span>
+              <span style="display:flex; align-items:center; gap:8px;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                સેવ કરેલા માપની યાદી
+              </span>
               <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
             </div>
 
-            <input type="text" id="measSearchInput" class="form-control" placeholder="🔍 નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
+            <input type="text" id="measSearchInput" class="form-control" placeholder="નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
             <div id="measurementsListContainer" style="max-height: 540px; overflow-y: auto; padding-right: 2px;"></div>
           </div>
 
@@ -756,15 +1164,15 @@
             <label style="font-size: 12px; font-weight: 700;">ડિલિવરી આપવાની તારીખ:</label>
             <input type="date" id="custDueDate" class="form-control" oninput="updateLiveReceipt()">
 
-            <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, કિંમત (ભાવ) અને નંગ નક્કી કરો:</p>
+            <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, કિંમત અને નંગ નક્કી કરો:</p>
             <div class="items-scroll-list" id="servicesContainer"></div>
 
             <div class="custom-item-box">
-              <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">➕ અન્ય કોઈ નવું કામ ઉમેરવું હોય તો:</p>
+              <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">+ અન્ય કોઈ નવું કામ ઉમેરવું હોય તો:</p>
               <div style="display: grid; grid-template-columns: 1.8fr 1fr auto; gap: 8px;">
-                <input type="text" id="customItemName" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="કામનું નામ (દા.ત. લેસ/પીકો)">
+                <input type="text" id="customItemName" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="કામનું નામ">
                 <input type="number" id="customItemPrice" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="ભાવ ₹">
-                <button type="button" class="btn-primary" style="padding: 8px 14px; width: auto; font-size: 13px; border-radius: 8px;" onclick="addCustomService()">+ ઉમેરો</button>
+                <button type="button" class="btn-primary" style="padding: 8px 14px; width: auto; font-size: 13px;" onclick="addCustomService()">+ ઉમેરો</button>
               </div>
             </div>
           </div>
@@ -773,7 +1181,7 @@
           <div class="card-panel">
             <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
 
-            <!-- Receipt Box (Direct Target for PDF) -->
+            <!-- Receipt Box -->
             <div class="receipt-container" id="printableReceipt">
               <div class="receipt-head">
                 <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
@@ -790,7 +1198,7 @@
                   <tr><th>આઇટમ</th><th>નંગ</th><th>ભાવ</th><th style="text-align: right;">કુલ</th></tr>
                 </thead>
                 <tbody id="receiptTableBody">
-                  <tr><td colspan="4" style="text-align:center; color:#999; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
+                  <tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
                 </tbody>
               </table>
 
@@ -806,16 +1214,25 @@
               </div>
 
               <div style="text-align: center; margin-top: 15px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 6px;">
-                પધારવા બદલ આભાર! ફરી પધારશો. 🙏
+                પધારવા બદલ આભાર! ફરી પધારશો.
               </div>
             </div>
 
-            <!-- PDF and WhatsApp Action Buttons -->
+            <!-- Action Buttons -->
             <div class="btn-actions">
-              <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">📲 WhatsApp બિલ</button>
-              <button class="btn-pdf" onclick="downloadBillPDF()">📥 PDF ડાઉનલોડ</button>
+              <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+                WhatsApp બિલ
+              </button>
+              <button class="btn-pdf" onclick="downloadBillPDF()">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                PDF ડાઉનલોડ
+              </button>
             </div>
-            <button class="btn-primary" style="margin-top: 12px; background: #10b981;" onclick="saveCurrentBill()">💾 બિલ સેવ કરો</button>
+            <button class="btn-primary" style="margin-top: 12px; background: #10b981;" onclick="saveCurrentBill()">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+              બિલ સેવ કરો
+            </button>
           </div>
 
         </div>
@@ -824,32 +1241,89 @@
       <!-- 5. CUSTOMERS LIST -->
       <section class="view" id="view-customers">
         <div class="card-panel">
-          <div class="panel-title">👥 ગ્રાહકોની ડિજિટલ ડાયરી</div>
-          <input type="text" id="custSearchInput" class="form-control" placeholder="🔍 ગ્રાહકનું નામ અથવા નંબર શોધો..." oninput="renderCustomers()">
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              ગ્રાહકોની ડિજિટલ ડાયરી
+            </span>
+          </div>
+          <input type="text" id="custSearchInput" class="form-control" placeholder="ગ્રાહકનું નામ અથવા નંબર શોધો..." oninput="renderCustomers()">
           <div id="customersContainer"></div>
+        </div>
+      </section>
+
+      <!-- 5-A. DEDICATED QR PAYMENT SCANNER SECTION -->
+      <section class="view" id="view-qr-pay">
+        <div class="card-panel">
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#a855f7" d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v3h-3zm-5 0h3v3h-3zm2 3h3v3h-3zm3 0h3v3h-3zm-2 3h3v3h-3zm-3-3h3v3h-3z"/></svg>
+              UPI QR સ્કેનર (ઓનલાઇન પેમેન્ટ)
+            </span>
+          </div>
+
+          <div class="qr-stand-card">
+            <h3 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Google Pay / PhonePe / Paytm સ્કેન કરો</p>
+
+            <div style="margin: 18px 0 10px;">
+              <label style="font-size: 13px; font-weight: 700; color: #333; display: block; margin-bottom: 6px;">જેટલા રૂપિયા લેવાના હોય તે રકમ લખો:</label>
+              <div style="position: relative; max-width: 200px; margin: 0 auto;">
+                <span style="position: absolute; left: 14px; top: 10px; font-size: 18px; font-weight: bold; color: var(--primary);">₹</span>
+                <input type="number" id="qrCustomAmountInput" class="form-control" style="padding-left: 32px; font-size: 20px; font-weight: 800; text-align: center; color: var(--primary); margin-bottom: 0;" placeholder="0" oninput="generateStandaloneQR()">
+              </div>
+            </div>
+
+            <div class="quick-amount-chips">
+              <span class="chip-amt" onclick="setQuickAmount(100)">+ ₹100</span>
+              <span class="chip-amt" onclick="setQuickAmount(200)">+ ₹200</span>
+              <span class="chip-amt" onclick="setQuickAmount(500)">+ ₹500</span>
+              <span class="chip-amt" onclick="setQuickAmount(1000)">+ ₹1000</span>
+              <span class="chip-amt" style="background:#f1f2f6; color:#555;" onclick="setQuickAmount(0)">સાફ કરો</span>
+            </div>
+
+            <div class="qr-img-wrapper">
+              <img id="standQrImg" src="" alt="UPI QR Code">
+            </div>
+
+            <div style="background: #fff8f9; padding: 12px 14px; border-radius: 12px; border: 1px dashed #eec5d3; margin-top: 12px;">
+              <div style="font-size: 15px; font-weight: 800; color: var(--primary);">
+                સ્કેન કરવા માટેની રકમ: <span id="standQrAmountText">₹0</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 16px;">
+              <button type="button" class="btn-pdf" style="width: 100%; background: var(--primary); padding: 14px; font-size: 15px;" onclick="downloadStandaloneQR()">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                QR કોડ ડાઉનલોડ કરો (Save Image)
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 6. REPORTS VIEW -->
       <section class="view" id="view-reports">
         <div class="card-panel">
-          <div class="panel-title">📊 કુલ હિસાબ અને વેચાણ રિપોર્ટ</div>
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+              કુલ હિસાબ અને વેચાણ રિપોર્ટ
+            </span>
+          </div>
           
-          <!-- Month & Year Selector Row -->
           <div class="report-filter-wrapper">
             <div class="report-year-row">
               <div class="year-badge-wrap">
-                <label>📅 વર્ષ:</label>
+                <label>વર્ષ:</label>
                 <select id="reportYearSelect" class="year-select-dropdown" onchange="handleYearChange()"></select>
               </div>
               <span id="reportFilterLabel" style="font-size: 13px; color: var(--primary); font-weight: 800;"></span>
             </div>
 
-            <!-- Horizontal Scrollable Month Chips -->
             <div class="report-chips-scroll" id="reportChipsContainer"></div>
           </div>
 
-          <!-- Clean Banner Without Due Box -->
           <div class="dashboard-banner" style="margin-bottom: 20px;">
             <div style="width: 100%;">
               <p id="repBannerPeriodTitle" style="font-size: 13.5px; opacity: 0.95;">કુલ આવક</p>
@@ -865,31 +1339,56 @@
           <p style="font-weight: 700; margin-bottom: 12px; color: var(--primary);">સૌથી વધુ સીવેલી આઇટમ્સ:</p>
           <div id="repTopItemsList"></div>
 
-          <!-- DEDICATED REPORT-ONLY RESET BUTTON (MEASUREMENTS REMAIN 100% SAFE) -->
           <div style="margin-top: 32px; padding-top: 18px; border-top: 1.5px dashed var(--border-color); text-align: center;">
             <button type="button" onclick="clearBillsReportData()" style="background: #fff0f3; color: #ee5253; border: 1.5px solid #ffccd2; padding: 11px 20px; border-radius: 12px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition);">
-              🗑️ જૂનો બિલ હિસાબ સાફ કરો (Reset Bills)
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ee5253" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+              જૂનો બિલ હિસાબ સાફ કરો (Reset Bills)
             </button>
-            <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">(નોંધ: ગ્રાહકોના સેવ કરેલા માપ ક્યારેય ડિલીટ નહીં થાય, તે સુરક્ષિત રહેશે)</p>
+            <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">(નોંધ: ગ્રાહકોના સેવ કરેલા માપ સુરક્ષિત રહેશે)</p>
           </div>
         </div>
       </section>
 
     </main>
 
-    <!-- Mobile Bottom Navigation -->
+    <!-- Mobile Bottom Navigation with Premium Colorful Icons -->
     <div class="bottom-nav" id="bottomNav">
-      <button class="bottom-nav-btn active" id="mobNavDash" onclick="switchView('view-dashboard')"><span>🏠</span>હોમ</button>
-      <button class="bottom-nav-btn" id="mobNavMeas" onclick="switchView('view-measurements')"><span>📏</span>માપ</button>
-      <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBill()"><span>🧾</span>બિલ</button>
-      <button class="bottom-nav-btn" id="mobNavCust" onclick="switchView('view-customers')"><span>👥</span>ગ્રાહકો</button>
-      <button class="bottom-nav-btn" id="mobNavRep" onclick="switchView('view-reports')"><span>📊</span>રિપોર્ટ</button>
+      <button class="bottom-nav-btn active" id="mobNavDash" onclick="switchView('view-dashboard')">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path fill="#0284c7" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span>હોમ</span>
+      </button>
+      <button class="bottom-nav-btn" id="mobNavMeas" onclick="switchView('view-measurements')">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/>
+        </svg>
+        <span>માપ</span>
+      </button>
+      <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBill()">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+        <span>બિલ</span>
+      </button>
+      <button class="bottom-nav-btn" id="mobNavQr" onclick="switchView('view-qr-pay')">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path fill="#8b5cf6" d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v3h-3zm-5 0h3v3h-3zm2 3h3v3h-3zm3 0h3v3h-3zm-2 3h3v3h-3zm-3-3h3v3h-3z"/>
+        </svg>
+        <span>સ્કેનર</span>
+      </button>
+      <button class="bottom-nav-btn" id="mobNavRep" onclick="switchView('view-reports')">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+        </svg>
+        <span>રિપોર્ટ</span>
+      </button>
     </div>
   </div>
 
 <script>
   // =========================================================================
-  // ૧. FIREBASE CONFIGURATION (Tamari keys ahi mukjo)
+  // ૧. FIREBASE CONFIGURATION
   // =========================================================================
   const firebaseConfig = {
     apiKey: "AIzaSyBi0VfTe2LkhwOXAuICPEA9hqDzIZ3z9ww",
@@ -902,9 +1401,11 @@
   };
 
   // =========================================================================
-  // ૨. મમ્મીનું GMAIL ID
+  // ૨. GMAIL ID અને UPI પેમેન્ટ ID
   // =========================================================================
   const AUTHORIZED_EMAIL = "ruksanavahora941@gmail.com";
+  const UPI_ID = "7572842641@upi";
+  const SHOP_NAME = "Ruksana Ladies Tailor";
 
   // Firebase Initialize
   let auth = null, db = null;
@@ -918,15 +1419,20 @@
     }
   }
 
-  // Master Services Catalog
+  // Master Services Catalog with Vibrant Colorful Icons
+  const ICON_DRESS = '<div class="item-badge" style="background:#fce7f3;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#db2777" d="M12 2C8.69 2 6 4.69 6 8c0 2.97 2.16 5.43 5 5.91V19H9v2h6v-2h-2v-5.09c2.84-.48 5-2.94 5-5.91 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg></div>';
+  const ICON_SHIRT = '<div class="item-badge" style="background:#e0f2fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#0284c7" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
+  const ICON_SUIT = '<div class="item-badge" style="background:#ede9fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#7c3aed" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg></div>';
+  const ICON_SCISSORS = '<div class="item-badge" style="background:#fef3c7;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#d97706" d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64z"/></svg></div>';
+
   let servicesList = [
-    { id: 1, name: 'ફેન્સી ડ્રેસ', price: 1500, icon: '👗' },
-    { id: 2, name: 'બ્લાઉઝ', price: 800, icon: '👚' },
-    { id: 3, name: 'કોટસુટ', price: 2500, icon: '🧥' },
-    { id: 4, name: 'લેડીઝ શર્ટ', price: 900, icon: '👔' },
-    { id: 5, name: 'ફેન્સી ટોપ', price: 1200, icon: '✨' },
-    { id: 6, name: 'ફ્રોક', price: 1300, icon: '💃' },
-    { id: 7, name: 'રિપેરિંગ કામ', price: 150, icon: '🪡' }
+    { id: 1, name: 'ફેન્સી ડ્રેસ', price: 1500, iconRender: ICON_DRESS },
+    { id: 2, name: 'બ્લાઉઝ', price: 800, iconRender: ICON_DRESS },
+    { id: 3, name: 'કોટસુટ', price: 2500, iconRender: ICON_SUIT },
+    { id: 4, name: 'લેડીઝ શર્ટ', price: 900, iconRender: ICON_SHIRT },
+    { id: 5, name: 'ફેન્સી ટોપ', price: 1200, iconRender: ICON_DRESS },
+    { id: 6, name: 'ફ્રોક', price: 1300, iconRender: ICON_DRESS },
+    { id: 7, name: 'રિપેરિંગ કામ', price: 150, iconRender: ICON_SCISSORS }
   ];
 
   let cart = {};
@@ -935,17 +1441,15 @@
   let billsDB = JSON.parse(localStorage.getItem('ruksana_tailor_bills') || '[]');
   let measDB = JSON.parse(localStorage.getItem('ruksana_tailor_measurements') || '[]');
 
-  // Active Report Filter State
   const now = new Date();
   let currentReportYear = String(now.getFullYear());
   let currentReportMonth = 'all';
 
-  // Toast Function
   let toastTimeout;
   function showToast(text, type = 'success') {
     const box = document.getElementById('toast-box');
     box.className = `${type} show`;
-    box.innerHTML = `${type === 'success' ? '✅' : type === 'error' ? '⚠️' : 'ℹ️'} ${text}`;
+    box.innerHTML = text;
     clearTimeout(toastTimeout);
     toastTimeout = setTimeout(() => {
       box.className = '';
@@ -982,7 +1486,7 @@
 
   function handleGoogleLogin() {
     if(!auth) {
-      alert("મહેરબાની કરીને Firebase Config કોડમાં તમારી સાચી API કી અને મમ્મીનું Gmail ઉમેરો!");
+      alert("Firebase Config કોડમાં API કી ઉમેરો!");
       return;
     }
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -1001,7 +1505,6 @@
     }
   }
 
-  // Realtime Cloud Sync
   function loadFirestoreData() {
     if(!db) return;
 
@@ -1029,6 +1532,7 @@
     refreshDashboardStats();
     renderMeasurements();
     renderReports();
+    generateStandaloneQR();
   };
 
   window.addEventListener('click', function(e) {
@@ -1049,28 +1553,83 @@
     const target = document.getElementById(viewId);
     if(target) target.classList.add('active');
 
-    // Desktop
+    // Desktop Nav
     document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
     if(viewId === 'view-dashboard') { document.getElementById('deskNavDash')?.classList.add('active'); refreshDashboardStats(); }
     if(viewId === 'view-measurements') { document.getElementById('deskNavMeas')?.classList.add('active'); renderMeasurements(); }
     if(viewId === 'view-new-bill') document.getElementById('deskNavNew')?.classList.add('active');
-    if(viewId === 'view-customers') { document.getElementById('deskNavCust')?.classList.add('active'); renderCustomers(); }
+    if(viewId === 'view-qr-pay') { document.getElementById('deskNavQr')?.classList.add('active'); generateStandaloneQR(); }
     if(viewId === 'view-reports') { document.getElementById('deskNavRep')?.classList.add('active'); renderReports(); }
 
-    // Mobile
+    // Mobile Nav
     document.querySelectorAll('.bottom-nav-btn').forEach(el => el.classList.remove('active'));
     if(viewId === 'view-dashboard') document.getElementById('mobNavDash')?.classList.add('active');
     if(viewId === 'view-measurements') document.getElementById('mobNavMeas')?.classList.add('active');
     if(viewId === 'view-new-bill') document.getElementById('mobNavNew')?.classList.add('active');
-    if(viewId === 'view-customers') document.getElementById('mobNavCust')?.classList.add('active');
+    if(viewId === 'view-qr-pay') { document.getElementById('mobNavQr')?.classList.add('active'); generateStandaloneQR(); }
     if(viewId === 'view-reports') document.getElementById('mobNavRep')?.classList.add('active');
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ==========================================
-  // MEASUREMENTS MANAGEMENT
-  // ==========================================
+  // Standalone QR Generator
+  function getStandaloneUpiUrl() {
+    const inputVal = document.getElementById('qrCustomAmountInput')?.value;
+    const amt = Math.max(0, parseFloat(inputVal) || 0);
+    let upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(SHOP_NAME)}&cu=INR`;
+    if (amt > 0) {
+      upiUrl += `&am=${amt}&tn=${encodeURIComponent('Tailor Payment')}`;
+    }
+    return { upiUrl, amt };
+  }
+
+  function generateStandaloneQR() {
+    const { upiUrl, amt } = getStandaloneUpiUrl();
+    const qrImg = document.getElementById('standQrImg');
+    const lblAmt = document.getElementById('standQrAmountText');
+
+    if(lblAmt) lblAmt.innerText = '₹' + amt;
+
+    if(qrImg) {
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
+    }
+  }
+
+  function setQuickAmount(amt) {
+    const input = document.getElementById('qrCustomAmountInput');
+    if(input) {
+      input.value = amt > 0 ? amt : '';
+      generateStandaloneQR();
+    }
+  }
+
+  function downloadStandaloneQR() {
+    const qrImg = document.getElementById('standQrImg');
+    if (!qrImg || !qrImg.src) return;
+
+    showToast('QR કોડ ડાઉનલોડ થઈ રહ્યો છે...', 'info');
+
+    fetch(qrImg.src)
+      .then(res => res.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const inputVal = document.getElementById('qrCustomAmountInput')?.value;
+        const amt = parseFloat(inputVal) || 0;
+        a.href = url;
+        a.download = `Tailor_QR_${amt > 0 ? amt + 'Rs' : 'Pay'}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        showToast('QR કોડ સંપૂર્ણ ડાઉનલોડ થઈ ગયો!', 'success');
+      })
+      .catch(() => {
+        window.open(qrImg.src, '_blank');
+      });
+  }
+
+  // Measurements
   async function saveMeasurement() {
     const name = document.getElementById('mCustName').value.trim();
     const phone = document.getElementById('mCustPhone').value.trim();
@@ -1078,7 +1637,7 @@
     const notes = document.getElementById('mExtraNotes').value.trim();
 
     if(!name || !phone) {
-      showToast('કૃપા કરીને ગ્રાહકનું નામ અને મોબાઈલ નંબર લખો.', 'error');
+      showToast('ગ્રાહકનું નામ અને મોબાઈલ નંબર લખો.', 'error');
       return;
     }
 
@@ -1108,12 +1667,12 @@
       const idx = measDB.findIndex(m => String(m.id) === String(editId));
       if(idx !== -1) measDB[idx] = { id: editId, ...measData };
       if(db) db.collection("measurements").doc(String(editId)).set(measData, {merge:true}).catch(()=>{});
-      showToast('માપ સફળતાપૂર્વક સુધારી લેવાયું!', 'success');
+      showToast('માપ સુધારી લેવાયું!', 'success');
     } else {
       const newId = String(Date.now());
       measDB.unshift({ id: newId, ...measData });
       if(db) db.collection("measurements").doc(newId).set(measData).catch(()=>{});
-      showToast('ગ્રાહકનું માપ સાચવી લીધું!', 'success');
+      showToast('માપ સાચવી લીધું!', 'success');
     }
 
     localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
@@ -1151,7 +1710,7 @@
     if(badge) badge.innerText = `${filtered.length} માપ`;
 
     if(filtered.length === 0) {
-      container.innerHTML = `<p style="text-align:center; color:#999; padding: 25px;">કોઈ માપ મળ્યા નથી. ડાબી બાજુથી નવું માપ ઉમેરો.</p>`;
+      container.innerHTML = `<p style="text-align:center; color:#94a3b8; padding: 25px;">કોઈ માપ મળ્યા નથી.</p>`;
       return;
     }
 
@@ -1164,7 +1723,7 @@
         { title: 'સીટ', val: m.specs.seat },
         { title: 'શોલ્ડર', val: m.specs.shoulder },
         { title: 'બાય લંબાઈ', val: m.specs.sleeve },
-        { title: 'મોરી (ઘેર)', val: m.specs.mori },
+        { title: 'મોરી', val: m.specs.mori },
         { title: 'આગળ ગળો', val: m.specs.fneck },
         { title: 'પાછળ ગળો', val: m.specs.bneck },
         { title: 'પેન્ટ લંબાઈ', val: m.specs.plen }
@@ -1181,25 +1740,31 @@
                   <span class="meas-badge-pill">${m.clothType}</span>
                 </div>
                 <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
-                  📞 ${m.phone} • <span style="font-size:11px;">${m.date}</span>
+                  ${m.phone} • <span style="font-size:11px;">${m.date}</span>
                 </div>
               </div>
             </div>
 
             <div class="meas-action-wrap" onclick="event.stopPropagation()">
-              <button class="btn-3dot" title="ઓપ્શન્સ" onclick="toggle3DotMenu('${m.id}', event)">⋮</button>
+              <button class="btn-3dot" title="વિકલ્પ" onclick="toggle3DotMenu('${m.id}', event)">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#64748b" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </button>
               <div class="meas-dropdown-menu" id="menu-${m.id}">
                 <button class="meas-drop-item" onclick="editMeasurement('${m.id}'); hideAllMenus();">
-                  ✏️ માપ સુધારો
+                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                  માપ સુધારો
                 </button>
                 <button class="meas-drop-item" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}'); hideAllMenus();">
-                  🧾 બિલ બનાવો
+                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                  બિલ બનાવો
                 </button>
                 <button class="meas-drop-item" onclick="sendMeasWhatsApp('${m.id}'); hideAllMenus();">
-                  📲 WhatsApp
+                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#25D366" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+                  WhatsApp
                 </button>
                 <button class="meas-drop-item delete" onclick="deleteMeasurement('${m.id}'); hideAllMenus();">
-                  🗑️ ડિલીટ કરો
+                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ef4444" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                  ડિલીટ કરો
                 </button>
               </div>
             </div>
@@ -1207,7 +1772,7 @@
 
           <div class="meas-expand-body" id="expand-${m.id}">
             <div style="font-size: 11.5px; font-weight: 700; color: var(--primary); margin-top: 8px;">
-              📏 તમામ માપની વિગત (ઇંચમાં):
+              તમામ માપની વિગત (ઇંચમાં):
             </div>
             <div class="meas-details-grid">
               ${specList.length > 0 ? specList.map(s => `
@@ -1215,12 +1780,12 @@
                   <div class="title">${s.title}</div>
                   <div class="val">${s.val}"</div>
                 </div>
-              `).join('') : '<p style="grid-column: 1/-1; font-size: 12px; color:#999; text-align:center;">કોઈ માપ નોંધેલ નથી</p>'}
+              `).join('') : '<p style="grid-column: 1/-1; font-size: 12px; color:#94a3b8; text-align:center;">કોઈ માપ નોંધેલ નથી</p>'}
             </div>
 
             ${m.notes ? `
               <div class="meas-notes-box">
-                <b>📝 ખાસ નોંધ:</b> ${m.notes}
+                <b>નોંધ:</b> ${m.notes}
               </div>
             ` : ''}
           </div>
@@ -1286,12 +1851,12 @@
     const m = measDB.find(x => String(x.id) === String(id));
     if(!m) return;
 
-    let msg = `🧵 *રૂકસાના લેડીઝ ટેલર - ગ્રાહકનું માપ*\n`;
+    let msg = `*રૂકસાના લેડીઝ ટેલર - ગ્રાહકનું માપ*\n`;
     msg += `------------------------------------\n`;
-    msg += `👤 ગ્રાહક: ${m.name}\n`;
-    msg += `📱 મોબાઈલ: ${m.phone}\n`;
-    msg += `👗 પ્રકાર: ${m.clothType}\n`;
-    msg += `📅 તારીખ: ${m.date}\n`;
+    msg += `ગ્રાહક: ${m.name}\n`;
+    msg += `મોબાઈલ: ${m.phone}\n`;
+    msg += `પ્રકાર: ${m.clothType}\n`;
+    msg += `તારીખ: ${m.date}\n`;
     msg += `------------------------------------\n`;
     msg += `*માપની વિગત:*\n`;
     if(m.specs.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
@@ -1304,10 +1869,10 @@
     if(m.specs.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
     if(m.specs.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
     if(m.specs.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
-    if(m.notes) msg += `\n📝 *નોંધ:* ${m.notes}\n`;
+    if(m.notes) msg += `\n*નોંધ:* ${m.notes}\n`;
     msg += `------------------------------------\n`;
-    msg += `📍 C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
-    msg += `📞 7572842641`;
+    msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
+    msg += `ફોન: 7572842641`;
 
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
   }
@@ -1320,9 +1885,7 @@
     showToast(`નવા બિલમાં ${name} ઉમેરાઈ ગયા!`, 'info');
   }
 
-  // ==========================================
-  // BILLING MANAGEMENT
-  // ==========================================
+  // Billing
   function openNewBill() {
     cart = {};
     itemPrices = {};
@@ -1349,15 +1912,14 @@
     list.innerHTML = servicesList.map(item => `
       <div class="item-row-card">
         <div class="item-meta">
-          <div class="item-badge">${item.icon}</div>
+          ${item.iconRender}
           <div>
             <div style="font-weight:700; font-size:14.5px;">${item.name}</div>
             <div class="price-edit-box">
               <span style="color:var(--primary); font-weight:700; font-size:13px;">₹</span>
               <input type="number" class="price-edit-input" 
                 value="${itemPrices[item.id] !== undefined ? itemPrices[item.id] : item.price}" 
-                oninput="updateServicePrice(${item.id}, this.value)"
-                title="કિંમત બદલવા માટે અહીં નવો ભાવ લખો">
+                oninput="updateServicePrice(${item.id}, this.value)">
             </div>
           </div>
         </div>
@@ -1383,12 +1945,12 @@
     const price = parseFloat(priceInput.value) || 0;
 
     if(!name) {
-      showToast('કૃપા કરીને કામનું નામ લખો.', 'error');
+      showToast('કામનું નામ લખો.', 'error');
       return;
     }
 
     const newId = Date.now();
-    servicesList.push({ id: newId, name: name, price: price, icon: '🪡' });
+    servicesList.push({ id: newId, name: name, price: price, iconRender: ICON_SCISSORS });
     itemPrices[newId] = price;
     cart[newId] = 1;
 
@@ -1397,7 +1959,7 @@
 
     renderServiceCards();
     updateLiveReceipt();
-    showToast(`'${name}' બિલમાં ઉમેરાઈ ગયું!`, 'success');
+    showToast(`'${name}' ઉમેરાઈ ગયું!`, 'success');
   }
 
   function adjustQty(id, delta) {
@@ -1439,7 +2001,7 @@
 
     const tbody = document.getElementById('receiptTableBody');
     if(itemsPurchased.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#999; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>`;
     } else {
       tbody.innerHTML = itemsPurchased.map(i => `
         <tr>
@@ -1471,7 +2033,7 @@
 
   function saveCurrentBill() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('ગ્રાહકનું નામ અને ઓછામાં ઓછી ૧ આઇટમ ઉમેરો.', 'error');
+      showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
       return;
     }
 
@@ -1487,12 +2049,9 @@
     switchView('view-dashboard');
   }
 
-  // =========================================================================
-  // PDF DOWNLOAD FUNCTION (૧૦૦% ચાલશે, ક્યારેય બ્લેન્ક કે અડધું નહીં આવે)
-  // =========================================================================
   function downloadBillPDF() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('પહેલાં ગ્રાહકનું નામ અને ઓછામાં ઓછી ૧ આઇટમ ઉમેરો.', 'error');
+      showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
       return;
     }
 
@@ -1503,29 +2062,22 @@
     const advInput = document.getElementById('billAdvance');
     const advPrint = document.getElementById('lblAdvancePrint');
 
-    // 1. PDF મા ઇનપુટ બોક્સના બદલે સ્પષ્ટ રકમ દર્શાવો
     if (advInput && advPrint) {
       advPrint.innerText = '₹' + (advInput.value || 0);
       advPrint.style.display = 'inline';
       advInput.style.display = 'none';
     }
 
-    // 2. સિંગલ પેજ પર પરફેક્ટ બેસવા માટે હળવી 460px પહોળાઈ સેટ કરો
     const origWidth = element.style.width;
     element.style.width = '460px';
 
     const opt = {
-      margin:       [5, 5, 5, 5],
-      filename:     `Bill_${currentBillData.billNo}_${safeCustName}.pdf`,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { 
-        scale: 2, 
-        useCORS: true,
-        scrollY: 0,
-        scrollX: 0
-      },
-      jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' },
-      pagebreak:    { mode: 'avoid-all' }
+      margin: [5, 5, 5, 5],
+      filename: `Bill_${currentBillData.billNo}_${safeCustName}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 },
+      jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' },
+      pagebreak: { mode: 'avoid-all' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
@@ -1534,7 +2086,7 @@
         advInput.style.display = 'inline-block';
         advPrint.style.display = 'none';
       }
-      showToast('PDF સંપૂર્ણ ડાઉનલોડ થઈ ગઈ! 📄', 'success');
+      showToast('PDF ડાઉનલોડ થઈ ગઈ!', 'success');
     }).catch(err => {
       console.error("PDF generation error:", err);
       element.style.width = origWidth;
@@ -1546,39 +2098,36 @@
     });
   }
 
-  // =========================================================================
-  // WHATSAPP RECEIPT (OPENS CONTACT SELECTOR DIRECTLY)
-  // =========================================================================
   function sendWhatsAppReceipt() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('પહેલાં ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
+      showToast('ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
       return;
     }
 
     let itemsStr = '';
-    currentBillData.items.forEach((it, idx) => {
-      itemsStr += `▪️ *${it.name}*\n    નંગ: ${it.qty}  |  ભાવ: ₹${it.price}  |  કુલ: *₹${it.total}*\n`;
+    currentBillData.items.forEach((it) => {
+      itemsStr += `▪️ *${it.name}*\n  નંગ: ${it.qty} | ભાવ: ₹${it.price} | કુલ: *₹${it.total}*\n`;
     });
 
-    let msg = `🧵 *રૂકસાના લેડીઝ ટેલર*\n`;
+    let msg = `*રૂકસાના લેડીઝ ટેલર*\n`;
     msg += `પ્રો. રૂકસાના બેન | મો: 7572842641\n`;
     msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
     msg += `------------------------------------\n`;
-    msg += `🧾 *બિલ નં:* #${currentBillData.billNo}\n`;
-    msg += `📅 *તારીખ:* ${currentBillData.date}\n`;
-    msg += `👤 *ગ્રાહક:* ${currentBillData.customer}\n`;
+    msg += `બિલ નં: #${currentBillData.billNo}\n`;
+    msg += `તારીખ: ${currentBillData.date}\n`;
+    msg += `ગ્રાહક: ${currentBillData.customer}\n`;
     if(currentBillData.phone && currentBillData.phone !== '-') {
-      msg += `📱 *મોબાઈલ:* ${currentBillData.phone}\n`;
+      msg += `મોબાઈલ: ${currentBillData.phone}\n`;
     }
-    msg += `🗓️ *ડિલિવરી તારીખ:* ${currentBillData.dueDate}\n`;
+    msg += `ડિલિવરી તારીખ: ${currentBillData.dueDate}\n`;
     msg += `------------------------------------\n`;
-    msg += `*કામ અને હિસાબની વિગત:*\n\n${itemsStr}`;
+    msg += `*કામ અને હિસાબ:*\n\n${itemsStr}`;
     msg += `------------------------------------\n`;
-    msg += `💰 *કુલ રકમ (Total):* ₹${currentBillData.total}\n`;
-    msg += `💵 *એડવાન્સ જમા:* ₹${currentBillData.advance}\n`;
-    msg += `🔴 *બાકી રકમ (Due):* *₹${currentBillData.due}*\n`;
+    msg += `કુલ રકમ: ₹${currentBillData.total}\n`;
+    msg += `એડવાન્સ જમા: ₹${currentBillData.advance}\n`;
+    msg += `બાકી રકમ: *₹${currentBillData.due}*\n`;
     msg += `------------------------------------\n`;
-    msg += `🙏 _પધારવા બદલ આભાર! ફરી પધારશો._`;
+    msg += `પધારવા બદલ આભાર!`;
 
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
   }
@@ -1603,7 +2152,7 @@
     );
 
     if(list.length === 0) {
-      container.innerHTML = `<p style="text-align:center; color:#999; padding:20px;">કોઈ ગ્રાહક મળ્યા નથી.</p>`;
+      container.innerHTML = `<p style="text-align:center; color:#94a3b8; padding:20px;">કોઈ ગ્રાહક મળ્યા નથી.</p>`;
       return;
     }
 
@@ -1611,16 +2160,13 @@
       <div class="data-list-card">
         <div>
           <b style="color:var(--primary); font-size:15px;">${c.name}</b>
-          <div style="font-size:12px; color:#666;">📞 ${c.phone} | છેલ્લો ઓર્ડર: ${c.lastDate}</div>
+          <div style="font-size:12px; color:#64748b;">${c.phone} | છેલ્લો ઓર્ડર: ${c.lastDate}</div>
         </div>
         <span style="background:#eef1f6; padding:5px 12px; border-radius:15px; font-weight:700; font-size:12px;">${c.orders} બિલ</span>
       </div>
     `).join('');
   }
 
-  // =========================================================================
-  // SMART DATE PARSER
-  // =========================================================================
   function getBillDateDetails(b) {
     if (b.dateRaw) {
       const d = new Date(b.dateRaw);
@@ -1648,9 +2194,6 @@
     };
   }
 
-  // =========================================================================
-  // YOUTUBE STUDIO STYLE MONTH/YEAR FILTER FOR REPORTS
-  // =========================================================================
   const MONTH_NAMES_GUJ = [
     { num: '01', short: 'Jan', full: 'જાન્યુઆરી' },
     { num: '02', short: 'Feb', full: 'ફેબ્રુઆરી' },
@@ -1712,13 +2255,13 @@
 
       chipsHtml += `
         <button class="filter-chip-btn ${currentReportMonth === 'all' ? 'active' : ''}" onclick="setReportFilter('all')">
-          🌐 Lifetime (કુલ)
+          કુલ (Lifetime)
         </button>
       `;
 
       chipsHtml += `
         <button class="filter-chip-btn ${currentReportMonth === 'year' ? 'active' : ''}" onclick="setReportFilter('year')">
-          📅 ${currentReportYear} આખું વર્ષ
+          ${currentReportYear} આખું વર્ષ
         </button>
       `;
 
@@ -1781,7 +2324,7 @@
     const container = document.getElementById('repTopItemsList');
 
     if(sorted.length === 0) {
-      container.innerHTML = `<p style="color:#888; font-size:13px; text-align:center; padding:18px;">આ સમયગાળામાં કોઈ બિલ બનેલા નથી.</p>`;
+      container.innerHTML = `<p style="color:#94a3b8; font-size:13px; text-align:center; padding:18px;">આ સમયગાળામાં કોઈ બિલ બનેલા નથી.</p>`;
       return;
     }
 
@@ -1806,11 +2349,8 @@
     document.getElementById('dashTodayCount').innerText = `${todayBills.length} બિલ બનેલા`;
   }
 
-  // =========================================================================
-  // RESET ONLY BILLS & REPORTS (MEASUREMENTS ARE 100% PROTECTED)
-  // =========================================================================
   function clearBillsReportData() {
-    if(confirm('શું તમે ખરેખર ફક્ત જૂના બિલ અને હિસાબનો ડેટા સાફ કરવા માંગો છો?\n\n(ગ્રાહકોના સેવ કરેલા તમામ માપ સુરક્ષિત રહેશે, તે ડિલીટ નહીં થાય)')) {
+    if(confirm('શું તમે ફક્ત જૂના બિલ અને હિસાબનો ડેટા સાફ કરવા માંગો છો?\n\n(ગ્રાહકોના સેવ કરેલા માપ સુરક્ષિત રહેશે)')) {
       localStorage.removeItem('ruksana_tailor_bills');
       billsDB = [];
 
@@ -1822,7 +2362,7 @@
 
       refreshDashboardStats();
       renderReports();
-      showToast('જૂનો બિલ હિસાબ સાફ થઈ ગયો છે! (માપ સુરક્ષિત છે)', 'info');
+      showToast('જૂનો બિલ હિસાબ સાફ થઈ ગયો છે!', 'info');
     }
   }
 </script>
