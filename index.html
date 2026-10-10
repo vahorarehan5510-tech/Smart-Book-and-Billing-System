@@ -27,6 +27,8 @@
       --whatsapp: #25D366;
       --success: #10b981;
       --danger: #ef4444;
+      --gold: #d4af37;
+      --gold-light: #fef9e7;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
       --shadow-md: 0 8px 24px rgba(92, 9, 40, 0.08);
       --shadow-lg: 0 16px 36px rgba(92, 9, 40, 0.16);
@@ -108,7 +110,6 @@
       animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Special Unique Animation for Login Logo */
     .login-brand-logo {
       width: 86px;
       height: 86px;
@@ -372,7 +373,6 @@
       background: linear-gradient(90deg, #ec4899, #8b5cf6, #f59e0b);
     }
 
-    /* Tailor Animation Logo for Welcome */
     .welcome-brand-logo {
       width: 100px;
       height: 100px;
@@ -435,7 +435,7 @@
       align-items: center; 
       margin-bottom: 24px; 
       box-shadow: var(--shadow-md); 
-      transition: var(--transition);
+      transition: var(--transition); 
     }
     .dashboard-banner:hover {
       box-shadow: var(--shadow-lg);
@@ -459,15 +459,15 @@
       border-color: #f0ccd8; 
     }
     .menu-card .menu-icon-wrap { 
-      width: 60px;
-      height: 60px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-      transition: var(--transition);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      width: 60px; 
+      height: 60px; 
+      border-radius: 18px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto 14px; 
+      transition: var(--transition); 
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06); 
     }
     .menu-card:hover .menu-icon-wrap { transform: scale(1.1) rotate(4deg); }
     .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 6px; font-weight: 700; }
@@ -481,7 +481,7 @@
       padding: 22px; 
       box-shadow: var(--shadow-sm); 
       margin-bottom: 22px; 
-      transition: var(--transition);
+      transition: var(--transition); 
     }
     .card-panel:hover { box-shadow: var(--shadow-md); }
     .panel-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 1.5px solid #f4edf0; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
@@ -506,87 +506,132 @@
     .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(92, 9, 40, 0.2); }
     .btn-primary:active { transform: translateY(0); }
 
+    /* Measurement Mode Sub Tabs */
+    .meas-view-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    .meas-tab-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: none;
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    .meas-tab-btn:hover { background: #f1f5f9; color: var(--primary); }
+    .meas-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(92, 9, 40, 0.2);
+    }
+    .meas-tab-btn.active svg path {
+      fill: #ffffff;
+    }
+
     /* Measurement Grid Form */
-    .meas-grid-container { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width: 850px) { .meas-grid-container { grid-template-columns: 1.15fr 1fr; align-items: start; } }
     .meas-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; margin-bottom: 14px; background: #fff8f9; padding: 14px; border-radius: 14px; border: 1px dashed #eec5d3; }
     .meas-field-box { display: flex; flex-direction: column; gap: 4px; }
     .meas-field-box label { font-size: 12px; font-weight: 700; color: #475569; }
     .meas-field-box input { padding: 9px 6px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; text-align: center; background: #ffffff; transition: var(--transition); }
     .meas-field-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(92,9,40,0.08); }
 
-    /* Smart Measurement Cards */
+    /* ========================================================================= */
+    /* CLEAN ROYAL BOUTIQUE CARDS */
+    /* ========================================================================= */
+
     .smart-meas-card {
-      border: 1.5px solid #eee1e6;
-      border-radius: 16px;
-      margin-bottom: 12px;
-      background: #ffffff;
+      border: 1.5px solid rgba(212, 175, 55, 0.35);
+      border-radius: 18px;
+      margin-bottom: 16px;
+      background: linear-gradient(145deg, #240411 0%, #3d071c 65%, #18020b 100%);
+      color: #ffffff;
       transition: var(--transition);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 10px 26px rgba(36, 4, 17, 0.3);
       position: relative;
     }
     .smart-meas-card:hover {
-      border-color: #c988a2;
-      box-shadow: var(--shadow-md);
+      border-color: var(--gold);
+      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.22);
       transform: translateY(-2px);
     }
+
     .smart-meas-header {
-      padding: 14px 16px;
+      padding: 16px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
       user-select: none;
     }
-    .meas-user-info { display: flex; align-items: center; gap: 12px; flex: 1; }
+    .meas-user-info { display: flex; align-items: center; gap: 14px; flex: 1; }
+    
     .meas-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #f43f5e, #be123c);
-      color: white;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #d4af37, #996515);
+      color: #1a030d;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 19px;
-      font-weight: 800;
-      box-shadow: 0 4px 10px rgba(190, 18, 60, 0.25);
+      font-size: 20px;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+      flex-shrink: 0;
     }
     .meas-badge-pill {
-      background: #fff0f4;
-      color: var(--primary);
-      font-size: 11px;
-      padding: 3px 9px;
+      background: rgba(212, 175, 55, 0.18);
+      color: #ffd875;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      font-size: 11.5px;
+      padding: 3px 10px;
       border-radius: 20px;
       font-weight: 700;
       display: inline-block;
-      margin-left: 6px;
+      margin-left: 8px;
+      letter-spacing: 0.2px;
     }
 
-    /* 3-Dot Dropdown */
+    /* 3-Dot Action Wrap & Dropdown */
     .meas-action-wrap { position: relative; display: flex; align-items: center; gap: 4px; }
     .btn-3dot {
-      background: transparent;
-      border: none;
-      width: 36px;
-      height: 36px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       cursor: pointer;
-      color: #64748b;
+      color: #ffd875;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
     }
-    .btn-3dot:hover { background: #f1f2f6; color: var(--primary); }
+    .btn-3dot:hover { background: rgba(212, 175, 55, 0.25); color: #ffffff; }
+
     .meas-dropdown-menu {
       position: absolute;
-      top: 42px;
+      top: 44px;
       right: 0;
-      background: white;
+      background: #ffffff;
       border: 1px solid #e1e8ef;
       border-radius: 14px;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.3);
       z-index: 500;
       width: 175px;
       display: none;
@@ -615,35 +660,76 @@
 
     .meas-expand-body {
       display: none;
-      padding: 0 16px 16px 16px;
-      border-top: 1px dashed #f0d5df;
-      margin-top: 2px;
+      padding: 0 18px 18px;
+      border-top: 1px dashed rgba(212, 175, 55, 0.3);
       animation: viewSlideUp 0.25s ease-out;
     }
     .meas-expand-body.open { display: block; }
-    .meas-details-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-      gap: 8px;
+
+    /* Body Zones & Capsule Badges */
+    .zone-block {
       margin-top: 12px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 10px 12px;
     }
-    .meas-grid-item {
-      background: #fdf6f8;
-      border: 1px solid #fae3eb;
-      padding: 8px 6px;
-      border-radius: 10px;
-      text-align: center;
+    .zone-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 0.4px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .meas-grid-item .title { font-size: 11px; color: #64748b; font-weight: 600; margin-bottom: 2px; }
-    .meas-grid-item .val { font-size: 14px; color: var(--primary); font-weight: 800; }
+    .zone-capsules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .meas-capsule-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: var(--transition);
+    }
+    .meas-capsule-badge:hover {
+      background: rgba(212, 175, 55, 0.14);
+      border-color: var(--gold);
+    }
+    .meas-capsule-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .meas-capsule-val {
+      background: linear-gradient(135deg, #fbbf24, #d97706);
+      color: #1a030d;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 3px 9px;
+      border-radius: 14px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15), 0 2px 5px rgba(0,0,0,0.25);
+      letter-spacing: 0.2px;
+    }
+
     .meas-notes-box {
-      margin-top: 10px;
-      background: #fff9e6;
-      border: 1px solid #ffeaa7;
-      padding: 9px 12px;
-      border-radius: 10px;
+      margin-top: 12px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px dashed rgba(212, 175, 55, 0.5);
+      padding: 10px 14px;
+      border-radius: 12px;
       font-size: 12.5px;
-      color: #713f12;
+      color: #fef08a;
+      line-height: 1.5;
     }
 
     /* Billing Grid */
@@ -665,13 +751,13 @@
     .item-row-card:hover { border-color: #dab4c2; background: #fffdfd; }
     .item-meta { display: flex; align-items: center; gap: 12px; flex: 1; }
     .item-badge { 
-      width: 44px;
-      height: 44px;
+      width: 44px; 
+      height: 44px; 
       border-radius: 12px; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-shrink: 0; 
     }
     .price-edit-box { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
     .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; background: #ffffff; }
@@ -961,7 +1047,6 @@
         <div class="welcome-container">
           <div class="welcome-card">
             
-            <!-- Tailor Shop Identity Icon -->
             <div class="welcome-brand-logo">
               <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -974,19 +1059,13 @@
                     <stop offset="100%" stop-color="#d97706" />
                   </linearGradient>
                 </defs>
-                <!-- Sewing Machine Base -->
                 <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#tailorG1)" />
-                <!-- Machine Arm & Body -->
                 <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#tailorG1)" />
-                <!-- Needle & Presser Foot -->
                 <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#goldG1)" />
                 <path d="M18 40H27V42H18V40Z" fill="url(#goldG1)" />
-                <!-- Machine Handwheel -->
                 <circle cx="46" cy="24" r="5" fill="url(#goldG1)" />
                 <circle cx="46" cy="24" r="2" fill="#ffffff" />
-                <!-- Thread Spool Top -->
                 <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#goldG1)" />
-                <!-- Fashion Sparkles -->
                 <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24" opacity="0.9"/>
                 <path d="M50 36L51 33L54 34L51 35L50 38L49 35L46 34L49 33L50 36Z" fill="#ec4899" opacity="0.8"/>
               </svg>
@@ -1012,7 +1091,7 @@
             <span id="dashTodayCount" style="font-size: 13px; opacity: 0.9;">0 બિલ બનેલા</span>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn-primary" style="background: white; color: var(--primary); width: auto;" onclick="switchView('view-measurements')">
+            <button class="btn-primary" style="background: white; color: var(--primary); width: auto;" onclick="openMeasurementsTab('form')">
               <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
               માપ સેવ કરો
             </button>
@@ -1024,7 +1103,7 @@
         </div>
 
         <div class="menu-grid">
-          <div class="menu-card" onclick="switchView('view-measurements')">
+          <div class="menu-card" onclick="openMeasurementsTab('list')">
             <div class="menu-icon-wrap" style="background: #fef3c7;">
               <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
                 <path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/>
@@ -1065,94 +1144,103 @@
 
       <!-- 3. MEASUREMENTS VIEW -->
       <section class="view" id="view-measurements">
-        <div class="meas-grid-container">
-          
-          <!-- Left: Form -->
-          <div class="card-panel">
-            <div class="panel-title">
-              <span style="display:flex; align-items:center; gap:8px;">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
-                ગ્રાહકનું માપ લખો
-              </span>
-              <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <div>
-                <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
-                <input type="text" id="mCustName" class="form-control" placeholder="નામ (દા.ત. મીનાબેન)">
-              </div>
-              <div>
-                <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર: *</label>
-                <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર">
-              </div>
-            </div>
-
-            <label style="font-size: 12px; font-weight: 700;">કપડાંનો પ્રકાર:</label>
-            <select id="mClothType" class="form-control">
-              <option value="બ્લાઉઝ">બ્લાઉઝ (Blouse)</option>
-              <option value="સાદો ડ્રેસ">સાદો ડ્રેસ (Simple Dress)</option>
-              <option value="ફેન્સી ડ્રેસ">ફેન્સી ડ્રેસ (Fancy Dress)</option>
-              <option value="કુર્તી / ટોપ">કુર્તી / ટોપ (Kurti / Top)</option>
-              <option value="ચણિયાચોલી / લહેંગા">ચણિયાચોલી / લહેંગા</option>
-              <option value="પેન્ટ / સલવાર">પેન્ટ / સલવાર</option>
-              <option value="કોટસુટ">કોટસુટ</option>
-              <option value="અન્ય કામ">અન્ય સિલાઈ કામ</option>
-            </select>
-
-            <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">નીચે માપ લખો (ઇંચમાં):</p>
-            <div class="meas-fields-grid">
-              <div class="meas-field-box"><label>લંબાઈ</label><input type="text" id="m_len" placeholder='14"'></div>
-              <div class="meas-field-box"><label>છાતી</label><input type="text" id="m_chest" placeholder='36"'></div>
-              <div class="meas-field-box"><label>કમર</label><input type="text" id="m_waist" placeholder='30"'></div>
-              <div class="meas-field-box"><label>સીટ</label><input type="text" id="m_seat" placeholder='38"'></div>
-              <div class="meas-field-box"><label>શોલ્ડર</label><input type="text" id="m_shoulder" placeholder='14"'></div>
-              <div class="meas-field-box"><label>બાય લંબાઈ</label><input type="text" id="m_sleeve" placeholder='6"'></div>
-              <div class="meas-field-box"><label>મોરી</label><input type="text" id="m_mori" placeholder='12"'></div>
-              <div class="meas-field-box"><label>આગળ ગળો</label><input type="text" id="m_fneck" placeholder='6.5"'></div>
-              <div class="meas-field-box"><label>પાછળ ગળો</label><input type="text" id="m_bneck" placeholder='8"'></div>
-              <div class="meas-field-box"><label>પેન્ટ લંબાઈ</label><input type="text" id="m_plen" placeholder='37"'></div>
-            </div>
-
-            <label style="font-size: 12px; font-weight: 700; color: #444;">વધારાનું લખાણ / ખાસ ડિઝાઇન નોંધ:</label>
-            <textarea id="mExtraNotes" class="form-control" style="height: 75px; resize: vertical;" placeholder="દા.ત. પાછળ બોટ નેક, દોરી-લટકણ, અસ્તર ડબલ મૂકવું..."></textarea>
-
-            <input type="hidden" id="editingMeasId" value="">
-
-            <div style="display: flex; gap: 10px;">
-              <button class="btn-primary" style="background: #10b981; flex: 2;" onclick="saveMeasurement()">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
-                માપ સાચવો (Save)
-              </button>
-              <button class="btn-primary" style="background: #64748b; flex: 1;" onclick="resetMeasForm()">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                સાફ કરો
-              </button>
-            </div>
-          </div>
-
-          <!-- Right: Saved List -->
-          <div class="card-panel">
-            <div class="panel-title">
-              <span style="display:flex; align-items:center; gap:8px;">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                સેવ કરેલા માપની યાદી
-              </span>
-              <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
-            </div>
-
-            <input type="text" id="measSearchInput" class="form-control" placeholder="નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
-            <div id="measurementsListContainer" style="max-height: 540px; overflow-y: auto; padding-right: 2px;"></div>
-          </div>
-
+        
+        <!-- બે મુખ્ય વિકલ્પો -->
+        <div class="meas-view-tabs">
+          <button class="meas-tab-btn active" id="tabBtnNewMeas" onclick="setMeasSubView('form')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            નવું માપ લેવું છે
+          </button>
+          <button class="meas-tab-btn" id="tabBtnViewMeas" onclick="setMeasSubView('list')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#64748b" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            માપ જોવા છે
+          </button>
         </div>
+
+        <!-- વિકલ્પ ૧: નવું માપ લેવાનું ફોર્મ -->
+        <div id="subViewMeasForm" class="card-panel">
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
+              ગ્રાહકનું માપ લખો
+            </span>
+            <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
+              <input type="text" id="mCustName" class="form-control" placeholder="નામ (દા.ત. મીનાબેન)">
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર: *</label>
+              <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર">
+            </div>
+          </div>
+
+          <label style="font-size: 12px; font-weight: 700;">કપડાંનો પ્રકાર:</label>
+          <select id="mClothType" class="form-control">
+            <option value="બ્લાઉઝ">બ્લાઉઝ (Blouse)</option>
+            <option value="સાદો ડ્રેસ">સાદો ડ્રેસ (Simple Dress)</option>
+            <option value="ફેન્સી ડ્રેસ">ફેન્સી ડ્રેસ (Fancy Dress)</option>
+            <option value="કુર્તી / ટોપ">કુર્તી / ટોપ (Kurti / Top)</option>
+            <option value="ચણિયાચોલી / લહેંગા">ચણિયાચોલી / લહેંગા</option>
+            <option value="પેન્ટ / સલવાર">પેન્ટ / સલવાર</option>
+            <option value="કોટસુટ">કોટસુટ</option>
+            <option value="અન્ય કામ">અન્ય સિલાઈ કામ</option>
+          </select>
+
+          <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">નીચે માપ લખો (ઇંચમાં):</p>
+          <div class="meas-fields-grid">
+            <div class="meas-field-box"><label>લંબાઈ</label><input type="text" id="m_len" placeholder='14"'></div>
+            <div class="meas-field-box"><label>છાતી</label><input type="text" id="m_chest" placeholder='36"'></div>
+            <div class="meas-field-box"><label>કમર</label><input type="text" id="m_waist" placeholder='30"'></div>
+            <div class="meas-field-box"><label>સીટ</label><input type="text" id="m_seat" placeholder='38"'></div>
+            <div class="meas-field-box"><label>શોલ્ડર</label><input type="text" id="m_shoulder" placeholder='14"'></div>
+            <div class="meas-field-box"><label>બાય લંબાઈ</label><input type="text" id="m_sleeve" placeholder='6"'></div>
+            <div class="meas-field-box"><label>મોરી</label><input type="text" id="m_mori" placeholder='12"'></div>
+            <div class="meas-field-box"><label>આગળ ગળો</label><input type="text" id="m_fneck" placeholder='6.5"'></div>
+            <div class="meas-field-box"><label>પાછળ ગળો</label><input type="text" id="m_bneck" placeholder='8"'></div>
+            <div class="meas-field-box"><label>પેન્ટ લંબાઈ</label><input type="text" id="m_plen" placeholder='37"'></div>
+          </div>
+
+          <label style="font-size: 12px; font-weight: 700; color: #444;">વધારાનું લખાણ / ખાસ ડિઝાઇન નોંધ:</label>
+          <textarea id="mExtraNotes" class="form-control" style="height: 75px; resize: vertical;" placeholder="દા.ત. પાછળ બોટ નેક, દોરી-લટકણ, અસ્તર ડબલ મૂકવું..."></textarea>
+
+          <input type="hidden" id="editingMeasId" value="">
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-primary" style="background: #10b981; flex: 2;" onclick="saveMeasurement()">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+              માપ સાચવો (Save)
+            </button>
+            <button class="btn-primary" style="background: #64748b; flex: 1;" onclick="resetMeasForm()">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              સાફ કરો
+            </button>
+          </div>
+        </div>
+
+        <!-- વિકલ્પ ૨: સેવ કરેલા માપની યાદી -->
+        <div id="subViewMeasList" class="card-panel" style="display: none;">
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              સેવ કરેલા માપની યાદી
+            </span>
+            <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
+          </div>
+
+          <input type="text" id="measSearchInput" class="form-control" placeholder="નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
+          <div id="measurementsListContainer" style="max-height: 600px; overflow-y: auto; padding-right: 2px;"></div>
+        </div>
+
       </section>
 
       <!-- 4. NEW BILL VIEW -->
       <section class="view" id="view-new-bill">
         <div class="billing-grid">
           
-          <!-- Left: Selection & Pricing -->
           <div class="card-panel">
             <div class="panel-title">૧. ગ્રાહક અને કામની પસંદગી</div>
             
@@ -1177,11 +1265,9 @@
             </div>
           </div>
 
-          <!-- Right: Live Receipt -->
           <div class="card-panel">
             <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
 
-            <!-- Receipt Box -->
             <div class="receipt-container" id="printableReceipt">
               <div class="receipt-head">
                 <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
@@ -1218,7 +1304,6 @@
               </div>
             </div>
 
-            <!-- Action Buttons -->
             <div class="btn-actions">
               <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">
                 <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
@@ -1419,7 +1504,7 @@
     }
   }
 
-  // Master Services Catalog with Vibrant Colorful Icons
+  // Master Services Catalog
   const ICON_DRESS = '<div class="item-badge" style="background:#fce7f3;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#db2777" d="M12 2C8.69 2 6 4.69 6 8c0 2.97 2.16 5.43 5 5.91V19H9v2h6v-2h-2v-5.09c2.84-.48 5-2.94 5-5.91 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg></div>';
   const ICON_SHIRT = '<div class="item-badge" style="background:#e0f2fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#0284c7" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
   const ICON_SUIT = '<div class="item-badge" style="background:#ede9fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#7c3aed" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg></div>';
@@ -1535,6 +1620,7 @@
     generateStandaloneQR();
   };
 
+  // Close dropdown on click outside
   window.addEventListener('click', function(e) {
     if (!e.target.closest('.meas-action-wrap')) {
       document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
@@ -1570,6 +1656,32 @@
     if(viewId === 'view-reports') document.getElementById('mobNavRep')?.classList.add('active');
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Switch tabs inside measurements view
+  function setMeasSubView(type) {
+    const formBox = document.getElementById('subViewMeasForm');
+    const listBox = document.getElementById('subViewMeasList');
+    const tabForm = document.getElementById('tabBtnNewMeas');
+    const tabList = document.getElementById('tabBtnViewMeas');
+
+    if (type === 'form') {
+      if(formBox) formBox.style.display = 'block';
+      if(listBox) listBox.style.display = 'none';
+      if(tabForm) tabForm.classList.add('active');
+      if(tabList) tabList.classList.remove('active');
+    } else {
+      if(formBox) formBox.style.display = 'none';
+      if(listBox) listBox.style.display = 'block';
+      if(tabList) tabList.classList.add('active');
+      if(tabForm) tabForm.classList.remove('active');
+      renderMeasurements();
+    }
+  }
+
+  function openMeasurementsTab(tabType) {
+    switchView('view-measurements');
+    setMeasSubView(tabType);
   }
 
   // Standalone QR Generator
@@ -1629,7 +1741,7 @@
       });
   }
 
-  // Measurements
+  // Measurements Logic
   async function saveMeasurement() {
     const name = document.getElementById('mCustName').value.trim();
     const phone = document.getElementById('mCustPhone').value.trim();
@@ -1678,6 +1790,7 @@
     localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
     resetMeasForm();
     renderMeasurements();
+    setMeasSubView('list');
   }
 
   function resetMeasForm() {
@@ -1716,18 +1829,46 @@
 
     container.innerHTML = filtered.map(m => {
       const initial = m.name.charAt(0).toUpperCase();
-      const specList = [
+
+      const upperZone = [
         { title: 'લંબાઈ', val: m.specs.len },
         { title: 'છાતી', val: m.specs.chest },
         { title: 'કમર', val: m.specs.waist },
-        { title: 'સીટ', val: m.specs.seat },
-        { title: 'શોલ્ડર', val: m.specs.shoulder },
+        { title: 'શોલ્ડર', val: m.specs.shoulder }
+      ].filter(s => s.val && s.val.trim() !== '');
+
+      const armNeckZone = [
         { title: 'બાય લંબાઈ', val: m.specs.sleeve },
         { title: 'મોરી', val: m.specs.mori },
         { title: 'આગળ ગળો', val: m.specs.fneck },
-        { title: 'પાછળ ગળો', val: m.specs.bneck },
+        { title: 'પાછળ ગળો', val: m.specs.bneck }
+      ].filter(s => s.val && s.val.trim() !== '');
+
+      const lowerZone = [
+        { title: 'સીટ', val: m.specs.seat },
         { title: 'પેન્ટ લંબાઈ', val: m.specs.plen }
       ].filter(s => s.val && s.val.trim() !== '');
+
+      const hasAnySpecs = (upperZone.length + armNeckZone.length + lowerZone.length) > 0;
+
+      const renderZone = (title, items) => {
+        if (!items || items.length === 0) return '';
+        return `
+          <div class="zone-block">
+            <div class="zone-title">
+              <span>${title}</span>
+            </div>
+            <div class="zone-capsules-grid">
+              ${items.map(it => `
+                <div class="meas-capsule-badge">
+                  <span class="meas-capsule-label">${it.title}</span>
+                  <span class="meas-capsule-val">${it.val}"</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      };
 
       return `
         <div class="smart-meas-card" id="meas-card-${m.id}">
@@ -1735,34 +1876,34 @@
             <div class="meas-user-info">
               <div class="meas-avatar">${initial}</div>
               <div>
-                <div style="font-weight: 800; font-size: 15px; color: var(--text-main); display:flex; align-items:center;">
+                <div style="font-weight: 800; font-size: 15.5px; color: #ffffff; display:flex; align-items:center; letter-spacing: 0.3px;">
                   ${m.name}
                   <span class="meas-badge-pill">${m.clothType}</span>
                 </div>
-                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
-                  ${m.phone} • <span style="font-size:11px;">${m.date}</span>
+                <div style="font-size: 12px; color: #cbd5e1; margin-top: 3px;">
+                  📞 ${m.phone} • 📅 <span style="font-size:11px; opacity:0.85;">${m.date}</span>
                 </div>
               </div>
             </div>
 
             <div class="meas-action-wrap" onclick="event.stopPropagation()">
-              <button class="btn-3dot" title="વિકલ્પ" onclick="toggle3DotMenu('${m.id}', event)">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#64748b" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              <button type="button" class="btn-3dot" title="વિકલ્પ" onclick="toggle3DotMenu('${m.id}', event)">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
               </button>
               <div class="meas-dropdown-menu" id="menu-${m.id}">
-                <button class="meas-drop-item" onclick="editMeasurement('${m.id}'); hideAllMenus();">
+                <button type="button" class="meas-drop-item" onclick="editMeasurement('${m.id}'); hideAllMenus();">
                   <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                   માપ સુધારો
                 </button>
-                <button class="meas-drop-item" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}'); hideAllMenus();">
+                <button type="button" class="meas-drop-item" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}'); hideAllMenus();">
                   <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                   બિલ બનાવો
                 </button>
-                <button class="meas-drop-item" onclick="sendMeasWhatsApp('${m.id}'); hideAllMenus();">
+                <button type="button" class="meas-drop-item" onclick="sendMeasWhatsApp('${m.id}'); hideAllMenus();">
                   <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#25D366" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
                   WhatsApp
                 </button>
-                <button class="meas-drop-item delete" onclick="deleteMeasurement('${m.id}'); hideAllMenus();">
+                <button type="button" class="meas-drop-item delete" onclick="deleteMeasurement('${m.id}'); hideAllMenus();">
                   <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ef4444" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                   ડિલીટ કરો
                 </button>
@@ -1771,21 +1912,15 @@
           </div>
 
           <div class="meas-expand-body" id="expand-${m.id}">
-            <div style="font-size: 11.5px; font-weight: 700; color: var(--primary); margin-top: 8px;">
-              તમામ માપની વિગત (ઇંચમાં):
-            </div>
-            <div class="meas-details-grid">
-              ${specList.length > 0 ? specList.map(s => `
-                <div class="meas-grid-item">
-                  <div class="title">${s.title}</div>
-                  <div class="val">${s.val}"</div>
-                </div>
-              `).join('') : '<p style="grid-column: 1/-1; font-size: 12px; color:#94a3b8; text-align:center;">કોઈ માપ નોંધેલ નથી</p>'}
-            </div>
+            ${hasAnySpecs ? `
+              ${renderZone('૧. ઉપરનો ભાગ (Upper Body)', upperZone)}
+              ${renderZone('૨. હાથ અને ગળું (Sleeves & Neck)', armNeckZone)}
+              ${renderZone('૩. નીચેનો ભાગ (Lower Body)', lowerZone)}
+            ` : '<p style="font-size: 12.5px; color:#cbd5e1; text-align:center; padding:12px 0;">કોઈ માપ નોંધેલ નથી</p>'}
 
             ${m.notes ? `
               <div class="meas-notes-box">
-                <b>નોંધ:</b> ${m.notes}
+                <b style="color:var(--gold);">વિશેષ નોંધ:</b> ${m.notes}
               </div>
             ` : ''}
           </div>
@@ -1795,16 +1930,20 @@
   }
 
   function toggleMeasCard(id, event) {
+    if (event.target.closest('.meas-action-wrap')) return;
     const body = document.getElementById(`expand-${id}`);
     if(body) body.classList.toggle('open');
   }
 
   function toggle3DotMenu(id, event) {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     const menu = document.getElementById(`menu-${id}`);
-    const isOpen = menu.classList.contains('show');
+    if (!menu) return;
+    const isShowing = menu.classList.contains('show');
     hideAllMenus();
-    if (!isOpen) menu.classList.add('show');
+    if (!isShowing) {
+      menu.classList.add('show');
+    }
   }
 
   function hideAllMenus() {
@@ -1834,6 +1973,8 @@
 
     document.getElementById('measEditNotice').innerText = `(સુધારી રહ્યા છો: ${item.name})`;
     showToast(`${item.name} ના માપ ફોર્મમાં આવી ગયા છે.`, 'info');
+    
+    setMeasSubView('form');
     window.scrollTo({ top: 100, behavior: 'smooth' });
   }
 
@@ -1885,7 +2026,7 @@
     showToast(`નવા બિલમાં ${name} ઉમેરાઈ ગયા!`, 'info');
   }
 
-  // Billing
+  // Billing Logic
   function openNewBill() {
     cart = {};
     itemPrices = {};
@@ -1924,9 +2065,9 @@
           </div>
         </div>
         <div class="qty-group">
-          <button class="btn-qty" onclick="adjustQty(${item.id}, -1)">-</button>
+          <button type="button" class="btn-qty" onclick="adjustQty(${item.id}, -1)">-</button>
           <span class="qty-display" id="qty-val-${item.id}">${cart[item.id] || 0}</span>
-          <button class="btn-qty add" onclick="adjustQty(${item.id}, 1)">+</button>
+          <button type="button" class="btn-qty add" onclick="adjustQty(${item.id}, 1)">+</button>
         </div>
       </div>
     `).join('');
@@ -2254,13 +2395,13 @@
       let chipsHtml = '';
 
       chipsHtml += `
-        <button class="filter-chip-btn ${currentReportMonth === 'all' ? 'active' : ''}" onclick="setReportFilter('all')">
+        <button type="button" class="filter-chip-btn ${currentReportMonth === 'all' ? 'active' : ''}" onclick="setReportFilter('all')">
           કુલ (Lifetime)
         </button>
       `;
 
       chipsHtml += `
-        <button class="filter-chip-btn ${currentReportMonth === 'year' ? 'active' : ''}" onclick="setReportFilter('year')">
+        <button type="button" class="filter-chip-btn ${currentReportMonth === 'year' ? 'active' : ''}" onclick="setReportFilter('year')">
           ${currentReportYear} આખું વર્ષ
         </button>
       `;
@@ -2268,7 +2409,7 @@
       MONTH_NAMES_GUJ.forEach(m => {
         const isActive = (currentReportMonth === m.num);
         chipsHtml += `
-          <button class="filter-chip-btn ${isActive ? 'active' : ''}" onclick="setReportFilter('${m.num}')">
+          <button type="button" class="filter-chip-btn ${isActive ? 'active' : ''}" onclick="setReportFilter('${m.num}')">
             ${m.short} (${m.full})
           </button>
         `;
