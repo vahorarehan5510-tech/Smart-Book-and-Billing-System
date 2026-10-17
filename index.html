@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>રૂકસાના લેડીઝ ટેલર - સ્માર્ટ બુક અને બિલિંગ</title>
 
+  <!-- Google Gujarati Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -40,7 +45,7 @@
       box-sizing: border-box; 
       margin: 0; 
       padding: 0; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; 
+      font-family: 'Noto Sans Gujarati', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
       -webkit-tap-highlight-color: transparent; 
     }
     
@@ -166,9 +171,8 @@
       background: #f8f9fa; 
       border-color: #c6c9cc; 
       transform: translateY(-2px); 
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1); 
     }
-    .btn-google:active { transform: translateY(0); }
 
     /* Access Denied Screen */
     #screen-denied {
@@ -200,13 +204,11 @@
       justify-content: center;
       margin: 0 auto 20px;
       box-shadow: 0 0 30px rgba(238, 82, 83, 0.35);
-      animation: alertBounce 2s infinite ease-in-out;
     }
     .denied-title { font-size: 24px; font-weight: 800; color: #ff6b6b; margin-bottom: 10px; }
     .denied-subtitle { font-size: 14px; color: #ffccd2; line-height: 1.6; margin-bottom: 20px; }
     .denied-user-pill { background: rgba(0, 0, 0, 0.35); border: 1px dashed rgba(255, 107, 107, 0.6); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #f1f2f6; margin-bottom: 24px; word-break: break-all; }
     .denied-btn { width: 100%; background: linear-gradient(135deg, #ee5253, #c0392b); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .denied-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(238,82,83,0.4); }
 
     /* Main Container */
     .app-wrapper { 
@@ -241,7 +243,6 @@
       font-size: 19px; 
       font-weight: 800; 
       cursor: pointer; 
-      transition: var(--transition); 
       letter-spacing: 0.3px; 
     }
     .header-logo-badge {
@@ -253,13 +254,9 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      animation: floatSoft 3s ease-in-out infinite;
       flex-shrink: 0;
     }
-    .header-logo-badge svg {
-      width: 24px;
-      height: 24px;
-    }
+    .header-logo-badge svg { width: 24px; height: 24px; }
     .desktop-nav { display: flex; gap: 8px; align-items: center; }
     .nav-link { 
       background: transparent; 
@@ -277,7 +274,6 @@
     }
     .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.18); color: #ffffff; transform: translateY(-1px); }
     .btn-logout { background: #ee5253; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; margin-left: 8px; transition: var(--transition); display: flex; align-items: center; gap: 6px; }
-    .btn-logout:hover { background: #c0392b; transform: scale(1.03); }
 
     /* Mobile Bottom Navigation */
     .bottom-nav {
@@ -322,28 +318,11 @@
       from { opacity: 0; transform: translateY(16px); } 
       to { opacity: 1; transform: translateY(0); } 
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes scaleUp {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes floatSoft {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-    @keyframes alertBounce { 
-      0%, 100% { transform: scale(1); } 
-      50% { transform: scale(1.06); } 
-    }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 8px 24px rgba(92, 9, 40, 0.15); }
-      50% { box-shadow: 0 14px 32px rgba(92, 9, 40, 0.28); }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleUp { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    @keyframes floatSoft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-    /* Welcome Screen Styles */
+    /* Welcome Screen */
     .welcome-container {
       display: flex;
       align-items: center;
@@ -365,14 +344,6 @@
       overflow: hidden;
       animation: scaleUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .welcome-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 6px;
-      background: linear-gradient(90deg, #ec4899, #8b5cf6, #f59e0b);
-    }
-
     .welcome-brand-logo {
       width: 100px;
       height: 100px;
@@ -386,23 +357,8 @@
       box-shadow: 0 12px 30px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
       animation: floatSoft 3.5s ease-in-out infinite;
     }
-    .welcome-brand-logo svg {
-      width: 62px;
-      height: 62px;
-      filter: drop-shadow(0 4px 8px rgba(157, 23, 77, 0.2));
-    }
-    .welcome-title { 
-      color: var(--primary); 
-      font-size: 28px; 
-      font-weight: 800; 
-      margin-bottom: 8px; 
-    }
-    .welcome-sub { 
-      color: var(--text-muted); 
-      font-size: 15px; 
-      margin-bottom: 34px; 
-      line-height: 1.4; 
-    }
+    .welcome-title { color: var(--primary); font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .welcome-sub { color: var(--text-muted); font-size: 15px; margin-bottom: 34px; line-height: 1.4; }
     .btn-start {
       width: 100%;
       background: linear-gradient(135deg, var(--primary), #82103c);
@@ -419,10 +375,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      animation: pulseGlow 2.5s infinite;
     }
-    .btn-start:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(92, 9, 40, 0.32); }
-    .btn-start:active { transform: translateY(0); }
 
     /* Dashboard Layout */
     .dashboard-banner { 
@@ -435,11 +388,6 @@
       align-items: center; 
       margin-bottom: 24px; 
       box-shadow: var(--shadow-md); 
-      transition: var(--transition); 
-    }
-    .dashboard-banner:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
     }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
     .menu-card { 
@@ -451,13 +399,8 @@
       cursor: pointer; 
       transition: var(--transition); 
       box-shadow: var(--shadow-sm); 
-      position: relative;
     }
-    .menu-card:hover { 
-      transform: translateY(-4px); 
-      box-shadow: var(--shadow-md); 
-      border-color: #f0ccd8; 
-    }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #f0ccd8; }
     .menu-card .menu-icon-wrap { 
       width: 60px; 
       height: 60px; 
@@ -466,10 +409,8 @@
       align-items: center; 
       justify-content: center; 
       margin: 0 auto 14px; 
-      transition: var(--transition); 
       box-shadow: 0 8px 18px rgba(0,0,0,0.06); 
     }
-    .menu-card:hover .menu-icon-wrap { transform: scale(1.1) rotate(4deg); }
     .menu-card h3 { color: var(--primary); font-size: 17px; margin-bottom: 6px; font-weight: 700; }
     .menu-card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
 
@@ -481,11 +422,9 @@
       padding: 22px; 
       box-shadow: var(--shadow-sm); 
       margin-bottom: 22px; 
-      transition: var(--transition); 
     }
-    .card-panel:hover { box-shadow: var(--shadow-md); }
     .panel-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 1.5px solid #f4edf0; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-    .form-control { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 12px; font-size: 15px; margin-bottom: 14px; outline: none; transition: var(--transition); background: #fafbfc; }
+    .form-control { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: 12px; font-size: 15px; margin-bottom: 14px; outline: none; background: #fafbfc; transition: var(--transition); }
     .form-control:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(92, 9, 40, 0.08); }
     .btn-primary { 
       width: 100%; 
@@ -497,17 +436,16 @@
       font-size: 15px; 
       font-weight: 700; 
       cursor: pointer; 
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 8px; 
       transition: var(--transition); 
     }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(92, 9, 40, 0.2); }
-    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
-    /* Measurement Mode Sub Tabs */
-    .meas-view-tabs {
+    /* Sub Tabs (Common) */
+    .sub-tabs-bar {
       display: flex;
       gap: 12px;
       margin-bottom: 18px;
@@ -517,7 +455,7 @@
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-sm);
     }
-    .meas-tab-btn {
+    .sub-tab-btn {
       flex: 1;
       padding: 12px 16px;
       border-radius: 12px;
@@ -533,65 +471,48 @@
       gap: 8px;
       transition: var(--transition);
     }
-    .meas-tab-btn:hover { background: #f1f5f9; color: var(--primary); }
-    .meas-tab-btn.active {
+    .sub-tab-btn:hover { background: #f1f5f9; color: var(--primary); }
+    .sub-tab-btn.active {
       background: var(--primary);
       color: #ffffff;
       box-shadow: 0 4px 14px rgba(92, 9, 40, 0.2);
     }
-    .meas-tab-btn.active svg path {
-      fill: #ffffff;
-    }
+    .sub-tab-btn.active svg path { fill: #ffffff; }
 
     /* Measurement Grid Form */
     .meas-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; margin-bottom: 14px; background: #fff8f9; padding: 14px; border-radius: 14px; border: 1px dashed #eec5d3; }
     .meas-field-box { display: flex; flex-direction: column; gap: 4px; }
     .meas-field-box label { font-size: 12px; font-weight: 700; color: #475569; }
-    .meas-field-box input { padding: 9px 6px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; text-align: center; background: #ffffff; transition: var(--transition); }
-    .meas-field-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(92,9,40,0.08); }
+    .meas-field-box input { padding: 9px 6px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; text-align: center; background: #ffffff; }
 
-    /* ========================================================================= */
-    /* CLEAN ROYAL BOUTIQUE CARDS */
-    /* ========================================================================= */
-
+    /* Measurement Card Style in Profile */
     .smart-meas-card {
       border: 1.5px solid rgba(212, 175, 55, 0.35);
       border-radius: 18px;
       margin-bottom: 16px;
       background: linear-gradient(145deg, #240411 0%, #3d071c 65%, #18020b 100%);
       color: #ffffff;
-      transition: var(--transition);
       box-shadow: 0 10px 26px rgba(36, 4, 17, 0.3);
       position: relative;
     }
-    .smart-meas-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.22);
-      transform: translateY(-2px);
-    }
-
     .smart-meas-header {
       padding: 16px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
-      user-select: none;
     }
     .meas-user-info { display: flex; align-items: center; gap: 14px; flex: 1; }
-    
     .meas-avatar {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border-radius: 14px;
       background: linear-gradient(135deg, #d4af37, #996515);
       color: #1a030d;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 900;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
       flex-shrink: 0;
     }
     .meas-badge-pill {
@@ -604,29 +525,34 @@
       font-weight: 700;
       display: inline-block;
       margin-left: 8px;
-      letter-spacing: 0.2px;
     }
 
-    /* 3-Dot Action Wrap & Dropdown */
-    .meas-action-wrap { position: relative; display: flex; align-items: center; gap: 4px; }
+    /* 3-Dot Action Wrap */
+    .meas-action-wrap { position: relative; display: flex; align-items: center; }
     .btn-3dot {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      width: 38px;
-      height: 38px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       cursor: pointer;
-      color: #ffd875;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
     }
-    .btn-3dot:hover { background: rgba(212, 175, 55, 0.25); color: #ffffff; }
+    .btn-3dot:hover { background: rgba(212, 175, 55, 0.35); }
+    .btn-3dot-light {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+    }
+    .btn-3dot-light:hover { background: #e2e8f0; }
 
     .meas-dropdown-menu {
       position: absolute;
-      top: 44px;
+      top: 42px;
       right: 0;
       background: #ffffff;
       border: 1px solid #e1e8ef;
@@ -658,83 +584,44 @@
     .meas-drop-item:hover { background: #fff0f4; color: var(--primary); }
     .meas-drop-item.delete:hover { background: #fee2e2; color: #ef4444; }
 
-    .meas-expand-body {
-      display: none;
-      padding: 0 18px 18px;
-      border-top: 1px dashed rgba(212, 175, 55, 0.3);
-      animation: viewSlideUp 0.25s ease-out;
-    }
-    .meas-expand-body.open { display: block; }
-
-    /* Body Zones & Capsule Badges */
     .zone-block {
-      margin-top: 12px;
+      margin-top: 10px;
       background: rgba(0, 0, 0, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
       padding: 10px 12px;
     }
-    .zone-title {
-      font-size: 11.5px;
-      font-weight: 800;
-      color: var(--gold);
-      letter-spacing: 0.4px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .zone-capsules-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 8px;
-    }
-
+    .zone-title { font-size: 11.5px; font-weight: 800; color: var(--gold); margin-bottom: 8px; }
+    .zone-capsules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); gap: 8px; }
     .meas-capsule-badge {
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(212, 175, 55, 0.28);
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 30px;
-      transition: var(--transition);
     }
-    .meas-capsule-badge:hover {
-      background: rgba(212, 175, 55, 0.14);
-      border-color: var(--gold);
-    }
-    .meas-capsule-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #e2e8f0;
-    }
-
+    .meas-capsule-label { font-size: 12px; font-weight: 600; color: #e2e8f0; }
     .meas-capsule-val {
       background: linear-gradient(135deg, #fbbf24, #d97706);
       color: #1a030d;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 900;
-      padding: 3px 9px;
-      border-radius: 14px;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15), 0 2px 5px rgba(0,0,0,0.25);
-      letter-spacing: 0.2px;
+      padding: 2px 8px;
+      border-radius: 12px;
     }
-
     .meas-notes-box {
-      margin-top: 12px;
+      margin-top: 10px;
       background: rgba(212, 175, 55, 0.12);
       border: 1px dashed rgba(212, 175, 55, 0.5);
       padding: 10px 14px;
       border-radius: 12px;
       font-size: 12.5px;
       color: #fef08a;
-      line-height: 1.5;
     }
 
-    /* Billing Grid */
-    .billing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width: 850px) { .billing-grid { grid-template-columns: 1.25fr 1fr; align-items: start; } }
+    /* Billing Items */
     .items-scroll-list { max-height: 480px; overflow-y: auto; padding-right: 4px; }
     .item-row-card {
       display: flex;
@@ -745,182 +632,179 @@
       border-radius: 14px;
       margin-bottom: 10px;
       background: #fff;
-      transition: var(--transition);
       gap: 8px;
     }
-    .item-row-card:hover { border-color: #dab4c2; background: #fffdfd; }
     .item-meta { display: flex; align-items: center; gap: 12px; flex: 1; }
-    .item-badge { 
-      width: 44px; 
-      height: 44px; 
-      border-radius: 12px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      flex-shrink: 0; 
-    }
+    .item-badge { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .price-edit-box { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
-    .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; background: #ffffff; }
+    .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; }
     .qty-group { display: flex; align-items: center; gap: 8px; }
-    .btn-qty { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border-color); background: #f8fafc; font-weight: 700; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-    .btn-qty:hover { background: #e2e8f0; }
+    .btn-qty { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border-color); background: #f8fafc; font-weight: 700; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
     .btn-qty.add { background: var(--primary); color: white; border: none; }
-    .btn-qty.add:hover { background: var(--primary-hover); }
     .qty-display { min-width: 24px; text-align: center; font-weight: 700; font-size: 14px; }
     .custom-item-box { background: #fff8f9; border: 1.5px dashed #eec5d3; border-radius: 14px; padding: 14px; margin-top: 14px; }
 
-    /* Receipt Box */
+    /* RECEIPT CARD */
     .receipt-container {
-      background: #fff;
-      border: 1.5px dashed #b58997;
-      border-radius: 16px;
-      padding: 22px;
-      font-size: 13px;
-      line-height: 1.6;
+      background: #ffffff;
+      border: 3.5px solid #0088cc;
+      border-radius: 28px;
+      padding: 24px 20px;
       position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 136, 204, 0.12);
       page-break-inside: avoid;
     }
-    .receipt-head { text-align: center; border-bottom: 1px dashed #aaa; padding-bottom: 12px; margin-bottom: 12px; }
-    .receipt-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-    .receipt-table th { border-top: 1px dashed #888; border-bottom: 1px dashed #888; padding: 6px 0; text-align: left; }
-    .receipt-table td { padding: 6px 0; }
-    .receipt-row { display: flex; justify-content: space-between; margin: 5px 0; }
-    .receipt-total { border-top: 2px solid #222; font-size: 16px; font-weight: 800; padding-top: 8px; }
+    .bill-header-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 6px; }
+    .bill-bell-icon { width: 65px; height: 65px; flex-shrink: 0; }
+    .bill-main-title { font-size: 32px; font-weight: 900; color: #0b2265; line-height: 1.15; }
+    .bill-title-underline { height: 4px; width: 130px; background: #f59e0b; border-radius: 4px; margin-top: 4px; }
+    .bill-address-row { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 18px; text-align: center; }
+    .bill-info-cards-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .bill-info-card-left { background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .bill-info-card-right { background: #fefce8; border: 2px solid #fef08a; border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .bill-info-item { display: flex; align-items: center; gap: 10px; }
+    .bill-circle-icon { width: 34px; height: 34px; border-radius: 50%; background: #0284c7; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .bill-info-texts { line-height: 1.3; overflow: hidden; }
+    .bill-info-label { font-size: 11.5px; font-weight: 700; color: #334155; }
+    .bill-info-val { font-size: 14.5px; font-weight: 800; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+    .bill-custom-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; border: 2px solid #0284c7; margin-bottom: 16px; }
+    .bill-custom-table thead th { background: #0284c7; color: #ffffff; padding: 10px 8px; font-size: 14.5px; font-weight: 800; border-right: 2px solid #38bdf8; text-align: center; }
+    .bill-custom-table tbody td { padding: 10px 8px; font-size: 13.5px; font-weight: 700; color: #1e293b; border-top: 1.5px solid #bae6fd; border-right: 1.5px solid #bae6fd; text-align: center; }
+    .bill-custom-table tbody td:first-child { text-align: left; padding-left: 14px; }
+    .bill-custom-table tbody td:last-child { border-right: none; text-align: right; padding-right: 14px; }
+    .bill-summary-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .bill-sum-pill { display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; border-radius: 30px; font-size: 15px; font-weight: 800; }
+    .bill-sum-pill.total { background: #f0f9ff; border: 2px solid #bae6fd; color: #0369a1; }
+    .bill-sum-pill.advance { background: #ecfdf5; border: 2px solid #a7f3d0; color: #047857; }
+    .bill-sum-pill.due { background: #fff1f2; border: 2px solid #fecdd3; color: #be123c; }
+    .bill-sum-pill .pill-left { display: flex; align-items: center; gap: 10px; }
+    .bill-footer-thanks { text-align: center; margin-top: 10px; font-size: 13.5px; font-weight: 800; color: #0284c7; }
 
-    /* Action Buttons */
-    .btn-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-whatsapp:hover { background: #20b858; transform: translateY(-1px); }
-    .btn-pdf { background: #0284c7; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-pdf:hover { background: #0369a1; transform: translateY(-1px); }
-    .data-list-card { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 14px; margin-bottom: 10px; background: #fff; transition: var(--transition); }
-    .data-list-card:hover { border-color: #c988a2; }
+    .btn-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 13px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; }
+    .btn-pdf { background: #0284c7; color: white; border: none; padding: 13px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; }
+    .btn-save-bill { background: #10b981; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; width: 100%; font-size: 15px; }
 
-    /* Horizontal Month Filter (Reports) */
-    .report-filter-wrapper {
-      margin-bottom: 20px;
+    /* Customer List Item */
+    .cust-card-item {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .report-year-row {
-      display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .year-badge-wrap {
-      display: flex;
       align-items: center;
-      gap: 8px;
-    }
-    .year-badge-wrap label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    .year-select-dropdown {
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1.5px solid var(--primary);
-      background: var(--primary-light);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 13.5px;
-      outline: none;
-      cursor: pointer;
-    }
-    .report-chips-scroll {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .report-chips-scroll::-webkit-scrollbar { display: none; }
-    .filter-chip-btn {
-      white-space: nowrap;
-      padding: 8px 16px;
-      border-radius: 24px;
-      border: 1.5px solid var(--border-color);
-      background: #ffffff;
-      color: var(--text-main);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .filter-chip-btn:hover {
-      border-color: #c988a2;
-      background: #fff8f9;
-    }
-    .filter-chip-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 4px 14px rgba(92, 9, 40, 0.25);
-    }
-
-    /* QR Payment Stand Card */
-    .qr-stand-card {
-      max-width: 420px;
-      margin: 0 auto;
-      background: #ffffff;
-      border: 2px solid #ecd4de;
-      border-radius: 24px;
-      padding: 26px 20px;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-    }
-    .qr-stand-card:hover { box-shadow: var(--shadow-lg); }
-    .qr-img-wrapper {
-      width: 220px;
-      height: 220px;
-      margin: 16px auto;
-      padding: 10px;
-      border: 2px dashed var(--primary);
-      border-radius: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      margin-bottom: 12px;
       background: #fff;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .cust-card-item:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* FULL-SCREEN CUSTOMER PROFILE MODAL / SCREEN */
+    #custProfileModal {
+      position: fixed;
+      inset: 0;
+      background: #f8fafc;
+      z-index: 10000;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .profile-top-header {
+      background: linear-gradient(135deg, var(--primary), #7d0d38);
+      color: white;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .profile-back-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .qr-img-wrapper img {
+    .profile-body-container {
+      max-width: 900px;
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      margin: 0 auto;
+      padding: 20px 16px 80px;
+      flex: 1;
     }
-    .quick-amount-chips {
+
+    /* Bill Row Strip in Customer Profile */
+    .bill-strip-card {
       display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-    .chip-amt {
-      background: #fff0f4;
-      border: 1px solid #f2cad8;
-      color: var(--primary);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 13px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      margin-bottom: 10px;
       cursor: pointer;
       transition: var(--transition);
     }
-    .chip-amt:hover {
-      background: var(--primary);
-      color: #fff;
+    .bill-strip-card:hover {
+      border-color: #0284c7;
+      background: #f0f9ff;
     }
 
-    /* Mobile Screen Adjustments */
+    /* Quick Bill View Modal */
+    #billDetailsModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 11000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .bill-modal-content {
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 24px;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Reports & Filters */
+    .report-filter-wrapper { margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .report-year-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .year-badge-wrap { display: flex; align-items: center; gap: 8px; }
+    .year-select-dropdown { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 13.5px; outline: none; }
+    .report-chips-scroll { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+    .filter-chip-btn { white-space: nowrap; padding: 8px 16px; border-radius: 24px; border: 1.5px solid var(--border-color); background: #ffffff; color: var(--text-main); font-size: 13px; font-weight: 700; cursor: pointer; }
+    .filter-chip-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+
+    /* QR Card */
+    .qr-stand-card { max-width: 420px; margin: 0 auto; background: #ffffff; border: 2px solid #ecd4de; border-radius: 24px; padding: 26px 20px; text-align: center; box-shadow: var(--shadow-md); }
+    .qr-img-wrapper { width: 220px; height: 220px; margin: 16px auto; padding: 10px; border: 2px dashed var(--primary); border-radius: 18px; background: #fff; display: flex; align-items: center; justify-content: center; }
+    .qr-img-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+    .quick-amount-chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+    .chip-amt { background: #fff0f4; border: 1px solid #f2cad8; color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; cursor: pointer; }
+
     @media (max-width: 768px) {
       .app-wrapper { border-radius: 0; box-shadow: none; }
       .desktop-nav { display: none; }
@@ -929,19 +813,20 @@
       .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; border-radius: 16px; }
       .items-scroll-list { max-height: none; }
       .card-panel { padding: 16px; border-radius: 16px; }
+      .bill-info-cards-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Custom Floating Toast Message -->
+  <!-- Toast Notification -->
   <div id="toast-box"></div>
 
-  <!-- 1. GOOGLE LOGIN SCREEN WITH BRAND LOGO & SWING ANIMATION -->
+  <!-- Google Login Screen -->
   <div class="auth-overlay" id="screen-login">
     <div class="auth-card">
       <div class="login-brand-logo">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 64 64" fill="none">
           <defs>
             <linearGradient id="logTailorG" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#ec4899" />
@@ -958,7 +843,6 @@
           <path d="M18 40H27V42H18V40Z" fill="url(#logGoldG)" />
           <circle cx="46" cy="24" r="5" fill="url(#logGoldG)" />
           <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#logGoldG)" />
-          <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24"/>
         </svg>
       </div>
       <h2 style="color: var(--primary); margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h2>
@@ -970,7 +854,7 @@
     </div>
   </div>
 
-  <!-- 2. ACCESS DENIED SCREEN -->
+  <!-- Access Denied Screen -->
   <div class="auth-overlay" id="screen-denied" style="display: none;">
     <div class="denied-container">
       <div class="denied-icon-wrap">
@@ -979,7 +863,7 @@
         </svg>
       </div>
       <h1 class="denied-title">આ વેબસાઇટ તમારા માટે નથી</h1>
-      <p class="denied-subtitle">નમસ્તે! આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત હિસાબ-કિતાબ તથા માપ ડાયરી માટે સુરક્ષિત છે.</p>
+      <p class="denied-subtitle">આ પોર્ટલ ફક્ત <b>"રૂકસાના લેડીઝ ટેલર"</b> ના અંગત હિસાબ અને ડાયરી માટે સુરક્ષિત છે.</p>
       <div class="denied-user-pill">
         <span>તમારું એકાઉન્ટ:</span><br>
         <b id="deniedUserEmail" style="color: #ff7675;">અજાણ્યું એકાઉન્ટ</b>
@@ -988,31 +872,17 @@
     </div>
   </div>
 
-  <!-- 3. MAIN APP WRAPPER -->
+  <!-- Main App Wrapper -->
   <div class="app-wrapper" id="appMainWrapper">
     
-    <!-- Top Navigation (Desktop) with Animation Brand Logo -->
+    <!-- Top Navigation (Desktop) -->
     <header class="app-header" id="appHeader">
       <div class="brand" onclick="switchView('view-dashboard')">
         <div class="header-logo-badge">
-          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="hTailorG" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ec4899" />
-                <stop offset="100%" stop-color="#9d174d" />
-              </linearGradient>
-              <linearGradient id="hGoldG" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#fbbf24" />
-                <stop offset="100%" stop-color="#d97706" />
-              </linearGradient>
-            </defs>
-            <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#hTailorG)" />
-            <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#hTailorG)" />
-            <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#hGoldG)" />
-            <path d="M18 40H27V42H18V40Z" fill="url(#hGoldG)" />
-            <circle cx="46" cy="24" r="5" fill="url(#hGoldG)" />
-            <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#hGoldG)" />
-            <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24"/>
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="#9d174d" />
+            <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="#ec4899" />
+            <rect x="21" y="28" width="3" height="12" rx="1.5" fill="#fbbf24" />
           </svg>
         </div>
         <span>રૂકસાના લેડીઝ ટેલર</span>
@@ -1024,8 +894,11 @@
         <button class="nav-link" id="deskNavMeas" onclick="switchView('view-measurements')">
           <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg> માપ ડાયરી
         </button>
-        <button class="nav-link" id="deskNavNew" onclick="openNewBill()">
+        <button class="nav-link" id="deskNavNew" onclick="openNewBillTab('form')">
           <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg> નવું બિલ
+        </button>
+        <button class="nav-link" id="deskNavCust" onclick="switchView('view-customers')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> ગ્રાહકોની યાદી
         </button>
         <button class="nav-link" id="deskNavQr" onclick="switchView('view-qr-pay')">
           <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#a855f7" d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v3h-3zm-5 0h3v3h-3zm2 3h3v3h-3zm3 0h3v3h-3zm-2 3h3v3h-3zm-3-3h3v3h-3z"/></svg> સ્કેનર
@@ -1033,49 +906,28 @@
         <button class="nav-link" id="deskNavRep" onclick="switchView('view-reports')">
           <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#fb7185" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> રિપોર્ટ્સ
         </button>
-        <button class="btn-logout" onclick="handleLogout()">
-          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-          લૉગઆઉટ
-        </button>
+        <button class="btn-logout" onclick="handleLogout()">લૉગઆઉટ</button>
       </nav>
     </header>
 
     <main class="main-content">
       
-      <!-- 1. WELCOME SCREEN -->
+      <!-- 1. WELCOME VIEW -->
       <section class="view active" id="view-welcome">
         <div class="welcome-container">
           <div class="welcome-card">
-            
             <div class="welcome-brand-logo">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="tailorG1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#ec4899" />
-                    <stop offset="100%" stop-color="#9d174d" />
-                  </linearGradient>
-                  <linearGradient id="goldG1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#fbbf24" />
-                    <stop offset="100%" stop-color="#d97706" />
-                  </linearGradient>
-                </defs>
-                <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#tailorG1)" />
-                <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#tailorG1)" />
-                <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#goldG1)" />
-                <path d="M18 40H27V42H18V40Z" fill="url(#goldG1)" />
-                <circle cx="46" cy="24" r="5" fill="url(#goldG1)" />
-                <circle cx="46" cy="24" r="2" fill="#ffffff" />
-                <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#goldG1)" />
-                <path d="M14 12L15.5 8L19.5 9.5L15.5 11L14 15L12.5 11L8.5 9.5L12.5 8L14 12Z" fill="#fbbf24" opacity="0.9"/>
-                <path d="M50 36L51 33L54 34L51 35L50 38L49 35L46 34L49 33L50 36Z" fill="#ec4899" opacity="0.8"/>
+              <svg viewBox="0 0 64 64" fill="none">
+                <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="#9d174d" />
+                <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="#ec4899" />
+                <rect x="21" y="28" width="3" height="12" rx="1.5" fill="#fbbf24" />
+                <circle cx="46" cy="24" r="5" fill="#fbbf24" />
               </svg>
             </div>
-
             <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
             <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ મેનેજમેન્ટ સિસ્ટમ</p>
-            
             <button class="btn-start" onclick="startApp()">
-              <svg class="icon-svg" style="fill: #ffffff; width:20px; height:20px;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-svg" style="fill: #ffffff;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               શરૂ કરો (Start)
             </button>
           </div>
@@ -1091,50 +943,40 @@
             <span id="dashTodayCount" style="font-size: 13px; opacity: 0.9;">0 બિલ બનેલા</span>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn-primary" style="background: white; color: var(--primary); width: auto;" onclick="openMeasurementsTab('form')">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
-              માપ સેવ કરો
+            <button class="btn-primary" style="background: white; color: var(--primary); width: auto;" onclick="switchView('view-measurements')">
+              માપ લખો
             </button>
-            <button class="btn-primary" style="background: #10b981; color: white; width: auto;" onclick="openNewBill()">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-              નવું બિલ
+            <button class="btn-primary" style="background: #10b981; color: white; width: auto;" onclick="openNewBillTab('form')">
+              + નવું બિલ
             </button>
           </div>
         </div>
 
         <div class="menu-grid">
-          <div class="menu-card" onclick="openMeasurementsTab('list')">
+          <div class="menu-card" onclick="switchView('view-measurements')">
             <div class="menu-icon-wrap" style="background: #fef3c7;">
-              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
-                <path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/>
-              </svg>
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
             </div>
             <h3>માપ ડાયરી</h3>
-            <p>ગ્રાહકના માપ અને વિગત સેવ કરો</p>
+            <p>ગ્રાહકનું નવું માપ લખો</p>
           </div>
-          <div class="menu-card" onclick="openNewBill()">
+          <div class="menu-card" onclick="openNewBillTab('form')">
             <div class="menu-icon-wrap" style="background: #d1fae5;">
-              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
-                <path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-              </svg>
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             </div>
             <h3>નવી બિલ પહોંચ</h3>
             <p>ગ્રાહક માટે નવું બિલ બનાવો</p>
           </div>
           <div class="menu-card" onclick="switchView('view-customers')">
             <div class="menu-icon-wrap" style="background: #e0f2fe;">
-              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
-                <path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-              </svg>
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
             </div>
             <h3>ગ્રાહકોની યાદી</h3>
-            <p>તમામ ગ્રાહકોના નંબર અને હિસાબ</p>
+            <p>પ્રોફાઇલ, સેવ કરેલા માપ અને બિલો</p>
           </div>
           <div class="menu-card" onclick="switchView('view-reports')">
             <div class="menu-icon-wrap" style="background: #fce7f3;">
-              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24">
-                <path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-              </svg>
+              <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
             </div>
             <h3>કુલ હિસાબ રિપોર્ટ</h3>
             <p>આવક અને વધુ વેચાતી આઇટમ્સ</p>
@@ -1142,27 +984,13 @@
         </div>
       </section>
 
-      <!-- 3. MEASUREMENTS VIEW -->
+      <!-- 3. MEASUREMENTS VIEW (ONLY FORM NOW) -->
       <section class="view" id="view-measurements">
-        
-        <!-- બે મુખ્ય વિકલ્પો -->
-        <div class="meas-view-tabs">
-          <button class="meas-tab-btn active" id="tabBtnNewMeas" onclick="setMeasSubView('form')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            નવું માપ લેવું છે
-          </button>
-          <button class="meas-tab-btn" id="tabBtnViewMeas" onclick="setMeasSubView('list')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#64748b" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-            માપ જોવા છે
-          </button>
-        </div>
-
-        <!-- વિકલ્પ ૧: નવું માપ લેવાનું ફોર્મ -->
-        <div id="subViewMeasForm" class="card-panel">
+        <div class="card-panel">
           <div class="panel-title">
             <span style="display:flex; align-items:center; gap:8px;">
               <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
-              ગ્રાહકનું માપ લખો
+              ગ્રાહકનું માપ લખો (માપ ડાયરી)
             </span>
             <span id="measEditNotice" style="font-size: 12px; color: #d35400; font-weight: normal;"></span>
           </div>
@@ -1170,11 +998,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div>
               <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
-              <input type="text" id="mCustName" class="form-control" placeholder="નામ (દા.ત. મીનાબેન)">
+              <input type="text" id="mCustName" class="form-control" placeholder="નામ લખો (દા.ત. મીનાબેન)">
             </div>
             <div>
               <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર: *</label>
-              <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર">
+              <input type="tel" id="mCustPhone" class="form-control" placeholder="મોબાઈલ નંબર લખો">
             </div>
           </div>
 
@@ -1215,96 +1043,184 @@
               માપ સાચવો (Save)
             </button>
             <button class="btn-primary" style="background: #64748b; flex: 1;" onclick="resetMeasForm()">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
               સાફ કરો
             </button>
           </div>
         </div>
-
-        <!-- વિકલ્પ ૨: સેવ કરેલા માપની યાદી -->
-        <div id="subViewMeasList" class="card-panel" style="display: none;">
-          <div class="panel-title">
-            <span style="display:flex; align-items:center; gap:8px;">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-              સેવ કરેલા માપની યાદી
-            </span>
-            <span id="measCountBadge" style="font-size: 12px; background: #eef1f6; padding: 3px 10px; border-radius: 12px; font-weight: 700;">0 માપ</span>
-          </div>
-
-          <input type="text" id="measSearchInput" class="form-control" placeholder="નામ અથવા મોબાઈલ નંબરથી માપ શોધો..." oninput="renderMeasurements()">
-          <div id="measurementsListContainer" style="max-height: 600px; overflow-y: auto; padding-right: 2px;"></div>
-        </div>
-
       </section>
 
       <!-- 4. NEW BILL VIEW -->
       <section class="view" id="view-new-bill">
-        <div class="billing-grid">
+        <div class="sub-tabs-bar">
+          <button class="sub-tab-btn active" id="tabBtnBillForm" onclick="setBillSubView('form')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            બિલ બનાવો (Form)
+          </button>
+          <button class="sub-tab-btn" id="tabBtnBillView" onclick="setBillSubView('receipt')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#64748b" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            બિલ જુઓ (Receipt)
+          </button>
+        </div>
+
+        <!-- Bill Form Part -->
+        <div id="subViewBillForm" class="card-panel">
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              ગ્રાહકની વિગત અને કામની પસંદગી
+            </span>
+            <span id="billEditStatus" style="font-size:12px; color:var(--accent); font-weight:700;"></span>
+          </div>
           
-          <div class="card-panel">
-            <div class="panel-title">૧. ગ્રાહક અને કામની પસંદગી</div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <input type="text" id="custName" class="form-control" placeholder="ગ્રાહકનું નામ" oninput="updateLiveReceipt()">
-              <input type="tel" id="custPhone" class="form-control" placeholder="મોબાઈલ નંબર" oninput="updateLiveReceipt()">
+          <input type="hidden" id="editingBillId" value="">
+          <input type="hidden" id="customBillNo" value="">
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">ગ્રાહકનું નામ: *</label>
+              <input type="text" id="custName" class="form-control" placeholder="નામ લખો" oninput="updateLiveReceipt()">
             </div>
-            
-            <label style="font-size: 12px; font-weight: 700;">ડિલિવરી આપવાની તારીખ:</label>
-            <input type="date" id="custDueDate" class="form-control" oninput="updateLiveReceipt()">
-
-            <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, કિંમત અને નંગ નક્કી કરો:</p>
-            <div class="items-scroll-list" id="servicesContainer"></div>
-
-            <div class="custom-item-box">
-              <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">+ અન્ય કોઈ નવું કામ ઉમેરવું હોય તો:</p>
-              <div style="display: grid; grid-template-columns: 1.8fr 1fr auto; gap: 8px;">
-                <input type="text" id="customItemName" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="કામનું નામ">
-                <input type="number" id="customItemPrice" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="ભાવ ₹">
-                <button type="button" class="btn-primary" style="padding: 8px 14px; width: auto; font-size: 13px;" onclick="addCustomService()">+ ઉમેરો</button>
-              </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">મોબાઈલ નંબર:</label>
+              <input type="tel" id="custPhone" class="form-control" placeholder="નંબર લખો" oninput="updateLiveReceipt()">
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">ડિલિવરી તારીખ:</label>
+              <input type="date" id="custDueDate" class="form-control" oninput="updateLiveReceipt()">
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 700;">એડવાન્સ જમા (₹):</label>
+              <input type="number" id="billAdvance" class="form-control" value="0" placeholder="0" oninput="updateLiveReceipt()">
             </div>
           </div>
 
-          <div class="card-panel">
-            <div class="panel-title">૨. બિલ પહોંચ અને હિસાબ</div>
+          <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, ભાવ અને નંગ પસંદ કરો:</p>
+          <div class="items-scroll-list" id="servicesContainer"></div>
 
+          <div class="custom-item-box">
+            <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">+ અન્ય કોઈ નવું કામ ઉમેરવું હોય તો:</p>
+            <div style="display: grid; grid-template-columns: 1.8fr 1fr auto; gap: 8px;">
+              <input type="text" id="customItemName" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="કામનું નામ">
+              <input type="number" id="customItemPrice" class="form-control" style="margin-bottom:0; padding:8px 10px; font-size:13px;" placeholder="ભાવ ₹">
+              <button type="button" class="btn-primary" style="padding: 8px 14px; width: auto; font-size: 13px;" onclick="addCustomService()">+ ઉમેરો</button>
+            </div>
+          </div>
+
+          <button type="button" class="btn-primary" style="margin-top: 18px; background: #0284c7; padding: 14px;" onclick="goToBillReceiptTab()">
+            બિલ તૈયાર જુઓ (View Generated Bill) 👉
+          </button>
+        </div>
+
+        <!-- Bill Receipt Preview Part -->
+        <div id="subViewBillReceipt" class="card-panel" style="display: none;">
+          <div class="panel-title">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              જનરેટ થયેલ બિલ પહોંચ
+            </span>
+          </div>
+
+          <div style="max-width: 500px; margin: 0 auto;">
             <div class="receipt-container" id="printableReceipt">
-              <div class="receipt-head">
-                <h2 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h2>
-                <p style="font-size: 11px;">પ્રો. રૂકસાના બેન | મો: 7572842641</p>
-                <p style="font-size: 10px; color: #555;">C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</p>
+              
+              <div class="bill-header-wrap">
+                <svg class="bill-bell-icon" viewBox="0 0 100 100" fill="none">
+                  <path d="M50 8C46 8 43 11 43 15C32 18 24 29 24 42V62L16 70V74H84V70L76 62V42C76 29 68 18 57 15C57 11 54 8 50 8Z" fill="#f59e0b" stroke="#b45309" stroke-width="3"/>
+                  <ellipse cx="50" cy="74" rx="30" ry="8" fill="#d97706" />
+                  <ellipse cx="50" cy="80" rx="12" ry="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+                </svg>
+                <div>
+                  <h1 class="bill-main-title">રૂકસાના લેડીઝ ટેલર</h1>
+                  <div class="bill-title-underline"></div>
+                </div>
               </div>
 
-              <div class="receipt-row"><span>બિલ નં: <b id="lblBillNo">#0001</b></span> <span id="lblDate"></span></div>
-              <div class="receipt-row"><span>ગ્રાહક: <b id="lblCustName">-</b></span> <span id="lblCustPhone">-</span></div>
-              <div class="receipt-row"><span>ડિલિવરી તારીખ: <b id="lblDueDate">-</b></span></div>
+              <div class="bill-address-row">
+                <span>C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</span>
+              </div>
 
-              <table class="receipt-table">
+              <div class="bill-info-cards-grid">
+                <div class="bill-info-card-left">
+                  <div class="bill-info-item">
+                    <div class="bill-circle-icon">
+                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="bill-info-texts">
+                      <div class="bill-info-label">ગ્રાહકનું નામ :</div>
+                      <span class="bill-info-val" id="lblCustName">-</span>
+                    </div>
+                  </div>
+                  <div class="bill-info-item">
+                    <div class="bill-circle-icon">
+                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    </div>
+                    <div class="bill-info-texts">
+                      <div class="bill-info-label">મોબાઈલ નંબર :</div>
+                      <span class="bill-info-val" id="lblCustPhone">-</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bill-info-card-right">
+                  <div class="bill-info-item">
+                    <div class="bill-circle-icon" style="background: #0284c7;">
+                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <div class="bill-info-texts">
+                      <div class="bill-info-label">બિલ નંબર :</div>
+                      <span class="bill-info-val" id="lblBillNo">#0001</span>
+                    </div>
+                  </div>
+                  <div class="bill-info-item">
+                    <div class="bill-circle-icon" style="background: #0284c7;">
+                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                    </div>
+                    <div class="bill-info-texts">
+                      <div class="bill-info-label">બિલ તારીખ :</div>
+                      <span class="bill-info-val" id="lblDate">-</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="bill-custom-table">
                 <thead>
-                  <tr><th>આઇટમ</th><th>નંગ</th><th>ભાવ</th><th style="text-align: right;">કુલ</th></tr>
+                  <tr>
+                    <th style="width: 44%;">આઈટમ</th>
+                    <th style="width: 14%;">નંગ</th>
+                    <th style="width: 21%;">ભાવ</th>
+                    <th style="width: 21%;">કુલ</th>
+                  </tr>
                 </thead>
                 <tbody id="receiptTableBody">
-                  <tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
+                  <tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 20px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>
                 </tbody>
               </table>
 
-              <div class="receipt-row"><span>કુલ રકમ (Total):</span><b id="lblTotal">₹0</b></div>
-              <div class="receipt-row" style="align-items: center;">
-                <span>એડવાન્સ જમા:</span>
-                <span id="lblAdvancePrint" style="display:none; font-weight:700;">₹0</span>
-                <input type="number" id="billAdvance" value="0" style="width: 90px; padding: 4px 6px; text-align: right; border: 1.5px solid #ccc; border-radius: 6px; font-size: 15px;" oninput="updateLiveReceipt()">
-              </div>
-              <div class="receipt-row receipt-total">
-                <span>બાકી રકમ (Due):</span>
-                <span id="lblDue" style="color: #ee5253;">₹0</span>
+              <div class="bill-summary-list">
+                <div class="bill-sum-pill total">
+                  <div class="pill-left"><span>કુલ રકમ (Total):</span></div>
+                  <span id="lblTotal" style="font-size:18px;">₹0</span>
+                </div>
+                <div class="bill-sum-pill advance">
+                  <div class="pill-left"><span>એડવાન્સ જમા:</span></div>
+                  <span id="lblAdvanceDisplay" style="font-size:17px; font-weight:800;">₹0</span>
+                </div>
+                <div class="bill-sum-pill due">
+                  <div class="pill-left"><span>બાકી રકમ (Due):</span></div>
+                  <span id="lblDue" style="font-size:20px; font-weight:900;">₹0</span>
+                </div>
               </div>
 
-              <div style="text-align: center; margin-top: 15px; font-size: 11px; border-top: 1px dashed #aaa; padding-top: 6px;">
-                પધારવા બદલ આભાર! ફરી પધારશો.
+              <div class="bill-footer-thanks">
+                <span>✨ પધારવા બદલ આભાર! ફરી પધારશો. ❤️</span>
               </div>
             </div>
 
-            <div class="btn-actions">
+            <div class="btn-actions-grid">
               <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">
                 <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
                 WhatsApp બિલ
@@ -1314,30 +1230,30 @@
                 PDF ડાઉનલોડ
               </button>
             </div>
-            <button class="btn-primary" style="margin-top: 12px; background: #10b981;" onclick="saveCurrentBill()">
+            <button class="btn-save-bill" onclick="saveCurrentBill()">
               <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
               બિલ સેવ કરો
             </button>
           </div>
-
         </div>
       </section>
 
-      <!-- 5. CUSTOMERS LIST -->
+      <!-- 5. CUSTOMERS DIRECTORY VIEW -->
       <section class="view" id="view-customers">
         <div class="card-panel">
           <div class="panel-title">
             <span style="display:flex; align-items:center; gap:8px;">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-              ગ્રાહકોની ડિજિટલ ડાયરી
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              ગ્રાહકોની ડિજિટલ યાદી (પ્રોફાઇલ જોવા નામ પર ક્લિક કરો)
             </span>
+            <span id="custTotalCountBadge" style="font-size:12px; background:#e0f2fe; color:#0284c7; padding:3px 10px; border-radius:12px; font-weight:700;">0 ગ્રાહકો</span>
           </div>
-          <input type="text" id="custSearchInput" class="form-control" placeholder="ગ્રાહકનું નામ અથવા નંબર શોધો..." oninput="renderCustomers()">
+          <input type="text" id="custSearchInput" class="form-control" placeholder="ગ્રાહકનું નામ અથવા ફોન નંબર શોધો..." oninput="renderCustomers()">
           <div id="customersContainer"></div>
         </div>
       </section>
 
-      <!-- 5-A. DEDICATED QR PAYMENT SCANNER SECTION -->
+      <!-- 6. UPI QR STAND -->
       <section class="view" id="view-qr-pay">
         <div class="card-panel">
           <div class="panel-title">
@@ -1346,48 +1262,31 @@
               UPI QR સ્કેનર (ઓનલાઇન પેમેન્ટ)
             </span>
           </div>
-
           <div class="qr-stand-card">
             <h3 style="color: var(--primary); font-size: 18px; font-weight: 800;">રૂકસાના લેડીઝ ટેલર</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Google Pay / PhonePe / Paytm સ્કેન કરો</p>
-
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Google Pay / PhonePe / Paytm</p>
             <div style="margin: 18px 0 10px;">
-              <label style="font-size: 13px; font-weight: 700; color: #333; display: block; margin-bottom: 6px;">જેટલા રૂપિયા લેવાના હોય તે રકમ લખો:</label>
-              <div style="position: relative; max-width: 200px; margin: 0 auto;">
-                <span style="position: absolute; left: 14px; top: 10px; font-size: 18px; font-weight: bold; color: var(--primary);">₹</span>
-                <input type="number" id="qrCustomAmountInput" class="form-control" style="padding-left: 32px; font-size: 20px; font-weight: 800; text-align: center; color: var(--primary); margin-bottom: 0;" placeholder="0" oninput="generateStandaloneQR()">
-              </div>
+              <label style="font-size: 13px; font-weight: 700; color: #333; display: block; margin-bottom: 6px;">રકમ લખો (₹):</label>
+              <input type="number" id="qrCustomAmountInput" class="form-control" style="font-size: 20px; font-weight: 800; text-align: center; color: var(--primary);" placeholder="0" oninput="generateStandaloneQR()">
             </div>
-
             <div class="quick-amount-chips">
               <span class="chip-amt" onclick="setQuickAmount(100)">+ ₹100</span>
               <span class="chip-amt" onclick="setQuickAmount(200)">+ ₹200</span>
               <span class="chip-amt" onclick="setQuickAmount(500)">+ ₹500</span>
               <span class="chip-amt" onclick="setQuickAmount(1000)">+ ₹1000</span>
-              <span class="chip-amt" style="background:#f1f2f6; color:#555;" onclick="setQuickAmount(0)">સાફ કરો</span>
+              <span class="chip-amt" style="background:#f1f2f6; color:#555;" onclick="setQuickAmount(0)">સાફ</span>
             </div>
-
             <div class="qr-img-wrapper">
-              <img id="standQrImg" src="" alt="UPI QR Code">
+              <img id="standQrImg" src="" alt="UPI QR">
             </div>
-
-            <div style="background: #fff8f9; padding: 12px 14px; border-radius: 12px; border: 1px dashed #eec5d3; margin-top: 12px;">
-              <div style="font-size: 15px; font-weight: 800; color: var(--primary);">
-                સ્કેન કરવા માટેની રકમ: <span id="standQrAmountText">₹0</span>
-              </div>
-            </div>
-
-            <div style="margin-top: 16px;">
-              <button type="button" class="btn-pdf" style="width: 100%; background: var(--primary); padding: 14px; font-size: 15px;" onclick="downloadStandaloneQR()">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                QR કોડ ડાઉનલોડ કરો (Save Image)
-              </button>
+            <div style="font-size: 15px; font-weight: 800; color: var(--primary); margin-top:8px;">
+              રકમ: <span id="standQrAmountText">₹0</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 6. REPORTS VIEW -->
+      <!-- 7. REPORTS VIEW -->
       <section class="view" id="view-reports">
         <div class="card-panel">
           <div class="panel-title">
@@ -1405,7 +1304,6 @@
               </div>
               <span id="reportFilterLabel" style="font-size: 13px; color: var(--primary); font-weight: 800;"></span>
             </div>
-
             <div class="report-chips-scroll" id="reportChipsContainer"></div>
           </div>
 
@@ -1413,9 +1311,8 @@
             <div style="width: 100%;">
               <p id="repBannerPeriodTitle" style="font-size: 13.5px; opacity: 0.95;">કુલ આવક</p>
               <h1 id="repLifetimeSales" style="font-size: 34px; margin: 6px 0; font-weight: 800;">₹0</h1>
-              
               <div style="margin-top: 10px; display: inline-block; background: rgba(255, 255, 255, 0.18); padding: 6px 16px; border-radius: 20px;">
-                <span style="font-size: 12.5px; opacity: 0.95;">કુલ બિલોની સંખ્યા: </span>
+                <span style="font-size: 12.5px;">કુલ બિલોની સંખ્યા: </span>
                 <b id="repLifetimeBills" style="font-size: 15px; margin-left: 4px;">0 બિલ</b>
               </div>
             </div>
@@ -1425,56 +1322,88 @@
           <div id="repTopItemsList"></div>
 
           <div style="margin-top: 32px; padding-top: 18px; border-top: 1.5px dashed var(--border-color); text-align: center;">
-            <button type="button" onclick="clearBillsReportData()" style="background: #fff0f3; color: #ee5253; border: 1.5px solid #ffccd2; padding: 11px 20px; border-radius: 12px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition);">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ee5253" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            <button type="button" onclick="clearBillsReportData()" style="background: #fff0f3; color: #ee5253; border: 1.5px solid #ffccd2; padding: 11px 20px; border-radius: 12px; font-size: 13.5px; font-weight: 700; cursor: pointer;">
               જૂનો બિલ હિસાબ સાફ કરો (Reset Bills)
             </button>
-            <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">(નોંધ: ગ્રાહકોના સેવ કરેલા માપ સુરક્ષિત રહેશે)</p>
           </div>
         </div>
       </section>
 
     </main>
 
-    <!-- Mobile Bottom Navigation with Premium Colorful Icons -->
+    <!-- Mobile Bottom Navigation -->
     <div class="bottom-nav" id="bottomNav">
       <button class="bottom-nav-btn active" id="mobNavDash" onclick="switchView('view-dashboard')">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path fill="#0284c7" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-        </svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>હોમ</span>
       </button>
       <button class="bottom-nav-btn" id="mobNavMeas" onclick="switchView('view-measurements')">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/>
-        </svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
         <span>માપ</span>
       </button>
-      <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBill()">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-        </svg>
+      <button class="bottom-nav-btn" id="mobNavNew" onclick="openNewBillTab('form')">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         <span>બિલ</span>
       </button>
-      <button class="bottom-nav-btn" id="mobNavQr" onclick="switchView('view-qr-pay')">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path fill="#8b5cf6" d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v3h-3zm-5 0h3v3h-3zm2 3h3v3h-3zm3 0h3v3h-3zm-2 3h3v3h-3zm-3-3h3v3h-3z"/>
-        </svg>
-        <span>સ્કેનર</span>
+      <button class="bottom-nav-btn" id="mobNavCust" onclick="switchView('view-customers')">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        <span>ગ્રાહકો</span>
       </button>
       <button class="bottom-nav-btn" id="mobNavRep" onclick="switchView('view-reports')">
-        <svg class="icon-svg" viewBox="0 0 24 24">
-          <path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-        </svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ec4899" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
         <span>રિપોર્ટ</span>
       </button>
     </div>
   </div>
 
+  <!-- FULL-SCREEN CUSTOMER PROFILE -->
+  <div id="custProfileModal">
+    <div class="profile-top-header">
+      <button class="profile-back-btn" onclick="closeCustomerProfile()">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      </button>
+      <div>
+        <h2 id="profCustName" style="font-size: 20px; font-weight:800;">-</h2>
+        <p id="profCustPhone" style="font-size: 13px; opacity:0.9;">-</p>
+      </div>
+    </div>
+
+    <div class="profile-body-container">
+      <div class="sub-tabs-bar">
+        <button class="sub-tab-btn active" id="profTabBtnMeas" onclick="setProfileSubTab('meas')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 5v14h18V5H3zm16 12h-2v-3h-2v3h-2v-5h-2v5H9v-3H7v3H5V7h14v10z"/></svg>
+          માપ જુઓ (Measurements)
+        </button>
+        <button class="sub-tab-btn" id="profTabBtnBills" onclick="setProfileSubTab('bills')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#64748b" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          બિલ હિસ્ટ્રી (Bills History)
+        </button>
+      </div>
+
+      <!-- Tab 1: Measurements -->
+      <div id="profSectionMeas">
+        <div id="profMeasList"></div>
+      </div>
+
+      <!-- Tab 2: Bills History -->
+      <div id="profSectionBills" style="display: none;">
+        <div id="profBillsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW OF BILL DETAILS -->
+  <div id="billDetailsModal" onclick="closeBillDetails(event)">
+    <div class="bill-modal-content" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+        <h3 id="modalBillTitle" style="color:var(--primary); font-size:18px;">બિલ વિગત</h3>
+        <button onclick="closeBillDetails()" style="background:#fee2e2; border:none; color:#ef4444; width:30px; height:30px; border-radius:50%; font-weight:bold; cursor:pointer;">✕</button>
+      </div>
+      <div id="modalBillDetailsBody"></div>
+    </div>
+  </div>
+
 <script>
-  // =========================================================================
-  // ૧. FIREBASE CONFIGURATION
-  // =========================================================================
   const firebaseConfig = {
     apiKey: "AIzaSyBi0VfTe2LkhwOXAuICPEA9hqDzIZ3z9ww",
     authDomain: "diploma-study-portal-db8b2.firebaseapp.com",
@@ -1485,14 +1414,10 @@
     measurementId: "G-H1C1065TTV"
   };
 
-  // =========================================================================
-  // ૨. GMAIL ID અને UPI પેમેન્ટ ID
-  // =========================================================================
   const AUTHORIZED_EMAIL = "ruksanavahora941@gmail.com";
   const UPI_ID = "7572842641@upi";
   const SHOP_NAME = "Ruksana Ladies Tailor";
 
-  // Firebase Initialize
   let auth = null, db = null;
   if (firebaseConfig.apiKey && firebaseConfig.apiKey.trim() !== "") {
     try {
@@ -1500,23 +1425,22 @@
       auth = firebase.auth();
       db = firebase.firestore();
     } catch(e) {
-      console.log("Firebase Init Notice:", e);
+      console.log("Firebase Init:", e);
     }
   }
 
-  // Master Services Catalog
   const ICON_DRESS = '<div class="item-badge" style="background:#fce7f3;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#db2777" d="M12 2C8.69 2 6 4.69 6 8c0 2.97 2.16 5.43 5 5.91V19H9v2h6v-2h-2v-5.09c2.84-.48 5-2.94 5-5.91 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg></div>';
   const ICON_SHIRT = '<div class="item-badge" style="background:#e0f2fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#0284c7" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
   const ICON_SUIT = '<div class="item-badge" style="background:#ede9fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#7c3aed" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg></div>';
   const ICON_SCISSORS = '<div class="item-badge" style="background:#fef3c7;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#d97706" d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64z"/></svg></div>';
 
   let servicesList = [
-    { id: 1, name: 'ફેન્સી ડ્રેસ', price: 1500, iconRender: ICON_DRESS },
-    { id: 2, name: 'બ્લાઉઝ', price: 800, iconRender: ICON_DRESS },
-    { id: 3, name: 'કોટસુટ', price: 2500, iconRender: ICON_SUIT },
-    { id: 4, name: 'લેડીઝ શર્ટ', price: 900, iconRender: ICON_SHIRT },
-    { id: 5, name: 'ફેન્સી ટોપ', price: 1200, iconRender: ICON_DRESS },
-    { id: 6, name: 'ફ્રોક', price: 1300, iconRender: ICON_DRESS },
+    { id: 1, name: 'સાદા ડ્રેસ', price: 400, iconRender: ICON_DRESS },
+    { id: 2, name: 'અસ્તર વાળા ડ્રેસ', price: 650, iconRender: ICON_DRESS },
+    { id: 3, name: 'લેસ', price: 100, iconRender: ICON_SCISSORS },
+    { id: 4, name: 'બ્લાઉઝ', price: 800, iconRender: ICON_DRESS },
+    { id: 5, name: 'કોટસુટ', price: 2500, iconRender: ICON_SUIT },
+    { id: 6, name: 'લેડીઝ શર્ટ', price: 900, iconRender: ICON_SHIRT },
     { id: 7, name: 'રિપેરિંગ કામ', price: 150, iconRender: ICON_SCISSORS }
   ];
 
@@ -1529,6 +1453,7 @@
   const now = new Date();
   let currentReportYear = String(now.getFullYear());
   let currentReportMonth = 'all';
+  let activeCustomerData = null;
 
   let toastTimeout;
   function showToast(text, type = 'success') {
@@ -1536,12 +1461,10 @@
     box.className = `${type} show`;
     box.innerHTML = text;
     clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-      box.className = '';
-    }, 2800);
+    toastTimeout = setTimeout(() => { box.className = ''; }, 2800);
   }
 
-  // Google Authentication
+  // Auth
   if(auth) {
     auth.onAuthStateChanged(user => {
       const loginScreen = document.getElementById('screen-login');
@@ -1570,37 +1493,25 @@
   }
 
   function handleGoogleLogin() {
-    if(!auth) {
-      alert("Firebase Config કોડમાં API કી ઉમેરો!");
-      return;
-    }
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).catch(err => {
-      showToast('લૉગિન ભૂલ: ' + err.message, 'error');
-    });
+    if(!auth) return alert("Firebase Config API કી તપાસો!");
+    auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => showToast(err.message, 'error'));
   }
 
   function handleLogout() {
-    if(auth) {
-      auth.signOut().then(() => {
-        showToast('લૉગ આઉટ થઈ ગયું!', 'info');
-      });
-    } else {
-      location.reload();
-    }
+    if(auth) auth.signOut().then(() => showToast('લૉગ આઉટ!', 'info'));
+    else location.reload();
   }
 
   function loadFirestoreData() {
     if(!db) return;
-
     db.collection("measurements").orderBy("dateRaw", "desc").onSnapshot(snapshot => {
       if(!snapshot.empty) {
         measDB = [];
         snapshot.forEach(doc => measDB.push({ id: doc.id, ...doc.data() }));
         localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
-        renderMeasurements();
+        renderCustomers();
       }
-    }, err => console.warn("Firestore meas error:", err));
+    });
 
     db.collection("bills").orderBy("dateRaw", "desc").onSnapshot(snapshot => {
       if(!snapshot.empty) {
@@ -1608,19 +1519,20 @@
         snapshot.forEach(doc => billsDB.push({ id: doc.id, ...doc.data() }));
         localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
         refreshDashboardStats();
+        renderCustomers();
         renderReports();
       }
-    }, err => console.warn("Firestore bills error:", err));
+    });
   }
 
   window.onload = function() {
     refreshDashboardStats();
-    renderMeasurements();
+    renderCustomers();
     renderReports();
     generateStandaloneQR();
   };
 
-  // Close dropdown on click outside
+  // Close menus when clicked outside
   window.addEventListener('click', function(e) {
     if (!e.target.closest('.meas-action-wrap')) {
       document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
@@ -1631,7 +1543,6 @@
     document.getElementById('appHeader').style.display = 'flex';
     document.getElementById('bottomNav').classList.add('nav-active');
     switchView('view-dashboard');
-    showToast('રૂકસાના લેડીઝ ટેલરમાં સ્વાગત છે!', 'info');
   }
 
   function switchView(viewId) {
@@ -1639,109 +1550,27 @@
     const target = document.getElementById(viewId);
     if(target) target.classList.add('active');
 
-    // Desktop Nav
+    // Desktop
     document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
     if(viewId === 'view-dashboard') { document.getElementById('deskNavDash')?.classList.add('active'); refreshDashboardStats(); }
-    if(viewId === 'view-measurements') { document.getElementById('deskNavMeas')?.classList.add('active'); renderMeasurements(); }
-    if(viewId === 'view-new-bill') document.getElementById('deskNavNew')?.classList.add('active');
+    if(viewId === 'view-measurements') { document.getElementById('deskNavMeas')?.classList.add('active'); }
+    if(viewId === 'view-new-bill') { document.getElementById('deskNavNew')?.classList.add('active'); }
+    if(viewId === 'view-customers') { document.getElementById('deskNavCust')?.classList.add('active'); renderCustomers(); }
     if(viewId === 'view-qr-pay') { document.getElementById('deskNavQr')?.classList.add('active'); generateStandaloneQR(); }
     if(viewId === 'view-reports') { document.getElementById('deskNavRep')?.classList.add('active'); renderReports(); }
 
-    // Mobile Nav
+    // Mobile
     document.querySelectorAll('.bottom-nav-btn').forEach(el => el.classList.remove('active'));
     if(viewId === 'view-dashboard') document.getElementById('mobNavDash')?.classList.add('active');
     if(viewId === 'view-measurements') document.getElementById('mobNavMeas')?.classList.add('active');
     if(viewId === 'view-new-bill') document.getElementById('mobNavNew')?.classList.add('active');
-    if(viewId === 'view-qr-pay') { document.getElementById('mobNavQr')?.classList.add('active'); generateStandaloneQR(); }
+    if(viewId === 'view-customers') document.getElementById('mobNavCust')?.classList.add('active');
     if(viewId === 'view-reports') document.getElementById('mobNavRep')?.classList.add('active');
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Switch tabs inside measurements view
-  function setMeasSubView(type) {
-    const formBox = document.getElementById('subViewMeasForm');
-    const listBox = document.getElementById('subViewMeasList');
-    const tabForm = document.getElementById('tabBtnNewMeas');
-    const tabList = document.getElementById('tabBtnViewMeas');
-
-    if (type === 'form') {
-      if(formBox) formBox.style.display = 'block';
-      if(listBox) listBox.style.display = 'none';
-      if(tabForm) tabForm.classList.add('active');
-      if(tabList) tabList.classList.remove('active');
-    } else {
-      if(formBox) formBox.style.display = 'none';
-      if(listBox) listBox.style.display = 'block';
-      if(tabList) tabList.classList.add('active');
-      if(tabForm) tabForm.classList.remove('active');
-      renderMeasurements();
-    }
-  }
-
-  function openMeasurementsTab(tabType) {
-    switchView('view-measurements');
-    setMeasSubView(tabType);
-  }
-
-  // Standalone QR Generator
-  function getStandaloneUpiUrl() {
-    const inputVal = document.getElementById('qrCustomAmountInput')?.value;
-    const amt = Math.max(0, parseFloat(inputVal) || 0);
-    let upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(SHOP_NAME)}&cu=INR`;
-    if (amt > 0) {
-      upiUrl += `&am=${amt}&tn=${encodeURIComponent('Tailor Payment')}`;
-    }
-    return { upiUrl, amt };
-  }
-
-  function generateStandaloneQR() {
-    const { upiUrl, amt } = getStandaloneUpiUrl();
-    const qrImg = document.getElementById('standQrImg');
-    const lblAmt = document.getElementById('standQrAmountText');
-
-    if(lblAmt) lblAmt.innerText = '₹' + amt;
-
-    if(qrImg) {
-      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
-    }
-  }
-
-  function setQuickAmount(amt) {
-    const input = document.getElementById('qrCustomAmountInput');
-    if(input) {
-      input.value = amt > 0 ? amt : '';
-      generateStandaloneQR();
-    }
-  }
-
-  function downloadStandaloneQR() {
-    const qrImg = document.getElementById('standQrImg');
-    if (!qrImg || !qrImg.src) return;
-
-    showToast('QR કોડ ડાઉનલોડ થઈ રહ્યો છે...', 'info');
-
-    fetch(qrImg.src)
-      .then(res => res.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const inputVal = document.getElementById('qrCustomAmountInput')?.value;
-        const amt = parseFloat(inputVal) || 0;
-        a.href = url;
-        a.download = `Tailor_QR_${amt > 0 ? amt + 'Rs' : 'Pay'}.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-        showToast('QR કોડ સંપૂર્ણ ડાઉનલોડ થઈ ગયો!', 'success');
-      })
-      .catch(() => {
-        window.open(qrImg.src, '_blank');
-      });
-  }
-
-  // Measurements Logic
+  // --- માપ ડાયરી (માત્ર ફોર્મ અને સેવ) ---
   async function saveMeasurement() {
     const name = document.getElementById('mCustName').value.trim();
     const phone = document.getElementById('mCustPhone').value.trim();
@@ -1749,7 +1578,7 @@
     const notes = document.getElementById('mExtraNotes').value.trim();
 
     if(!name || !phone) {
-      showToast('ગ્રાહકનું નામ અને મોબાઈલ નંબર લખો.', 'error');
+      showToast('ગ્રાહકનું નામ અને મોબાઈલ નંબર જરૂરી છે.', 'error');
       return;
     }
 
@@ -1779,18 +1608,19 @@
       const idx = measDB.findIndex(m => String(m.id) === String(editId));
       if(idx !== -1) measDB[idx] = { id: editId, ...measData };
       if(db) db.collection("measurements").doc(String(editId)).set(measData, {merge:true}).catch(()=>{});
-      showToast('માપ સુધારી લેવાયું!', 'success');
+      showToast('માપ સફળતાપૂર્વક અપડેટ થયું!', 'success');
     } else {
       const newId = String(Date.now());
       measDB.unshift({ id: newId, ...measData });
       if(db) db.collection("measurements").doc(newId).set(measData).catch(()=>{});
-      showToast('માપ સાચવી લીધું!', 'success');
+      showToast('નવું માપ ગ્રાહકના ખાતામાં સેવ થઈ ગયું!', 'success');
     }
 
     localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
     resetMeasForm();
-    renderMeasurements();
-    setMeasSubView('list');
+    renderCustomers();
+    // Redirect to customers profile
+    openCustomerProfile(name, phone);
   }
 
   function resetMeasForm() {
@@ -1801,232 +1631,40 @@
     document.getElementById('editingMeasId').value = '';
     document.getElementById('measEditNotice').innerText = '';
 
-    const ids = ['m_len', 'm_chest', 'm_waist', 'm_seat', 'm_shoulder', 'm_sleeve', 'm_mori', 'm_fneck', 'm_bneck', 'm_plen'];
-    ids.forEach(id => {
+    ['m_len', 'm_chest', 'm_waist', 'm_seat', 'm_shoulder', 'm_sleeve', 'm_mori', 'm_fneck', 'm_bneck', 'm_plen'].forEach(id => {
       const el = document.getElementById(id);
       if(el) el.value = '';
     });
   }
 
-  function renderMeasurements() {
-    const q = (document.getElementById('measSearchInput')?.value || '').toLowerCase();
-    const container = document.getElementById('measurementsListContainer');
-    const badge = document.getElementById('measCountBadge');
-    if(!container) return;
+  // --- બિલિંગ સેક્શન ---
+  function setBillSubView(type) {
+    const formBox = document.getElementById('subViewBillForm');
+    const receiptBox = document.getElementById('subViewBillReceipt');
+    const tabForm = document.getElementById('tabBtnBillForm');
+    const tabReceipt = document.getElementById('tabBtnBillView');
 
-    const filtered = measDB.filter(m => 
-      (m.name && m.name.toLowerCase().includes(q)) || 
-      (m.phone && m.phone.includes(q)) || 
-      (m.clothType && m.clothType.toLowerCase().includes(q))
-    );
-
-    if(badge) badge.innerText = `${filtered.length} માપ`;
-
-    if(filtered.length === 0) {
-      container.innerHTML = `<p style="text-align:center; color:#94a3b8; padding: 25px;">કોઈ માપ મળ્યા નથી.</p>`;
-      return;
-    }
-
-    container.innerHTML = filtered.map(m => {
-      const initial = m.name.charAt(0).toUpperCase();
-
-      const upperZone = [
-        { title: 'લંબાઈ', val: m.specs.len },
-        { title: 'છાતી', val: m.specs.chest },
-        { title: 'કમર', val: m.specs.waist },
-        { title: 'શોલ્ડર', val: m.specs.shoulder }
-      ].filter(s => s.val && s.val.trim() !== '');
-
-      const armNeckZone = [
-        { title: 'બાય લંબાઈ', val: m.specs.sleeve },
-        { title: 'મોરી', val: m.specs.mori },
-        { title: 'આગળ ગળો', val: m.specs.fneck },
-        { title: 'પાછળ ગળો', val: m.specs.bneck }
-      ].filter(s => s.val && s.val.trim() !== '');
-
-      const lowerZone = [
-        { title: 'સીટ', val: m.specs.seat },
-        { title: 'પેન્ટ લંબાઈ', val: m.specs.plen }
-      ].filter(s => s.val && s.val.trim() !== '');
-
-      const hasAnySpecs = (upperZone.length + armNeckZone.length + lowerZone.length) > 0;
-
-      const renderZone = (title, items) => {
-        if (!items || items.length === 0) return '';
-        return `
-          <div class="zone-block">
-            <div class="zone-title">
-              <span>${title}</span>
-            </div>
-            <div class="zone-capsules-grid">
-              ${items.map(it => `
-                <div class="meas-capsule-badge">
-                  <span class="meas-capsule-label">${it.title}</span>
-                  <span class="meas-capsule-val">${it.val}"</span>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      };
-
-      return `
-        <div class="smart-meas-card" id="meas-card-${m.id}">
-          <div class="smart-meas-header" onclick="toggleMeasCard('${m.id}', event)">
-            <div class="meas-user-info">
-              <div class="meas-avatar">${initial}</div>
-              <div>
-                <div style="font-weight: 800; font-size: 15.5px; color: #ffffff; display:flex; align-items:center; letter-spacing: 0.3px;">
-                  ${m.name}
-                  <span class="meas-badge-pill">${m.clothType}</span>
-                </div>
-                <div style="font-size: 12px; color: #cbd5e1; margin-top: 3px;">
-                  📞 ${m.phone} • 📅 <span style="font-size:11px; opacity:0.85;">${m.date}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="meas-action-wrap" onclick="event.stopPropagation()">
-              <button type="button" class="btn-3dot" title="વિકલ્પ" onclick="toggle3DotMenu('${m.id}', event)">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-              <div class="meas-dropdown-menu" id="menu-${m.id}">
-                <button type="button" class="meas-drop-item" onclick="editMeasurement('${m.id}'); hideAllMenus();">
-                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#f59e0b" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                  માપ સુધારો
-                </button>
-                <button type="button" class="meas-drop-item" onclick="billFromMeas('${m.name.replace(/'/g, "\\'")}', '${m.phone}'); hideAllMenus();">
-                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#10b981" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                  બિલ બનાવો
-                </button>
-                <button type="button" class="meas-drop-item" onclick="sendMeasWhatsApp('${m.id}'); hideAllMenus();">
-                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#25D366" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
-                  WhatsApp
-                </button>
-                <button type="button" class="meas-drop-item delete" onclick="deleteMeasurement('${m.id}'); hideAllMenus();">
-                  <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ef4444" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                  ડિલીટ કરો
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="meas-expand-body" id="expand-${m.id}">
-            ${hasAnySpecs ? `
-              ${renderZone('૧. ઉપરનો ભાગ (Upper Body)', upperZone)}
-              ${renderZone('૨. હાથ અને ગળું (Sleeves & Neck)', armNeckZone)}
-              ${renderZone('૩. નીચેનો ભાગ (Lower Body)', lowerZone)}
-            ` : '<p style="font-size: 12.5px; color:#cbd5e1; text-align:center; padding:12px 0;">કોઈ માપ નોંધેલ નથી</p>'}
-
-            ${m.notes ? `
-              <div class="meas-notes-box">
-                <b style="color:var(--gold);">વિશેષ નોંધ:</b> ${m.notes}
-              </div>
-            ` : ''}
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function toggleMeasCard(id, event) {
-    if (event.target.closest('.meas-action-wrap')) return;
-    const body = document.getElementById(`expand-${id}`);
-    if(body) body.classList.toggle('open');
-  }
-
-  function toggle3DotMenu(id, event) {
-    if (event) event.stopPropagation();
-    const menu = document.getElementById(`menu-${id}`);
-    if (!menu) return;
-    const isShowing = menu.classList.contains('show');
-    hideAllMenus();
-    if (!isShowing) {
-      menu.classList.add('show');
+    if (type === 'form') {
+      if(formBox) formBox.style.display = 'block';
+      if(receiptBox) receiptBox.style.display = 'none';
+      if(tabForm) tabForm.classList.add('active');
+      if(tabReceipt) tabReceipt.classList.remove('active');
+    } else {
+      updateLiveReceipt();
+      if(formBox) formBox.style.display = 'none';
+      if(receiptBox) receiptBox.style.display = 'block';
+      if(tabReceipt) tabReceipt.classList.add('active');
+      if(tabForm) tabForm.classList.remove('active');
     }
   }
 
-  function hideAllMenus() {
-    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
-  }
+  function goToBillReceiptTab() { setBillSubView('receipt'); }
 
-  function editMeasurement(id) {
-    const item = measDB.find(m => String(m.id) === String(id));
-    if(!item) return;
-
-    document.getElementById('editingMeasId').value = item.id;
-    document.getElementById('mCustName').value = item.name;
-    document.getElementById('mCustPhone').value = item.phone;
-    document.getElementById('mClothType').value = item.clothType;
-    document.getElementById('mExtraNotes').value = item.notes || '';
-
-    document.getElementById('m_len').value = item.specs.len || '';
-    document.getElementById('m_chest').value = item.specs.chest || '';
-    document.getElementById('m_waist').value = item.specs.waist || '';
-    document.getElementById('m_seat').value = item.specs.seat || '';
-    document.getElementById('m_shoulder').value = item.specs.shoulder || '';
-    document.getElementById('m_sleeve').value = item.specs.sleeve || '';
-    document.getElementById('m_mori').value = item.specs.mori || '';
-    document.getElementById('m_fneck').value = item.specs.fneck || '';
-    document.getElementById('m_bneck').value = item.specs.bneck || '';
-    document.getElementById('m_plen').value = item.specs.plen || '';
-
-    document.getElementById('measEditNotice').innerText = `(સુધારી રહ્યા છો: ${item.name})`;
-    showToast(`${item.name} ના માપ ફોર્મમાં આવી ગયા છે.`, 'info');
-    
-    setMeasSubView('form');
-    window.scrollTo({ top: 100, behavior: 'smooth' });
-  }
-
-  function deleteMeasurement(id) {
-    if(confirm('શું તમે આ ગ્રાહકનું માપ કાઢી નાખવા માંગો છો?')) {
-      measDB = measDB.filter(m => String(m.id) !== String(id));
-      localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
-      if(db) db.collection("measurements").doc(String(id)).delete().catch(()=>{});
-      renderMeasurements();
-      showToast('માપ કાઢી નાખ્યું.', 'info');
-    }
-  }
-
-  function sendMeasWhatsApp(id) {
-    const m = measDB.find(x => String(x.id) === String(id));
-    if(!m) return;
-
-    let msg = `*રૂકસાના લેડીઝ ટેલર - ગ્રાહકનું માપ*\n`;
-    msg += `------------------------------------\n`;
-    msg += `ગ્રાહક: ${m.name}\n`;
-    msg += `મોબાઈલ: ${m.phone}\n`;
-    msg += `પ્રકાર: ${m.clothType}\n`;
-    msg += `તારીખ: ${m.date}\n`;
-    msg += `------------------------------------\n`;
-    msg += `*માપની વિગત:*\n`;
-    if(m.specs.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
-    if(m.specs.chest) msg += `• છાતી: ${m.specs.chest}\n`;
-    if(m.specs.waist) msg += `• કમર: ${m.specs.waist}\n`;
-    if(m.specs.seat) msg += `• સીટ: ${m.specs.seat}\n`;
-    if(m.specs.shoulder) msg += `• શોલ્ડર: ${m.specs.shoulder}\n`;
-    if(m.specs.sleeve) msg += `• બાય લંબાઈ: ${m.specs.sleeve}\n`;
-    if(m.specs.mori) msg += `• મોરી: ${m.specs.mori}\n`;
-    if(m.specs.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
-    if(m.specs.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
-    if(m.specs.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
-    if(m.notes) msg += `\n*નોંધ:* ${m.notes}\n`;
-    msg += `------------------------------------\n`;
-    msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
-    msg += `ફોન: 7572842641`;
-
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-
-  function billFromMeas(name, phone) {
+  function openNewBillTab(subTab = 'form') {
     openNewBill();
-    document.getElementById('custName').value = name;
-    document.getElementById('custPhone').value = phone;
-    updateLiveReceipt();
-    showToast(`નવા બિલમાં ${name} ઉમેરાઈ ગયા!`, 'info');
+    setBillSubView(subTab);
   }
 
-  // Billing Logic
   function openNewBill() {
     cart = {};
     itemPrices = {};
@@ -2037,6 +1675,9 @@
 
     document.getElementById('custName').value = '';
     document.getElementById('custPhone').value = '';
+    document.getElementById('editingBillId').value = '';
+    document.getElementById('customBillNo').value = '';
+    document.getElementById('billEditStatus').innerText = '';
     
     const d = new Date();
     d.setDate(d.getDate() + 4);
@@ -2074,8 +1715,7 @@
   }
 
   function updateServicePrice(id, newPrice) {
-    const p = Math.max(0, parseFloat(newPrice) || 0);
-    itemPrices[id] = p;
+    itemPrices[id] = Math.max(0, parseFloat(newPrice) || 0);
     updateLiveReceipt();
   }
 
@@ -2085,10 +1725,7 @@
     const name = nameInput.value.trim();
     const price = parseFloat(priceInput.value) || 0;
 
-    if(!name) {
-      showToast('કામનું નામ લખો.', 'error');
-      return;
-    }
+    if(!name) return showToast('કામનું નામ લખો.', 'error');
 
     const newId = Date.now();
     servicesList.push({ id: newId, name: name, price: price, iconRender: ICON_SCISSORS });
@@ -2107,8 +1744,8 @@
     const val = (cart[id] || 0) + delta;
     if(val >= 0) {
       cart[id] = val;
-      const displayEl = document.getElementById(`qty-val-${id}`);
-      if(displayEl) displayEl.innerText = val;
+      const el = document.getElementById(`qty-val-${id}`);
+      if(el) el.innerText = val;
       updateLiveReceipt();
     }
   }
@@ -2120,29 +1757,30 @@
     const advance = parseFloat(document.getElementById('billAdvance').value) || 0;
 
     const todayStr = new Date().toISOString().split('T')[0];
-    const billNo = String(billsDB.length + 1).padStart(4, '0');
+    const customNo = document.getElementById('customBillNo').value;
+    const billNo = customNo ? customNo : String(billsDB.length + 1).padStart(4, '0');
 
     document.getElementById('lblBillNo').innerText = '#' + billNo;
     document.getElementById('lblDate').innerText = todayStr;
     document.getElementById('lblCustName').innerText = name;
     document.getElementById('lblCustPhone').innerText = phone;
-    document.getElementById('lblDueDate').innerText = dueDate;
+    document.getElementById('lblAdvanceDisplay').innerText = '₹' + advance;
 
     let itemsPurchased = [];
     let subtotal = 0;
 
     servicesList.forEach(s => {
       const q = cart[s.id] || 0;
-      const currentPrice = itemPrices[s.id] !== undefined ? itemPrices[s.id] : s.price;
+      const curPrice = itemPrices[s.id] !== undefined ? itemPrices[s.id] : s.price;
       if(q > 0) {
-        itemsPurchased.push({ name: s.name, qty: q, price: currentPrice, total: q * currentPrice });
-        subtotal += q * currentPrice;
+        itemsPurchased.push({ name: s.name, qty: q, price: curPrice, total: q * curPrice });
+        subtotal += q * curPrice;
       }
     });
 
     const tbody = document.getElementById('receiptTableBody');
     if(itemsPurchased.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 15px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 20px 0;">કોઈ આઇટમ પસંદ કરેલ નથી</td></tr>`;
     } else {
       tbody.innerHTML = itemsPurchased.map(i => `
         <tr>
@@ -2178,91 +1816,76 @@
       return;
     }
 
-    const newBillId = String(Date.now());
-    billsDB.unshift({ id: newBillId, ...currentBillData });
+    const editId = document.getElementById('editingBillId').value;
+    if(editId) {
+      const idx = billsDB.findIndex(b => String(b.id) === String(editId));
+      if(idx !== -1) {
+        billsDB[idx] = { ...billsDB[idx], ...currentBillData, id: editId };
+      }
+      if(db) db.collection("bills").doc(String(editId)).set(currentBillData, {merge:true}).catch(()=>{});
+      showToast('બિલ સુધારી લીધું!', 'success');
+    } else {
+      const newBillId = String(Date.now());
+      billsDB.unshift({ id: newBillId, ...currentBillData });
+      if(db) db.collection("bills").doc(newBillId).set(currentBillData).catch(()=>{});
+      showToast('બિલ સેવ થઈ ગયું!', 'success');
+    }
+
     localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
-
-    if(db) db.collection("bills").doc(newBillId).set(currentBillData).catch(()=>{});
-
-    showToast('બિલ સેવ થઈ ગયું!', 'success');
     refreshDashboardStats();
+    renderCustomers();
     renderReports();
-    switchView('view-dashboard');
+    openCustomerProfile(currentBillData.customer, currentBillData.phone);
   }
 
   function downloadBillPDF() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
-      return;
+      return showToast('ગ્રાહકનું નામ અને આઇટમ ઉમેરો.', 'error');
     }
-
     showToast('PDF ડાઉનલોડ થઈ રહી છે...', 'info');
 
     const safeCustName = (currentBillData.customer || 'Customer').replace(/[^a-zA-Z0-9\u0A80-\u0AFF]/g, '_');
     const element = document.getElementById('printableReceipt');
-    const advInput = document.getElementById('billAdvance');
-    const advPrint = document.getElementById('lblAdvancePrint');
-
-    if (advInput && advPrint) {
-      advPrint.innerText = '₹' + (advInput.value || 0);
-      advPrint.style.display = 'inline';
-      advInput.style.display = 'none';
-    }
-
     const origWidth = element.style.width;
-    element.style.width = '460px';
+    element.style.width = '480px';
 
     const opt = {
-      margin: [5, 5, 5, 5],
+      margin: [8, 8, 8, 8],
       filename: `Bill_${currentBillData.billNo}_${safeCustName}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 },
-      jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' },
-      pagebreak: { mode: 'avoid-all' }
+      html2canvas: { scale: 2.8, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
       element.style.width = origWidth;
-      if (advInput && advPrint) {
-        advInput.style.display = 'inline-block';
-        advPrint.style.display = 'none';
-      }
-      showToast('PDF ડાઉનલોડ થઈ ગઈ!', 'success');
-    }).catch(err => {
-      console.error("PDF generation error:", err);
+      showToast('PDF તૈયાર છે!', 'success');
+    }).catch(() => {
       element.style.width = origWidth;
-      if (advInput && advPrint) {
-        advInput.style.display = 'inline-block';
-        advPrint.style.display = 'none';
-      }
-      showToast('PDF બનાવવામાં ખામી આવી.', 'error');
+      showToast('PDF ડાઉનલોડમાં ભૂલ આવી.', 'error');
     });
   }
 
   function sendWhatsAppReceipt() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
-      return;
+      return showToast('ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
     }
 
     let itemsStr = '';
-    currentBillData.items.forEach((it) => {
+    currentBillData.items.forEach(it => {
       itemsStr += `▪️ *${it.name}*\n  નંગ: ${it.qty} | ભાવ: ₹${it.price} | કુલ: *₹${it.total}*\n`;
     });
 
     let msg = `*રૂકસાના લેડીઝ ટેલર*\n`;
-    msg += `પ્રો. રૂકસાના બેન | મો: 7572842641\n`;
-    msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ\n`;
+    msg += `મો: 7572842641 | C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર, ભરૂચ\n`;
     msg += `------------------------------------\n`;
     msg += `બિલ નં: #${currentBillData.billNo}\n`;
     msg += `તારીખ: ${currentBillData.date}\n`;
     msg += `ગ્રાહક: ${currentBillData.customer}\n`;
-    if(currentBillData.phone && currentBillData.phone !== '-') {
-      msg += `મોબાઈલ: ${currentBillData.phone}\n`;
-    }
-    msg += `ડિલિવરી તારીખ: ${currentBillData.dueDate}\n`;
+    if(currentBillData.phone && currentBillData.phone !== '-') msg += `મોબાઈલ: ${currentBillData.phone}\n`;
+    msg += `ડિલિવરી: ${currentBillData.dueDate}\n`;
     msg += `------------------------------------\n`;
-    msg += `*કામ અને હિસાબ:*\n\n${itemsStr}`;
+    msg += `*કામ અને વિગત:*\n\n${itemsStr}`;
     msg += `------------------------------------\n`;
     msg += `કુલ રકમ: ₹${currentBillData.total}\n`;
     msg += `એડવાન્સ જમા: ₹${currentBillData.advance}\n`;
@@ -2273,66 +1896,476 @@
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
+  // --- ગ્રાહકોની યાદી અને પ્રોફાઇલ સિસ્ટમ ---
+  function getCustomerProfilesMap() {
+    let map = {};
+    // Gather from Measurements
+    measDB.forEach(m => {
+      const key = (m.phone && m.phone !== '-') ? m.phone.trim() : m.name.trim();
+      if(!map[key]) {
+        map[key] = { name: m.name, phone: m.phone, measCount: 0, billsCount: 0 };
+      }
+      map[key].measCount++;
+    });
+
+    // Gather from Bills
+    billsDB.forEach(b => {
+      const key = (b.phone && b.phone !== '-') ? b.phone.trim() : b.customer.trim();
+      if(!map[key]) {
+        map[key] = { name: b.customer, phone: b.phone, measCount: 0, billsCount: 0 };
+      }
+      map[key].billsCount++;
+    });
+
+    return map;
+  }
+
   function renderCustomers() {
     const q = (document.getElementById('custSearchInput')?.value || '').toLowerCase();
     const container = document.getElementById('customersContainer');
-    let map = {};
+    const badge = document.getElementById('custTotalCountBadge');
+    if(!container) return;
 
-    billsDB.forEach(b => {
-      const key = (b.phone && b.phone !== '-') ? b.phone : b.customer;
-      if(!map[key]) {
-        map[key] = { name: b.customer, phone: b.phone, lastDate: b.date, orders: 1 };
-      } else {
-        map[key].orders++;
-      }
-    });
-
+    const map = getCustomerProfilesMap();
     const list = Object.values(map).filter(c => 
       (c.name && c.name.toLowerCase().includes(q)) || 
       (c.phone && c.phone.includes(q))
     );
 
+    if(badge) badge.innerText = `${list.length} ગ્રાહકો`;
+
     if(list.length === 0) {
-      container.innerHTML = `<p style="text-align:center; color:#94a3b8; padding:20px;">કોઈ ગ્રાહક મળ્યા નથી.</p>`;
+      container.innerHTML = `<p style="text-align:center; color:#94a3b8; padding:30px;">કોઈ ગ્રાહક મળ્યા નથી.</p>`;
       return;
     }
 
     container.innerHTML = list.map(c => `
-      <div class="data-list-card">
-        <div>
-          <b style="color:var(--primary); font-size:15px;">${c.name}</b>
-          <div style="font-size:12px; color:#64748b;">${c.phone} | છેલ્લો ઓર્ડર: ${c.lastDate}</div>
+      <div class="cust-card-item" onclick="openCustomerProfile('${c.name.replace(/'/g, "\\'")}', '${c.phone}')">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="meas-avatar" style="width:42px; height:42px; font-size:16px;">
+            ${(c.name || 'G').charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <b style="color:var(--primary); font-size:16px; display:block;">${c.name}</b>
+            <span style="font-size:12.5px; color:#64748b;">📞 ${c.phone || 'નંબર નથી'}</span>
+          </div>
         </div>
-        <span style="background:#eef1f6; padding:5px 12px; border-radius:15px; font-weight:700; font-size:12px;">${c.orders} બિલ</span>
+        <div style="display:flex; gap:6px;">
+          <span style="background:#fef3c7; color:#b45309; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">
+            ${c.measCount} માપ
+          </span>
+          <span style="background:#e0f2fe; color:#0369a1; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">
+            ${c.billsCount} બિલ
+          </span>
+        </div>
       </div>
     `).join('');
   }
 
+  function openCustomerProfile(name, phone) {
+    activeCustomerData = { name, phone };
+    document.getElementById('profCustName').innerText = name;
+    document.getElementById('profCustPhone').innerText = phone ? `📞 ${phone}` : 'મોબાઈલ નંબર નથી';
+    
+    document.getElementById('custProfileModal').style.display = 'flex';
+    setProfileSubTab('meas');
+  }
+
+  function closeCustomerProfile() {
+    document.getElementById('custProfileModal').style.display = 'none';
+    activeCustomerData = null;
+  }
+
+  function setProfileSubTab(type) {
+    const tabMeas = document.getElementById('profTabBtnMeas');
+    const tabBills = document.getElementById('profTabBtnBills');
+    const secMeas = document.getElementById('profSectionMeas');
+    const secBills = document.getElementById('profSectionBills');
+
+    if(type === 'meas') {
+      tabMeas.classList.add('active');
+      tabBills.classList.remove('active');
+      secMeas.style.display = 'block';
+      secBills.style.display = 'none';
+      renderCustomerMeasurements();
+    } else {
+      tabBills.classList.add('active');
+      tabMeas.classList.remove('active');
+      secBills.style.display = 'block';
+      secMeas.style.display = 'none';
+      renderCustomerBills();
+    }
+  }
+
+  function renderCustomerMeasurements() {
+    if(!activeCustomerData) return;
+    const container = document.getElementById('profMeasList');
+    const { name, phone } = activeCustomerData;
+
+    const userMeas = measDB.filter(m => 
+      (phone && phone !== '-' && m.phone === phone) || (m.name.toLowerCase() === name.toLowerCase())
+    );
+
+    if(userMeas.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b;">આ ગ્રાહકનું કોઈ માપ સેવ કરેલું નથી.</div>`;
+      return;
+    }
+
+    container.innerHTML = userMeas.map(m => {
+      const upperZone = [
+        { title: 'લંબાઈ', val: m.specs.len },
+        { title: 'છાતી', val: m.specs.chest },
+        { title: 'કમર', val: m.specs.waist },
+        { title: 'શોલ્ડર', val: m.specs.shoulder }
+      ].filter(s => s.val && s.val.trim() !== '');
+
+      const armNeckZone = [
+        { title: 'બાય લંબાઈ', val: m.specs.sleeve },
+        { title: 'મોરી', val: m.specs.mori },
+        { title: 'આગળ ગળો', val: m.specs.fneck },
+        { title: 'પાછળ ગળો', val: m.specs.bneck }
+      ].filter(s => s.val && s.val.trim() !== '');
+
+      const lowerZone = [
+        { title: 'સીટ', val: m.specs.seat },
+        { title: 'પેન્ટ લંબાઈ', val: m.specs.plen }
+      ].filter(s => s.val && s.val.trim() !== '');
+
+      const renderZone = (title, items) => {
+        if (!items || items.length === 0) return '';
+        return `
+          <div class="zone-block">
+            <div class="zone-title"><span>${title}</span></div>
+            <div class="zone-capsules-grid">
+              ${items.map(it => `
+                <div class="meas-capsule-badge">
+                  <span class="meas-capsule-label">${it.title}</span>
+                  <span class="meas-capsule-val">${it.val}"</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      };
+
+      return `
+        <div class="smart-meas-card">
+          <div class="smart-meas-header">
+            <div class="meas-user-info">
+              <div class="meas-avatar">${(m.name || 'G').charAt(0).toUpperCase()}</div>
+              <div>
+                <div style="font-weight: 800; font-size: 15.5px; color: #ffffff;">
+                  ${m.clothType}
+                  <span class="meas-badge-pill">📅 ${m.date}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3-Dot Action -->
+            <div class="meas-action-wrap" onclick="event.stopPropagation()">
+              <button type="button" class="btn-3dot" onclick="toggleMenu('m-menu-${m.id}', event)">⋮</button>
+              <div class="meas-dropdown-menu" id="m-menu-${m.id}">
+                <button type="button" class="meas-drop-item" onclick="editCustomerMeasurement('${m.id}')">
+                  ✏️ માપ સુધારો
+                </button>
+                <button type="button" class="meas-drop-item" onclick="sendMeasWhatsApp('${m.id}')">
+                  🟢 WhatsApp
+                </button>
+                <button type="button" class="meas-drop-item delete" onclick="deleteCustomerMeasurement('${m.id}')">
+                  🗑️ ડિલીટ કરો
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding: 0 18px 18px;">
+            ${renderZone('૧. ઉપરનો ભાગ', upperZone)}
+            ${renderZone('૨. હાથ અને ગળું', armNeckZone)}
+            ${renderZone('૩. નીચેનો ભાગ', lowerZone)}
+            ${m.notes ? `<div class="meas-notes-box"><b>વિશેષ નોંધ:</b> ${m.notes}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderCustomerBills() {
+    if(!activeCustomerData) return;
+    const container = document.getElementById('profBillsList');
+    const { name, phone } = activeCustomerData;
+
+    const userBills = billsDB.filter(b => 
+      (phone && phone !== '-' && b.phone === phone) || (b.customer.toLowerCase() === name.toLowerCase())
+    );
+
+    if(userBills.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b;">આ ગ્રાહકનું કોઈ બિલ બનેલું નથી.</div>`;
+      return;
+    }
+
+    container.innerHTML = userBills.map(b => `
+      <div class="bill-strip-card" onclick="viewBillDetails('${b.id}')">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <b style="color:var(--primary); font-size:15px;">બિલ #${b.billNo}</b>
+            <span style="font-size:12px; color:#64748b;">📅 ${b.date}</span>
+          </div>
+          <div style="font-size:13px; margin-top:4px;">
+            કુલ રકમ: <b>₹${b.total}</b> | બાકી: <b style="color:${b.due > 0 ? '#e11d48' : '#10b981'};">₹${b.due}</b>
+          </div>
+        </div>
+
+        <div class="meas-action-wrap" onclick="event.stopPropagation()">
+          <button type="button" class="btn-3dot btn-3dot-light" onclick="toggleMenu('b-menu-${b.id}', event)">⋮</button>
+          <div class="meas-dropdown-menu" id="b-menu-${b.id}">
+            <button type="button" class="meas-drop-item" onclick="editCustomerBill('${b.id}')">
+              ✏️ બિલ સુધારો (Edit)
+            </button>
+            <button type="button" class="meas-drop-item delete" onclick="deleteCustomerBill('${b.id}')">
+              🗑️ ડિલીટ (Delete)
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleMenu(menuId, event) {
+    if(event) event.stopPropagation();
+    const menu = document.getElementById(menuId);
+    if(!menu) return;
+    const isShowing = menu.classList.contains('show');
+    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
+    if(!isShowing) menu.classList.add('show');
+  }
+
+  function editCustomerMeasurement(id) {
+    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
+    const item = measDB.find(m => String(m.id) === String(id));
+    if(!item) return;
+
+    closeCustomerProfile();
+    switchView('view-measurements');
+
+    document.getElementById('editingMeasId').value = item.id;
+    document.getElementById('mCustName').value = item.name;
+    document.getElementById('mCustPhone').value = item.phone;
+    document.getElementById('mClothType').value = item.clothType;
+    document.getElementById('mExtraNotes').value = item.notes || '';
+
+    document.getElementById('m_len').value = item.specs.len || '';
+    document.getElementById('m_chest').value = item.specs.chest || '';
+    document.getElementById('m_waist').value = item.specs.waist || '';
+    document.getElementById('m_seat').value = item.specs.seat || '';
+    document.getElementById('m_shoulder').value = item.specs.shoulder || '';
+    document.getElementById('m_sleeve').value = item.specs.sleeve || '';
+    document.getElementById('m_mori').value = item.specs.mori || '';
+    document.getElementById('m_fneck').value = item.specs.fneck || '';
+    document.getElementById('m_bneck').value = item.specs.bneck || '';
+    document.getElementById('m_plen').value = item.specs.plen || '';
+
+    document.getElementById('measEditNotice').innerText = `(સુધારી રહ્યા છો: ${item.name})`;
+    showToast(`માપ ફોર્મમાં લોડ થઈ ગયું છે.`, 'info');
+  }
+
+  function deleteCustomerMeasurement(id) {
+    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
+    if(confirm('શું તમે આ માપ કાઢી નાખવા માંગો છો?')) {
+      measDB = measDB.filter(m => String(m.id) !== String(id));
+      localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
+      if(db) db.collection("measurements").doc(String(id)).delete().catch(()=>{});
+      renderCustomerMeasurements();
+      renderCustomers();
+      showToast('માપ કાઢી નાખ્યું.', 'info');
+    }
+  }
+
+  function editCustomerBill(billId) {
+    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
+    const bill = billsDB.find(b => String(b.id) === String(billId));
+    if(!bill) return;
+
+    closeCustomerProfile();
+    openNewBill();
+
+    document.getElementById('editingBillId').value = bill.id;
+    document.getElementById('customBillNo').value = bill.billNo;
+    document.getElementById('custName').value = bill.customer;
+    document.getElementById('custPhone').value = bill.phone === '-' ? '' : bill.phone;
+    document.getElementById('custDueDate').value = bill.dueDate === '-' ? '' : bill.dueDate;
+    document.getElementById('billAdvance').value = bill.advance || 0;
+    document.getElementById('billEditStatus').innerText = `(સુધારી રહ્યા છો: બિલ #${bill.billNo})`;
+
+    // Restore Items
+    bill.items.forEach(it => {
+      let exist = servicesList.find(s => s.name === it.name);
+      if(!exist) {
+        const newId = Date.now() + Math.floor(Math.random()*100);
+        exist = { id: newId, name: it.name, price: it.price, iconRender: ICON_SCISSORS };
+        servicesList.push(exist);
+      }
+      cart[exist.id] = it.qty;
+      itemPrices[exist.id] = it.price;
+    });
+
+    renderServiceCards();
+    updateLiveReceipt();
+    setBillSubView('form');
+    showToast(`બિલ #${bill.billNo} ફોર્મમાં લોડ થઈ ગયું!`, 'info');
+  }
+
+  function deleteCustomerBill(billId) {
+    document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
+    if(confirm('શું તમે આ બિલ ડિલીટ કરવા માંગો છો?')) {
+      billsDB = billsDB.filter(b => String(b.id) !== String(billId));
+      localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
+      if(db) db.collection("bills").doc(String(billId)).delete().catch(()=>{});
+      renderCustomerBills();
+      renderCustomers();
+      refreshDashboardStats();
+      renderReports();
+      showToast('બિલ કાઢી નાખ્યું.', 'info');
+    }
+  }
+
+  function viewBillDetails(billId) {
+    const bill = billsDB.find(b => String(b.id) === String(billId));
+    if(!bill) return;
+
+    document.getElementById('modalBillTitle').innerText = `બિલ પહોંચ #${bill.billNo}`;
+    let itemsRows = bill.items.map(it => `
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #e2e8f0; font-size:13.5px;">
+        <span>${it.name} (x${it.qty})</span>
+        <b>₹${it.total}</b>
+      </div>
+    `).join('');
+
+    document.getElementById('modalBillDetailsBody').innerHTML = `
+      <div style="margin-bottom:12px; font-size:13px; color:#475569;">
+        <div><b>તારીખ:</b> ${bill.date}</div>
+        <div><b>ડિલિવરી તારીખ:</b> ${bill.dueDate}</div>
+      </div>
+      <div style="margin-bottom:14px;">${itemsRows}</div>
+      <div style="background:#f8fafc; padding:12px; border-radius:12px; font-size:14px; display:flex; flex-direction:column; gap:6px;">
+        <div style="display:flex; justify-content:space-between;"><span>કુલ રકમ:</span> <b>₹${bill.total}</b></div>
+        <div style="display:flex; justify-content:space-between;"><span>એડવાન્સ જમા:</span> <b>₹${bill.advance}</b></div>
+        <div style="display:flex; justify-content:space-between; color:#be123c; font-weight:bold; font-size:16px;"><span>બાકી રકમ:</span> <span>₹${bill.due}</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
+        <button class="btn-whatsapp" style="padding:10px;" onclick="loadAndWhatsAppBill('${bill.id}')">WhatsApp</button>
+        <button class="btn-pdf" style="padding:10px;" onclick="loadAndDownloadPDF('${bill.id}')">PDF ડાઉનલોડ</button>
+      </div>
+    `;
+
+    document.getElementById('billDetailsModal').style.display = 'flex';
+  }
+
+  function closeBillDetails(e) {
+    if(!e || e.target.id === 'billDetailsModal') {
+      document.getElementById('billDetailsModal').style.display = 'none';
+    }
+  }
+
+  function loadAndWhatsAppBill(billId) {
+    const bill = billsDB.find(b => String(b.id) === String(billId));
+    if(!bill) return;
+    currentBillData = bill;
+    sendWhatsAppReceipt();
+  }
+
+  function loadAndDownloadPDF(billId) {
+    const bill = billsDB.find(b => String(b.id) === String(billId));
+    if(!bill) return;
+    currentBillData = bill;
+    
+    // Fill printable element
+    document.getElementById('lblBillNo').innerText = '#' + bill.billNo;
+    document.getElementById('lblDate').innerText = bill.date;
+    document.getElementById('lblCustName').innerText = bill.customer;
+    document.getElementById('lblCustPhone').innerText = bill.phone;
+    document.getElementById('lblAdvanceDisplay').innerText = '₹' + bill.advance;
+    document.getElementById('lblTotal').innerText = '₹' + bill.total;
+    document.getElementById('lblDue').innerText = '₹' + bill.due;
+
+    const tbody = document.getElementById('receiptTableBody');
+    tbody.innerHTML = bill.items.map(i => `
+      <tr>
+        <td>${i.name}</td>
+        <td>${i.qty}</td>
+        <td>₹${i.price}</td>
+        <td style="text-align:right;">₹${i.total}</td>
+      </tr>
+    `).join('');
+
+    downloadBillPDF();
+  }
+
+  function sendMeasWhatsApp(id) {
+    const m = measDB.find(x => String(x.id) === String(id));
+    if(!m) return;
+
+    let msg = `*રૂકસાના લેડીઝ ટેલર - માપ વિગત*\n`;
+    msg += `ગ્રાહક: ${m.name} | મો: ${m.phone}\n`;
+    msg += `પ્રકાર: ${m.clothType} | તારીખ: ${m.date}\n`;
+    msg += `------------------------------------\n`;
+    if(m.specs.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
+    if(m.specs.chest) msg += `• છાતી: ${m.specs.chest}\n`;
+    if(m.specs.waist) msg += `• કમર: ${m.specs.waist}\n`;
+    if(m.specs.seat) msg += `• સીટ: ${m.specs.seat}\n`;
+    if(m.specs.shoulder) msg += `• શોલ્ડર: ${m.specs.shoulder}\n`;
+    if(m.specs.sleeve) msg += `• બાય લંબાઈ: ${m.specs.sleeve}\n`;
+    if(m.specs.mori) msg += `• મોરી: ${m.specs.mori}\n`;
+    if(m.specs.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
+    if(m.specs.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
+    if(m.specs.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
+    if(m.notes) msg += `\n*નોંધ:* ${m.notes}\n`;
+    msg += `------------------------------------\n`;
+    msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર, ભરૂચ\nફોન: 7572842641`;
+
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // --- સ્ટેન્ડઅલોન QR ---
+  function getStandaloneUpiUrl() {
+    const amt = Math.max(0, parseFloat(document.getElementById('qrCustomAmountInput')?.value) || 0);
+    let upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(SHOP_NAME)}&cu=INR`;
+    if (amt > 0) upiUrl += `&am=${amt}&tn=${encodeURIComponent('Tailor Payment')}`;
+    return { upiUrl, amt };
+  }
+
+  function generateStandaloneQR() {
+    const { upiUrl, amt } = getStandaloneUpiUrl();
+    const qrImg = document.getElementById('standQrImg');
+    const lblAmt = document.getElementById('standQrAmountText');
+    if(lblAmt) lblAmt.innerText = '₹' + amt;
+    if(qrImg) qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
+  }
+
+  function setQuickAmount(amt) {
+    const input = document.getElementById('qrCustomAmountInput');
+    if(input) {
+      input.value = amt > 0 ? amt : '';
+      generateStandaloneQR();
+    }
+  }
+
+  // --- રિપોર્ટ્સ ---
   function getBillDateDetails(b) {
     if (b.dateRaw) {
       const d = new Date(b.dateRaw);
       if (!isNaN(d.getTime())) {
-        return {
-          year: String(d.getFullYear()),
-          month: String(d.getMonth() + 1).padStart(2, '0')
-        };
+        return { year: String(d.getFullYear()), month: String(d.getMonth() + 1).padStart(2, '0') };
       }
     }
     if (b.date && typeof b.date === 'string') {
       const parts = b.date.trim().split(/[-/.]/);
       if (parts.length === 3) {
-        if (parts[0].length === 4) {
-          return { year: parts[0], month: parts[1].padStart(2, '0') };
-        } else if (parts[2].length === 4) {
-          return { year: parts[2], month: parts[1].padStart(2, '0') };
-        }
+        if (parts[0].length === 4) return { year: parts[0], month: parts[1].padStart(2, '0') };
+        if (parts[2].length === 4) return { year: parts[2], month: parts[1].padStart(2, '0') };
       }
     }
     const fallback = new Date();
-    return {
-      year: String(fallback.getFullYear()),
-      month: String(fallback.getMonth() + 1).padStart(2, '0')
-    };
+    return { year: String(fallback.getFullYear()), month: String(fallback.getMonth() + 1).padStart(2, '0') };
   }
 
   const MONTH_NAMES_GUJ = [
@@ -2364,10 +2397,7 @@
     });
 
     const sortedYears = Array.from(yearsSet).sort((a,b) => b - a);
-    
-    if(!sortedYears.includes(currentReportYear)) {
-      currentReportYear = sortedYears[0] || currentRealYear;
-    }
+    if(!sortedYears.includes(currentReportYear)) currentReportYear = sortedYears[0] || currentRealYear;
 
     yearSelect.innerHTML = sortedYears.map(yr => `
       <option value="${yr}" ${yr === currentReportYear ? 'selected' : ''}>${yr}</option>
@@ -2389,32 +2419,15 @@
 
   function renderReports() {
     initReportYearOptions();
-
     const chipsContainer = document.getElementById('reportChipsContainer');
     if(chipsContainer) {
-      let chipsHtml = '';
-
-      chipsHtml += `
-        <button type="button" class="filter-chip-btn ${currentReportMonth === 'all' ? 'active' : ''}" onclick="setReportFilter('all')">
-          કુલ (Lifetime)
-        </button>
+      let chipsHtml = `
+        <button type="button" class="filter-chip-btn ${currentReportMonth === 'all' ? 'active' : ''}" onclick="setReportFilter('all')">કુલ (Lifetime)</button>
+        <button type="button" class="filter-chip-btn ${currentReportMonth === 'year' ? 'active' : ''}" onclick="setReportFilter('year')">${currentReportYear} આખું વર્ષ</button>
       `;
-
-      chipsHtml += `
-        <button type="button" class="filter-chip-btn ${currentReportMonth === 'year' ? 'active' : ''}" onclick="setReportFilter('year')">
-          ${currentReportYear} આખું વર્ષ
-        </button>
-      `;
-
       MONTH_NAMES_GUJ.forEach(m => {
-        const isActive = (currentReportMonth === m.num);
-        chipsHtml += `
-          <button type="button" class="filter-chip-btn ${isActive ? 'active' : ''}" onclick="setReportFilter('${m.num}')">
-            ${m.short} (${m.full})
-          </button>
-        `;
+        chipsHtml += `<button type="button" class="filter-chip-btn ${currentReportMonth === m.num ? 'active' : ''}" onclick="setReportFilter('${m.num}')">${m.short} (${m.full})</button>`;
       });
-
       chipsContainer.innerHTML = chipsHtml;
     }
 
@@ -2425,10 +2438,7 @@
       filteredBills = billsDB;
       periodTitle = `લાઈફટાઈમ (કુલ હિસાબ)`;
     } else if (currentReportMonth === 'year') {
-      filteredBills = billsDB.filter(b => {
-        const dt = getBillDateDetails(b);
-        return dt.year === currentReportYear;
-      });
+      filteredBills = billsDB.filter(b => getBillDateDetails(b).year === currentReportYear);
       periodTitle = `${currentReportYear} ના આખા વર્ષની આવક`;
     } else {
       filteredBills = billsDB.filter(b => {
@@ -2436,15 +2446,11 @@
         return dt.year === currentReportYear && dt.month === currentReportMonth;
       });
       const mObj = MONTH_NAMES_GUJ.find(x => x.num === currentReportMonth);
-      const mName = mObj ? mObj.full : currentReportMonth;
-      periodTitle = `${mName} ${currentReportYear} ની આવક`;
+      periodTitle = `${mObj ? mObj.full : currentReportMonth} ${currentReportYear} ની આવક`;
     }
 
-    const filterLabel = document.getElementById('reportFilterLabel');
-    if(filterLabel) filterLabel.innerText = periodTitle;
-
-    const bannerTitle = document.getElementById('repBannerPeriodTitle');
-    if(bannerTitle) bannerTitle.innerText = periodTitle;
+    document.getElementById('reportFilterLabel').innerText = periodTitle;
+    document.getElementById('repBannerPeriodTitle').innerText = periodTitle;
 
     let revenue = 0;
     let counts = {};
@@ -2465,12 +2471,12 @@
     const container = document.getElementById('repTopItemsList');
 
     if(sorted.length === 0) {
-      container.innerHTML = `<p style="color:#94a3b8; font-size:13px; text-align:center; padding:18px;">આ સમયગાળામાં કોઈ બિલ બનેલા નથી.</p>`;
+      container.innerHTML = `<p style="color:#94a3b8; font-size:13px; text-align:center; padding:18px;">કોઈ બિલ બનેલા નથી.</p>`;
       return;
     }
 
     container.innerHTML = sorted.map(([item, qty]) => `
-      <div class="data-list-card">
+      <div style="display:flex; justify-content:space-between; padding:10px 14px; border:1px solid var(--border-color); border-radius:12px; margin-bottom:8px;">
         <span style="font-weight:600;">${item}</span>
         <b style="color:var(--primary);">${qty} નંગ</b>
       </div>
@@ -2491,19 +2497,14 @@
   }
 
   function clearBillsReportData() {
-    if(confirm('શું તમે ફક્ત જૂના બિલ અને હિસાબનો ડેટા સાફ કરવા માંગો છો?\n\n(ગ્રાહકોના સેવ કરેલા માપ સુરક્ષિત રહેશે)')) {
+    if(confirm('શું તમે જૂના બિલનો હિસાબ સાફ કરવા માંગો છો? (માપ સુરક્ષિત રહેશે)')) {
       localStorage.removeItem('ruksana_tailor_bills');
       billsDB = [];
-
-      if(db) {
-        db.collection("bills").get().then(snap => {
-          snap.forEach(doc => doc.ref.delete());
-        }).catch(err => console.log("Firestore bills delete error:", err));
-      }
-
+      if(db) db.collection("bills").get().then(s => s.forEach(doc => doc.ref.delete()));
       refreshDashboardStats();
       renderReports();
-      showToast('જૂનો બિલ હિસાબ સાફ થઈ ગયો છે!', 'info');
+      renderCustomers();
+      showToast('બિલ હિસાબ સાફ થઈ ગયો.', 'info');
     }
   }
 </script>
