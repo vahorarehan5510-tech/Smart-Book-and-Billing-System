@@ -15,8 +15,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-  <!-- PDF Generator Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- HTML2Canvas & jsPDF for reliable Gujarati PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root {
@@ -984,7 +985,7 @@
         </div>
       </section>
 
-      <!-- 3. MEASUREMENTS VIEW (ONLY FORM NOW) -->
+      <!-- 3. MEASUREMENTS VIEW -->
       <section class="view" id="view-measurements">
         <div class="card-panel">
           <div class="panel-title">
@@ -1431,7 +1432,7 @@
 
   const ICON_DRESS = '<div class="item-badge" style="background:#fce7f3;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#db2777" d="M12 2C8.69 2 6 4.69 6 8c0 2.97 2.16 5.43 5 5.91V19H9v2h6v-2h-2v-5.09c2.84-.48 5-2.94 5-5.91 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg></div>';
   const ICON_SHIRT = '<div class="item-badge" style="background:#e0f2fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#0284c7" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
-  const ICON_SUIT = '<div class="item-badge" style="background:#ede9fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#7c3aed" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg></div>';
+  const ICON_SUIT = '<div class="item-badge" style="background:#ede9fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#7c3aed" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
   const ICON_SCISSORS = '<div class="item-badge" style="background:#fef3c7;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#d97706" d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64z"/></svg></div>';
 
   let servicesList = [
@@ -1570,7 +1571,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // --- માપ ડાયરી (માત્ર ફોર્મ અને સેવ) ---
+  // --- માપ ડાયરી ---
   async function saveMeasurement() {
     const name = document.getElementById('mCustName').value.trim();
     const phone = document.getElementById('mCustPhone').value.trim();
@@ -1619,7 +1620,6 @@
     localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
     resetMeasForm();
     renderCustomers();
-    // Redirect to customers profile
     openCustomerProfile(name, phone);
   }
 
@@ -1838,32 +1838,54 @@
     openCustomerProfile(currentBillData.customer, currentBillData.phone);
   }
 
+  // --- સ્ટેબલ અને સાફ PDF ડાઉનલોડ ફંક્શન ---
   function downloadBillPDF() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
       return showToast('ગ્રાહકનું નામ અને આઇટમ ઉમેરો.', 'error');
     }
-    showToast('PDF ડાઉનલોડ થઈ રહી છે...', 'info');
+    showToast('PDF તૈયાર થઈ રહી છે...', 'info');
 
     const safeCustName = (currentBillData.customer || 'Customer').replace(/[^a-zA-Z0-9\u0A80-\u0AFF]/g, '_');
-    const element = document.getElementById('printableReceipt');
-    const origWidth = element.style.width;
-    element.style.width = '480px';
+    const originalElement = document.getElementById('printableReceipt');
 
-    const opt = {
-      margin: [8, 8, 8, 8],
-      filename: `Bill_${currentBillData.billNo}_${safeCustName}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2.8, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }
-    };
+    // ક્લોન બનાવીને સ્ક્રીનની બહાર રાખી પ્રિન્ટ લેવો
+    const clone = originalElement.cloneNode(true);
+    clone.style.width = '480px';
+    clone.style.position = 'fixed';
+    clone.style.left = '0';
+    clone.style.top = '0';
+    clone.style.zIndex = '-99999';
+    clone.style.background = '#ffffff';
+    clone.style.display = 'block';
+    clone.style.boxShadow = 'none';
+    document.body.appendChild(clone);
 
-    html2pdf().set(opt).from(element).save().then(() => {
-      element.style.width = origWidth;
-      showToast('PDF તૈયાર છે!', 'success');
-    }).catch(() => {
-      element.style.width = origWidth;
-      showToast('PDF ડાઉનલોડમાં ભૂલ આવી.', 'error');
-    });
+    // html2canvas વડે ફોન્ટ અને લેઆઉટ સાથે સચોટ કેપ્ચર
+    setTimeout(() => {
+      html2canvas(clone, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        logging: false
+      }).then(canvas => {
+        document.body.removeChild(clone);
+
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a5');
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`Bill_${currentBillData.billNo}_${safeCustName}.pdf`);
+        showToast('PDF સફળતાપૂર્વક ડાઉનલોડ થઈ!', 'success');
+      }).catch(err => {
+        if(document.body.contains(clone)) document.body.removeChild(clone);
+        console.error("PDF Error: ", err);
+        showToast('PDF બનાવવામાં સમસ્યા આવી.', 'error');
+      });
+    }, 150);
   }
 
   function sendWhatsAppReceipt() {
@@ -1899,7 +1921,6 @@
   // --- ગ્રાહકોની યાદી અને પ્રોફાઇલ સિસ્ટમ ---
   function getCustomerProfilesMap() {
     let map = {};
-    // Gather from Measurements
     measDB.forEach(m => {
       const key = (m.phone && m.phone !== '-') ? m.phone.trim() : m.name.trim();
       if(!map[key]) {
@@ -1908,7 +1929,6 @@
       map[key].measCount++;
     });
 
-    // Gather from Bills
     billsDB.forEach(b => {
       const key = (b.phone && b.phone !== '-') ? b.phone.trim() : b.customer.trim();
       if(!map[key]) {
@@ -2061,7 +2081,6 @@
               </div>
             </div>
 
-            <!-- 3-Dot Action -->
             <div class="meas-action-wrap" onclick="event.stopPropagation()">
               <button type="button" class="btn-3dot" onclick="toggleMenu('m-menu-${m.id}', event)">⋮</button>
               <div class="meas-dropdown-menu" id="m-menu-${m.id}">
@@ -2196,7 +2215,6 @@
     document.getElementById('billAdvance').value = bill.advance || 0;
     document.getElementById('billEditStatus').innerText = `(સુધારી રહ્યા છો: બિલ #${bill.billNo})`;
 
-    // Restore Items
     bill.items.forEach(it => {
       let exist = servicesList.find(s => s.name === it.name);
       if(!exist) {
@@ -2278,7 +2296,6 @@
     if(!bill) return;
     currentBillData = bill;
     
-    // Fill printable element
     document.getElementById('lblBillNo').innerText = '#' + bill.billNo;
     document.getElementById('lblDate').innerText = bill.date;
     document.getElementById('lblCustName').innerText = bill.customer;
