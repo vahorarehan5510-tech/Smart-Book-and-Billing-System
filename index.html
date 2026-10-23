@@ -305,7 +305,6 @@
     }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes scaleUp { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
-    @keyframes floatSoft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
     /* Welcome Screen - Pro & Big */
     .welcome-container {
@@ -648,13 +647,13 @@
     .custom-item-box { background: #fff8f9; border: 1.5px dashed #eec5d3; border-radius: 14px; padding: 14px; margin-top: 14px; }
 
     /* ========================================================
-       REFINED BILL RECEIPT (With Direct Inline SVG Logo for Photo Capture)
+       REFINED BILL RECEIPT (STRICT 2-COLUMN SIDE-BY-SIDE MATCHING IMAGE 2)
        ======================================================== */
     .receipt-container {
       background: #ffffff;
-      border: 3px solid #5c0928;
-      border-radius: 32px;
-      padding: 24px 20px 20px;
+      border: 3.5px solid #5c0928;
+      border-radius: 34px;
+      padding: 24px 18px 20px;
       position: relative;
       overflow: hidden;
       box-shadow: 0 14px 34px rgba(92, 9, 40, 0.12);
@@ -668,12 +667,13 @@
       margin-bottom: 4px; 
     }
     .bill-logo-badge { 
-      width: 58px; 
-      height: 58px; 
+      width: 60px; 
+      height: 60px; 
       border-radius: 50%;
       flex-shrink: 0; 
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(92, 9, 40, 0.2);
+      box-shadow: 0 4px 12px rgba(92, 9, 40, 0.25);
+      display: block !important;
     }
     .bill-logo-badge svg {
       width: 100%;
@@ -704,31 +704,33 @@
       margin: 12px 0 16px; 
       text-align: center; 
     }
+
+    /* પર્ફેક્ટ સાઈડ-બાય-સાઈડ ૨-કોલમ ગ્રીડ (હંમેશા આજુબાજુમાં જ રહેશે) */
     .bill-info-cards-grid { 
-      display: grid; 
-      grid-template-columns: 1.25fr 1fr; 
-      gap: 12px; 
-      margin-bottom: 16px; 
+      display: grid !important; 
+      grid-template-columns: 1.15fr 0.85fr !important; 
+      gap: 10px !important; 
+      margin-bottom: 16px !important; 
     }
     .bill-info-card-left { 
       background: #f7edf2; 
       border: 1.5px solid #ebd0dc; 
       border-radius: 18px; 
-      padding: 12px 14px; 
+      padding: 10px 12px; 
       display: flex; 
       flex-direction: column; 
-      gap: 12px; 
+      gap: 10px; 
     }
     .bill-info-card-right { 
       background: #fefce8; 
       border: 1.5px solid #fef08a; 
       border-radius: 18px; 
-      padding: 12px 14px; 
+      padding: 10px 12px; 
       display: flex; 
       flex-direction: column; 
-      gap: 12px; 
+      gap: 10px; 
     }
-    .bill-info-item { display: flex; align-items: center; gap: 10px; }
+    .bill-info-item { display: flex; align-items: center; gap: 8px; }
     .bill-circle-icon { 
       width: 32px; 
       height: 32px; 
@@ -740,8 +742,8 @@
       flex-shrink: 0; 
     }
     .bill-info-texts { line-height: 1.25; overflow: hidden; }
-    .bill-info-label { font-size: 12px; font-weight: 700; color: #475569; }
-    .bill-info-val { font-size: 14.5px; font-weight: 900; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; margin-top: 2px; }
+    .bill-info-label { font-size: 11.5px; font-weight: 700; color: #475569; }
+    .bill-info-val { font-size: 14px; font-weight: 900; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; margin-top: 1px; }
     
     .bill-custom-table { 
       width: 100%; 
@@ -755,15 +757,15 @@
     .bill-custom-table thead th { 
       background: #5c0928; 
       color: #ffffff; 
-      padding: 11px 8px; 
-      font-size: 15px; 
+      padding: 11px 6px; 
+      font-size: 14.5px; 
       font-weight: 800; 
       border-right: 1.5px solid rgba(255, 255, 255, 0.25); 
       text-align: center; 
     }
     .bill-custom-table thead th:last-child { border-right: none; }
     .bill-custom-table tbody td { 
-      padding: 10px 8px; 
+      padding: 10px 6px; 
       font-size: 13.5px; 
       font-weight: 700; 
       color: #1e293b; 
@@ -771,16 +773,15 @@
       border-right: 1.5px solid #ebd0dc; 
       text-align: center; 
     }
-    .bill-custom-table tbody td:first-child { text-align: left; padding-left: 14px; }
-    .bill-custom-table tbody td:last-child { border-right: none; text-align: right; padding-right: 14px; }
+    .bill-custom-table tbody td:first-child { text-align: left; padding-left: 12px; }
+    .bill-custom-table tbody td:last-child { border-right: none; text-align: right; padding-right: 12px; }
     
-    .bill-summary-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
-    .bill-sum-pill { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; border-radius: 30px; font-size: 15px; font-weight: 800; }
+    .bill-summary-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .bill-sum-pill { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-radius: 30px; font-size: 15px; font-weight: 800; }
     .bill-sum-pill.total { background: #f3e8ee; border: 1.5px solid #e5cad7; color: #5c0928; }
     .bill-sum-pill.advance { background: #e8fbf3; border: 1.5px solid #bbf7d0; color: #047857; }
     .bill-sum-pill.due { background: #fdf2f4; border: 1.5px solid #fecdd3; color: #be123c; }
-    .bill-sum-pill .pill-left { display: flex; align-items: center; gap: 10px; }
-    .bill-footer-thanks { text-align: center; margin-top: 10px; font-size: 14px; font-weight: 800; color: #5c0928; }
+    .bill-footer-thanks { text-align: center; margin-top: 10px; font-size: 13.5px; font-weight: 800; color: #5c0928; }
 
     /* SINGLE CENTERED WHATSAPP BUTTON */
     .single-action-box {
@@ -827,11 +828,10 @@
     }
     .cust-card-item:hover {
       border-color: var(--primary);
-      transform: translateY(-2px);
       box-shadow: var(--shadow-sm);
     }
 
-    /* FULL-SCREEN CUSTOMER PROFILE MODAL / SCREEN */
+    /* FULL-SCREEN CUSTOMER PROFILE MODAL */
     #custProfileModal {
       position: fixed;
       inset: 0;
@@ -939,7 +939,7 @@
       .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; border-radius: 16px; }
       .items-scroll-list { max-height: none; }
       .card-panel { padding: 16px; border-radius: 16px; }
-      .bill-info-cards-grid { grid-template-columns: 1fr; }
+      /* આ ક્વેરીમાંથી grid-template-columns હટાવી દીધું છે જેથી મોબાઇલમાં પણ ૨-કોલમ જ રહે */
     }
   </style>
 </head>
@@ -1276,7 +1276,7 @@
                 <span>C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</span>
               </div>
 
-              <!-- Info Cards Grid -->
+              <!-- Info Cards Grid (STRICT 2-COLUMN SIDE-BY-SIDE) -->
               <div class="bill-info-cards-grid">
                 <!-- Left: Customer Name & Mobile -->
                 <div class="bill-info-card-left">
@@ -1341,15 +1341,15 @@
               <!-- Summary Section Pills -->
               <div class="bill-summary-list">
                 <div class="bill-sum-pill total">
-                  <div class="pill-left"><span>કુલ રકમ (Total):</span></div>
+                  <span>કુલ રકમ (Total):</span>
                   <span id="lblTotal" style="font-size:18px;">₹0</span>
                 </div>
                 <div class="bill-sum-pill advance">
-                  <div class="pill-left"><span>એડવાન્સ જમા:</span></div>
+                  <span>એડવાન્સ જમા:</span>
                   <span id="lblAdvanceDisplay" style="font-size:17px; font-weight:800;">₹0</span>
                 </div>
                 <div class="bill-sum-pill due">
-                  <div class="pill-left"><span>બાકી રકમ (Due):</span></div>
+                  <span>બાકી રકમ (Due):</span>
                   <span id="lblDue" style="font-size:20px; font-weight:900;">₹0</span>
                 </div>
               </div>
@@ -1490,7 +1490,7 @@
     </div>
   </div>
 
-  <!-- FULL-SCREEN CUSTOMER PROFILE (FIXED & FULLY FUNCTIONAL) -->
+  <!-- FULL-SCREEN CUSTOMER PROFILE -->
   <div id="custProfileModal">
     <div class="profile-top-header">
       <button class="profile-back-btn" onclick="closeCustomerProfile()">
@@ -2183,7 +2183,7 @@
       tabBills.classList.add('active');
       tabMeas.classList.remove('active');
       secBills.style.display = 'block';
-      secMeas.style.display = 'none';
+      secBills.style.display = 'none';
       renderCustomerBills();
     }
   }
