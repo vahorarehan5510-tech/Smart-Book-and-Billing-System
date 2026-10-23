@@ -1832,7 +1832,7 @@
       const newBillId = String(Date.now());
       currentBillData.id = newBillId;
       billsDB.unshift({ id: newBillId, ...currentBillData });
-      document.getElementById('editingBillId').value = newBillId; // ભવિષ્યના ડુપ્લિકેટ અટકાવવા
+      document.getElementById('editingBillId').value = newBillId;
       if(db) db.collection("bills").doc(newBillId).set(currentBillData).catch(()=>{});
     }
 
@@ -1855,7 +1855,6 @@
       return;
     }
 
-    // બિલ સીધું ડેટાબેઝ અને ખાતામાં સેવ થઈ જશે
     saveCurrentBillToDatabase();
     setBillSubView('receipt'); 
     showToast('બિલ સાચવવામાં આવ્યું!', 'success');
@@ -2016,18 +2015,15 @@
     };
   }
 
-  // --- બિલ સેવ થશે અને ફોટો WhatsApp પર શેર થશે ---
+  // --- માત્ર ફોટો જ WhatsApp પર શેર થશે ---
   async function saveAndSendWhatsApp() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
       return showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
     }
 
-    // બિલ સેવ કરવું
     saveCurrentBillToDatabase();
-
     showToast('બિલ સેવ થયું! ફોટો તૈયાર થઈ રહ્યો છે...', 'info');
 
-    // બિલ પાવતીનો ફોટો બનાવવો
     const receiptEl = document.getElementById('printableReceipt');
     try {
       const canvas = await html2canvas(receiptEl, {
@@ -2038,7 +2034,7 @@
       });
 
       canvas.toBlob(async (blob) => {
-        if(!blob) return fallbackTextWhatsApp();
+        if(!blob) return showToast('ફોટો બનાવવામાં ભૂલ આવી.', 'error');
 
         const safeName = (currentBillData.customer || 'Bill').replace(/[^a-zA-Z0-9]/g, '_');
         const file = new File([blob], `Bill_${currentBillData.billNo}_${safeName}.png`, { type: 'image/png' });
@@ -2046,61 +2042,25 @@
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
-              files: [file],
-              title: `રૂકસાના લેડીઝ ટેલર - બિલ #${currentBillData.billNo}`,
-              text: `નમસ્તે ${currentBillData.customer}, આ તમારું રૂકસાના લેડીઝ ટેલરનું બિલ છે.`
+              files: [file]
             });
-            showToast('બિલ WhatsApp પર શેર થઈ ગયું!', 'success');
+            showToast('બિલનો ફોટો શેર થઈ ગયો!', 'success');
           } catch(err) {
-            if(err.name !== 'AbortError') fallbackTextWhatsApp();
+            // યુઝરે કેન્સલ કર્યું હોય તો કંઈ ન કરવું
           }
         } else {
           const link = document.createElement('a');
           link.download = `Bill_${currentBillData.billNo}_${safeName}.png`;
           link.href = canvas.toDataURL('image/png');
           link.click();
-          showToast('બિલનો ફોટો ડાઉનલોડ થયો, WhatsApp ખુલી રહ્યું છે...', 'info');
-          fallbackTextWhatsApp();
+          showToast('બિલનો ફોટો ડાઉનલોડ થઈ ગયો છે!', 'info');
         }
       }, 'image/png');
 
     } catch(e) {
       console.error(e);
-      fallbackTextWhatsApp();
+      showToast('ફોટો બનાવવામાં સમસ્યા આવી.', 'error');
     }
-  }
-
-  function fallbackTextWhatsApp() {
-    let rawPhone = currentBillData.phone ? currentBillData.phone.replace(/[^0-9]/g, '') : '';
-    let targetPhone = '';
-    if (rawPhone.length === 10) targetPhone = '91' + rawPhone;
-    else if (rawPhone.length > 10) targetPhone = rawPhone;
-
-    let itemsStr = '';
-    currentBillData.items.forEach(it => {
-      itemsStr += `▪️ *${it.name}*\n  નંગ: ${it.qty} | ભાવ: ₹${it.price} | કુલ: *₹${it.total}*\n`;
-    });
-
-    let msg = `*રૂકસાના લેડીઝ ટેલર*\n`;
-    msg += `મો: 7572842641 | C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર, ભરૂચ\n`;
-    msg += `------------------------------------\n`;
-    msg += `બિલ નં: #${currentBillData.billNo}\n`;
-    msg += `તારીખ: ${currentBillData.date}\n`;
-    msg += `ગ્રાહક: ${currentBillData.customer}\n`;
-    if(currentBillData.phone && currentBillData.phone !== '-') msg += `મોબાઈલ: ${currentBillData.phone}\n`;
-    msg += `ડિલિવરી: ${currentBillData.dueDate}\n`;
-    msg += `------------------------------------\n`;
-    msg += `*કામ અને વિગત:*\n\n${itemsStr}`;
-    msg += `------------------------------------\n`;
-    msg += `કુલ રકમ: ₹${currentBillData.total}\n`;
-    msg += `એડવાન્સ જમા: ₹${currentBillData.advance}\n`;
-    msg += `બાકી રકમ: *₹${currentBillData.due}*\n`;
-    msg += `------------------------------------\n`;
-    msg += `પધારવા બદલ આભાર!`;
-
-    let url = targetPhone ? `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(msg)}` 
-                          : `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
   }
 
   // --- ગ્રાહકોની યાદી અને પ્રોફાઇલ સિસ્ટમ ---
@@ -2310,7 +2270,6 @@
     const container = document.getElementById('profBillsList');
     const { name, phone } = activeCustomerData;
 
-    // ગ્રાહકના બિલોને ચોક્કસપણે શોધવું
     const userBills = billsDB.filter(b => {
       const bPhone = (b.phone || '').trim();
       const bName = (b.customer || '').trim().toLowerCase();
