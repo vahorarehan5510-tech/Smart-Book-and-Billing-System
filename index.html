@@ -15,7 +15,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-  <!-- HTML2Canvas & jsPDF for reliable Gujarati PDF Generation -->
+  <!-- HTML2Canvas & jsPDF for reliable Gujarati PDF/Image Generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -65,6 +65,13 @@
       flex-shrink: 0;
     }
 
+    /* SVG લોગો ક્લાસ */
+    .brand-needle-logo {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
     /* Custom Toast Notification */
     #toast-box {
       position: fixed;
@@ -92,11 +99,11 @@
     #toast-box.error { background: #ef4444; }
     #toast-box.info { background: #0284c7; }
 
-    /* Authentication Overlays */
+    /* Authentication Overlays - Pro & Big */
     .auth-overlay {
       position: fixed;
       inset: 0;
-      background: #fdf2f4;
+      background: radial-gradient(circle at top, #ffe4ec 0%, #fae8ef 45%, #f4d3df 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -105,49 +112,27 @@
       animation: fadeIn 0.4s ease-out;
     }
     .auth-card {
-      max-width: 420px;
+      max-width: 480px;
       width: 100%;
       background: white;
-      padding: 40px 26px;
-      border-radius: 24px;
-      border: 1.5px solid #f7dbe4;
-      box-shadow: var(--shadow-lg);
+      padding: 44px 30px;
+      border-radius: 32px;
+      border: 2px solid #f7dbe4;
+      box-shadow: 0 20px 50px rgba(92, 9, 40, 0.18);
       text-align: center;
       animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .login-brand-logo {
-      width: 86px;
-      height: 86px;
-      margin: 0 auto 16px;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #fff0f5 0%, #fdf2f8 50%, #fce7f3 100%);
-      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
-      animation: loginSwingGlow 4s ease-in-out infinite;
-    }
-    .login-brand-logo svg {
-      width: 54px;
-      height: 54px;
-      filter: drop-shadow(0 4px 6px rgba(157, 23, 77, 0.25));
-    }
-
-    @keyframes loginSwingGlow {
-      0%, 100% {
-        transform: rotate(0deg) scale(1);
-        box-shadow: 0 10px 25px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
-      }
-      25% {
-        transform: rotate(-4deg) scale(1.03);
-        box-shadow: 0 14px 30px rgba(225, 29, 72, 0.28), inset 0 0 0 2px #f43f5e;
-      }
-      75% {
-        transform: rotate(4deg) scale(1.03);
-        box-shadow: 0 14px 30px rgba(225, 29, 72, 0.28), inset 0 0 0 2px #f43f5e;
-      }
+      border-radius: 50%;
+      box-shadow: 0 12px 30px rgba(92, 9, 40, 0.25);
     }
 
     .btn-google {
@@ -155,24 +140,24 @@
       background: #ffffff;
       color: #333;
       border: 1.5px solid #dadce0;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 16.5px;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       transition: var(--transition);
-      margin-top: 22px;
+      margin-top: 24px;
     }
     .btn-google:hover { 
       background: #f8f9fa; 
       border-color: #c6c9cc; 
       transform: translateY(-2px); 
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
     }
 
     /* Access Denied Screen */
@@ -247,17 +232,16 @@
       letter-spacing: 0.3px; 
     }
     .header-logo-badge {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #fff0f5, #fce7f3);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
       flex-shrink: 0;
+      overflow: hidden;
     }
-    .header-logo-badge svg { width: 24px; height: 24px; }
     .desktop-nav { display: flex; gap: 8px; align-items: center; }
     .nav-link { 
       background: transparent; 
@@ -323,7 +307,7 @@
     @keyframes scaleUp { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
     @keyframes floatSoft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-    /* Welcome Screen */
+    /* Welcome Screen - Pro & Big */
     .welcome-container {
       display: flex;
       align-items: center;
@@ -334,48 +318,50 @@
       width: 100%;
     }
     .welcome-card {
-      max-width: 440px;
+      max-width: 500px;
       width: 100%;
       background: #ffffff;
-      padding: 48px 28px;
-      border-radius: 28px;
-      border: 1.5px solid #f7dbe4;
-      box-shadow: var(--shadow-lg);
+      padding: 50px 32px;
+      border-radius: 34px;
+      border: 2px solid #f7dbe4;
+      box-shadow: 0 20px 50px rgba(92, 9, 40, 0.18);
       position: relative;
       overflow: hidden;
       animation: scaleUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .welcome-brand-logo {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 20px;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 24px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 28px;
-      background: linear-gradient(135deg, #fff0f5 0%, #fdf2f8 50%, #fce7f3 100%);
-      box-shadow: 0 12px 30px rgba(225, 29, 72, 0.18), inset 0 0 0 2px #fbcfe8;
-      animation: floatSoft 3.5s ease-in-out infinite;
+      border-radius: 50%;
+      box-shadow: 0 14px 34px rgba(92, 9, 40, 0.25);
     }
-    .welcome-title { color: var(--primary); font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-    .welcome-sub { color: var(--text-muted); font-size: 15px; margin-bottom: 34px; line-height: 1.4; }
+    .welcome-title { color: var(--primary); font-size: 32px; font-weight: 900; margin-bottom: 10px; }
+    .welcome-sub { color: var(--text-muted); font-size: 16px; margin-bottom: 34px; line-height: 1.5; }
     .btn-start {
       width: 100%;
       background: linear-gradient(135deg, var(--primary), #82103c);
       color: white;
       border: none;
-      padding: 16px;
-      border-radius: 14px;
-      font-size: 17px;
-      font-weight: 700;
+      padding: 18px;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(92, 9, 40, 0.25);
+      box-shadow: 0 10px 28px rgba(92, 9, 40, 0.3);
       transition: var(--transition);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
+    }
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(92, 9, 40, 0.4);
     }
 
     /* Dashboard Layout */
@@ -445,7 +431,7 @@
     }
     .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
-    /* Sub Tabs (Common) */
+    /* Sub Tabs */
     .sub-tabs-bar {
       display: flex;
       gap: 12px;
@@ -470,7 +456,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: var(--transition);
+      transition: var(--transition); 
     }
     .sub-tab-btn:hover { background: #f1f5f9; color: var(--primary); }
     .sub-tab-btn.active {
@@ -622,7 +608,7 @@
       color: #fef08a;
     }
 
-    /* Billing Items */
+    /* Billing Items - Photo Styling */
     .items-scroll-list { max-height: 480px; overflow-y: auto; padding-right: 4px; }
     .item-row-card {
       display: flex;
@@ -630,13 +616,29 @@
       justify-content: space-between;
       padding: 12px 14px;
       border: 1px solid var(--border-color);
-      border-radius: 14px;
-      margin-bottom: 10px;
+      border-radius: 16px;
+      margin-bottom: 12px;
       background: #fff;
-      gap: 8px;
+      gap: 12px;
+      transition: var(--transition);
     }
-    .item-meta { display: flex; align-items: center; gap: 12px; flex: 1; }
-    .item-badge { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .item-row-card:hover {
+      border-color: #f2cad8;
+      box-shadow: var(--shadow-sm);
+    }
+    .item-meta { display: flex; align-items: center; gap: 14px; flex: 1; }
+    
+    .item-photo-thumb { 
+      width: 56px; 
+      height: 56px; 
+      border-radius: 14px; 
+      object-fit: cover; 
+      border: 1.5px solid #fecdd3; 
+      background: #fff0f4;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
     .price-edit-box { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
     .price-edit-input { width: 85px; padding: 4px 8px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-weight: 700; color: var(--primary); font-size: 14px; outline: none; }
     .qty-group { display: flex; align-items: center; gap: 8px; }
@@ -645,47 +647,170 @@
     .qty-display { min-width: 24px; text-align: center; font-weight: 700; font-size: 14px; }
     .custom-item-box { background: #fff8f9; border: 1.5px dashed #eec5d3; border-radius: 14px; padding: 14px; margin-top: 14px; }
 
-    /* RECEIPT CARD */
+    /* ========================================================
+       REFINED BILL RECEIPT (With Direct Inline SVG Logo for Photo Capture)
+       ======================================================== */
     .receipt-container {
       background: #ffffff;
-      border: 3.5px solid #0088cc;
-      border-radius: 28px;
-      padding: 24px 20px;
+      border: 3px solid #5c0928;
+      border-radius: 32px;
+      padding: 24px 20px 20px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0, 136, 204, 0.12);
+      box-shadow: 0 14px 34px rgba(92, 9, 40, 0.12);
       page-break-inside: avoid;
     }
-    .bill-header-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 6px; }
-    .bill-bell-icon { width: 65px; height: 65px; flex-shrink: 0; }
-    .bill-main-title { font-size: 32px; font-weight: 900; color: #0b2265; line-height: 1.15; }
-    .bill-title-underline { height: 4px; width: 130px; background: #f59e0b; border-radius: 4px; margin-top: 4px; }
-    .bill-address-row { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 18px; text-align: center; }
-    .bill-info-cards-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 12px; margin-bottom: 16px; }
-    .bill-info-card-left { background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
-    .bill-info-card-right { background: #fefce8; border: 2px solid #fef08a; border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .bill-header-wrap { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 14px; 
+      margin-bottom: 4px; 
+    }
+    .bill-logo-badge { 
+      width: 58px; 
+      height: 58px; 
+      border-radius: 50%;
+      flex-shrink: 0; 
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(92, 9, 40, 0.2);
+    }
+    .bill-logo-badge svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .bill-main-title { 
+      font-size: 30px; 
+      font-weight: 900; 
+      color: #5c0928; 
+      line-height: 1.15; 
+      letter-spacing: -0.2px;
+    }
+    .bill-title-underline { 
+      height: 3.5px; 
+      width: 140px; 
+      background: #d4af37; 
+      border-radius: 4px; 
+      margin-top: 4px; 
+    }
+    .bill-address-row { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 13.5px; 
+      font-weight: 800; 
+      color: #1e293b; 
+      margin: 12px 0 16px; 
+      text-align: center; 
+    }
+    .bill-info-cards-grid { 
+      display: grid; 
+      grid-template-columns: 1.25fr 1fr; 
+      gap: 12px; 
+      margin-bottom: 16px; 
+    }
+    .bill-info-card-left { 
+      background: #f7edf2; 
+      border: 1.5px solid #ebd0dc; 
+      border-radius: 18px; 
+      padding: 12px 14px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 12px; 
+    }
+    .bill-info-card-right { 
+      background: #fefce8; 
+      border: 1.5px solid #fef08a; 
+      border-radius: 18px; 
+      padding: 12px 14px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 12px; 
+    }
     .bill-info-item { display: flex; align-items: center; gap: 10px; }
-    .bill-circle-icon { width: 34px; height: 34px; border-radius: 50%; background: #0284c7; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .bill-info-texts { line-height: 1.3; overflow: hidden; }
-    .bill-info-label { font-size: 11.5px; font-weight: 700; color: #334155; }
-    .bill-info-val { font-size: 14.5px; font-weight: 800; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
-    .bill-custom-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; border: 2px solid #0284c7; margin-bottom: 16px; }
-    .bill-custom-table thead th { background: #0284c7; color: #ffffff; padding: 10px 8px; font-size: 14.5px; font-weight: 800; border-right: 2px solid #38bdf8; text-align: center; }
-    .bill-custom-table tbody td { padding: 10px 8px; font-size: 13.5px; font-weight: 700; color: #1e293b; border-top: 1.5px solid #bae6fd; border-right: 1.5px solid #bae6fd; text-align: center; }
+    .bill-circle-icon { 
+      width: 32px; 
+      height: 32px; 
+      border-radius: 50%; 
+      background: #5c0928; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-shrink: 0; 
+    }
+    .bill-info-texts { line-height: 1.25; overflow: hidden; }
+    .bill-info-label { font-size: 12px; font-weight: 700; color: #475569; }
+    .bill-info-val { font-size: 14.5px; font-weight: 900; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; margin-top: 2px; }
+    
+    .bill-custom-table { 
+      width: 100%; 
+      border-collapse: separate; 
+      border-spacing: 0; 
+      border-radius: 16px; 
+      overflow: hidden; 
+      border: 2px solid #5c0928; 
+      margin-bottom: 16px; 
+    }
+    .bill-custom-table thead th { 
+      background: #5c0928; 
+      color: #ffffff; 
+      padding: 11px 8px; 
+      font-size: 15px; 
+      font-weight: 800; 
+      border-right: 1.5px solid rgba(255, 255, 255, 0.25); 
+      text-align: center; 
+    }
+    .bill-custom-table thead th:last-child { border-right: none; }
+    .bill-custom-table tbody td { 
+      padding: 10px 8px; 
+      font-size: 13.5px; 
+      font-weight: 700; 
+      color: #1e293b; 
+      border-top: 1.5px solid #ebd0dc; 
+      border-right: 1.5px solid #ebd0dc; 
+      text-align: center; 
+    }
     .bill-custom-table tbody td:first-child { text-align: left; padding-left: 14px; }
     .bill-custom-table tbody td:last-child { border-right: none; text-align: right; padding-right: 14px; }
-    .bill-summary-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-    .bill-sum-pill { display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; border-radius: 30px; font-size: 15px; font-weight: 800; }
-    .bill-sum-pill.total { background: #f0f9ff; border: 2px solid #bae6fd; color: #0369a1; }
-    .bill-sum-pill.advance { background: #ecfdf5; border: 2px solid #a7f3d0; color: #047857; }
-    .bill-sum-pill.due { background: #fff1f2; border: 2px solid #fecdd3; color: #be123c; }
+    
+    .bill-summary-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+    .bill-sum-pill { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; border-radius: 30px; font-size: 15px; font-weight: 800; }
+    .bill-sum-pill.total { background: #f3e8ee; border: 1.5px solid #e5cad7; color: #5c0928; }
+    .bill-sum-pill.advance { background: #e8fbf3; border: 1.5px solid #bbf7d0; color: #047857; }
+    .bill-sum-pill.due { background: #fdf2f4; border: 1.5px solid #fecdd3; color: #be123c; }
     .bill-sum-pill .pill-left { display: flex; align-items: center; gap: 10px; }
-    .bill-footer-thanks { text-align: center; margin-top: 10px; font-size: 13.5px; font-weight: 800; color: #0284c7; }
+    .bill-footer-thanks { text-align: center; margin-top: 10px; font-size: 14px; font-weight: 800; color: #5c0928; }
 
-    .btn-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
-    .btn-whatsapp { background: var(--whatsapp); color: white; border: none; padding: 13px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; }
-    .btn-pdf { background: #0284c7; color: white; border: none; padding: 13px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; }
-    .btn-save-bill { background: #10b981; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; width: 100%; font-size: 15px; }
+    /* SINGLE CENTERED WHATSAPP BUTTON */
+    .single-action-box {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn-super-whatsapp {
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: white;
+      border: none;
+      padding: 18px 24px;
+      border-radius: 18px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+      transition: var(--transition);
+    }
+    .btn-super-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(37, 211, 102, 0.5);
+    }
 
     /* Customer List Item */
     .cust-card-item {
@@ -763,8 +888,8 @@
       transition: var(--transition);
     }
     .bill-strip-card:hover {
-      border-color: #0284c7;
-      background: #f0f9ff;
+      border-color: var(--primary);
+      background: #fcf4f7;
     }
 
     /* Quick Bill View Modal */
@@ -820,36 +945,38 @@
 </head>
 <body>
 
+  <!-- Hidden SVG Template for Reuse (Needle & Thread Circular Logo) -->
+  <svg style="display:none;" viewBox="0 0 100 100">
+    <defs>
+      <g id="ruksana-needle-logo">
+        <circle cx="50" cy="50" r="48" fill="#5c0928" />
+        <circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="2.5" />
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#e8c868" stroke-width="1.2" opacity="0.9" />
+        <path d="M 38 27 C 22 28, 20 54, 34 62 C 48 65, 75 62, 78 48 C 80 39, 74 38, 74 38" 
+              fill="none" stroke="#f6d378" stroke-width="2.4" stroke-linecap="round" />
+        <polygon points="34,22 41,30 67,78 61,70" fill="#ffffff" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.35))" />
+        <polygon points="67,78 63,73 66,75" fill="#f1f5f9" />
+        <ellipse cx="37.5" cy="27" rx="1.6" ry="3.6" transform="rotate(-38 37.5 27)" fill="#5c0928" />
+        <path d="M 26 77 Q 50 85 75 77" fill="none" stroke="#f6d378" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4.5" />
+      </g>
+    </defs>
+  </svg>
+
   <!-- Toast Notification -->
   <div id="toast-box"></div>
 
-  <!-- Google Login Screen -->
+  <!-- 1. PRO GOOGLE LOGIN SCREEN -->
   <div class="auth-overlay" id="screen-login">
     <div class="auth-card">
       <div class="login-brand-logo">
-        <svg viewBox="0 0 64 64" fill="none">
-          <defs>
-            <linearGradient id="logTailorG" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ec4899" />
-              <stop offset="100%" stop-color="#9d174d" />
-            </linearGradient>
-            <linearGradient id="logGoldG" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#fbbf24" />
-              <stop offset="100%" stop-color="#d97706" />
-            </linearGradient>
-          </defs>
-          <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="url(#logTailorG)" />
-          <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="url(#logTailorG)" />
-          <rect x="21" y="28" width="3" height="12" rx="1.5" fill="url(#logGoldG)" />
-          <path d="M18 40H27V42H18V40Z" fill="url(#logGoldG)" />
-          <circle cx="46" cy="24" r="5" fill="url(#logGoldG)" />
-          <rect x="29" y="10" width="6" height="4" rx="1" fill="url(#logGoldG)" />
+        <svg class="brand-needle-logo" viewBox="0 0 100 100">
+          <use href="#ruksana-needle-logo" />
         </svg>
       </div>
-      <h2 style="color: var(--primary); margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h2>
-      <p style="color: var(--text-muted); font-size: 14px;">તમારા ખાતામાં પ્રવેશ કરો</p>
+      <h1 style="color: var(--primary); font-size: 30px; font-weight: 900; margin-bottom: 6px;">રૂકસાના લેડીઝ ટેલર</h1>
+      <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 24px;">તમારા ખાતામાં સુરક્ષિત પ્રવેશ કરો</p>
       <button class="btn-google" onclick="handleGoogleLogin()">
-        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
         Google વડે લૉગિન કરો
       </button>
     </div>
@@ -876,14 +1003,12 @@
   <!-- Main App Wrapper -->
   <div class="app-wrapper" id="appMainWrapper">
     
-    <!-- Top Navigation (Desktop) -->
+    <!-- Top Navigation (Desktop) with New Needle Logo -->
     <header class="app-header" id="appHeader">
       <div class="brand" onclick="switchView('view-dashboard')">
         <div class="header-logo-badge">
-          <svg viewBox="0 0 64 64" fill="none">
-            <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="#9d174d" />
-            <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="#ec4899" />
-            <rect x="21" y="28" width="3" height="12" rx="1.5" fill="#fbbf24" />
+          <svg class="brand-needle-logo" viewBox="0 0 100 100">
+            <use href="#ruksana-needle-logo" />
           </svg>
         </div>
         <span>રૂકસાના લેડીઝ ટેલર</span>
@@ -913,29 +1038,26 @@
 
     <main class="main-content">
       
-      <!-- 1. WELCOME VIEW -->
+      <!-- 2. PRO WELCOME VIEW (BIG & BEAUTIFUL) -->
       <section class="view active" id="view-welcome">
         <div class="welcome-container">
           <div class="welcome-card">
             <div class="welcome-brand-logo">
-              <svg viewBox="0 0 64 64" fill="none">
-                <path d="M10 48H54C55.1 48 56 47.1 56 46V44H8V46C8 47.1 8.9 48 10 48Z" fill="#9d174d" />
-                <path d="M46 44V22C46 17.58 42.42 14 38 14H24C19.58 14 16 17.58 16 22V28H24V22C24 22 24 20 26 20H36C38 20 38 22 38 22V44H46Z" fill="#ec4899" />
-                <rect x="21" y="28" width="3" height="12" rx="1.5" fill="#fbbf24" />
-                <circle cx="46" cy="24" r="5" fill="#fbbf24" />
+              <svg class="brand-needle-logo" viewBox="0 0 100 100">
+                <use href="#ruksana-needle-logo" />
               </svg>
             </div>
             <h1 class="welcome-title">Welcome રૂકસાનાબેન</h1>
             <p class="welcome-sub">રૂકસાના લેડીઝ ટેલર - સ્માર્ટ મેનેજમેન્ટ સિસ્ટમ</p>
             <button class="btn-start" onclick="startApp()">
-              <svg class="icon-svg" style="fill: #ffffff;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-svg" style="fill: #ffffff; width: 22px; height: 22px;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               શરૂ કરો (Start)
             </button>
           </div>
         </div>
       </section>
 
-      <!-- 2. DASHBOARD VIEW -->
+      <!-- 3. DASHBOARD VIEW -->
       <section class="view" id="view-dashboard">
         <div class="dashboard-banner">
           <div>
@@ -985,7 +1107,7 @@
         </div>
       </section>
 
-      <!-- 3. MEASUREMENTS VIEW -->
+      <!-- 4. MEASUREMENTS VIEW -->
       <section class="view" id="view-measurements">
         <div class="card-panel">
           <div class="panel-title">
@@ -1050,7 +1172,7 @@
         </div>
       </section>
 
-      <!-- 4. NEW BILL VIEW -->
+      <!-- 5. NEW BILL VIEW -->
       <section class="view" id="view-new-bill">
         <div class="sub-tabs-bar">
           <button class="sub-tab-btn active" id="tabBtnBillForm" onclick="setBillSubView('form')">
@@ -1098,7 +1220,7 @@
             </div>
           </div>
 
-          <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, ભાવ અને નંગ પસંદ કરો:</p>
+          <p style="font-weight: 700; margin: 10px 0 8px; font-size: 14px; color: var(--primary);">કપડાં, ભાવ અને નંગ પસંદ કરો (ફોટા સાથે):</p>
           <div class="items-scroll-list" id="servicesContainer"></div>
 
           <div class="custom-item-box">
@@ -1110,7 +1232,7 @@
             </div>
           </div>
 
-          <button type="button" class="btn-primary" style="margin-top: 18px; background: #0284c7; padding: 14px;" onclick="goToBillReceiptTab()">
+          <button type="button" class="btn-primary" style="margin-top: 18px; background: var(--primary); padding: 14px;" onclick="goToBillReceiptTab()">
             બિલ તૈયાર જુઓ (View Generated Bill) 👉
           </button>
         </div>
@@ -1119,35 +1241,48 @@
         <div id="subViewBillReceipt" class="card-panel" style="display: none;">
           <div class="panel-title">
             <span style="display:flex; align-items:center; gap:8px;">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#0284c7" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#5c0928" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
               જનરેટ થયેલ બિલ પહોંચ
             </span>
           </div>
 
           <div style="max-width: 500px; margin: 0 auto;">
+            
+            <!-- THE PRINTABLE RECEIPT -->
             <div class="receipt-container" id="printableReceipt">
               
+              <!-- Header with INLINE SVG LOGO -->
               <div class="bill-header-wrap">
-                <svg class="bill-bell-icon" viewBox="0 0 100 100" fill="none">
-                  <path d="M50 8C46 8 43 11 43 15C32 18 24 29 24 42V62L16 70V74H84V70L76 62V42C76 29 68 18 57 15C57 11 54 8 50 8Z" fill="#f59e0b" stroke="#b45309" stroke-width="3"/>
-                  <ellipse cx="50" cy="74" rx="30" ry="8" fill="#d97706" />
-                  <ellipse cx="50" cy="80" rx="12" ry="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
-                </svg>
+                <div class="bill-logo-badge">
+                  <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="48" fill="#5c0928" />
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#d4af37" stroke-width="2.5" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#e8c868" stroke-width="1.2" opacity="0.9" />
+                    <path d="M 38 27 C 22 28, 20 54, 34 62 C 48 65, 75 62, 78 48 C 80 39, 74 38, 74 38" fill="none" stroke="#f6d378" stroke-width="2.4" stroke-linecap="round" />
+                    <polygon points="34,22 41,30 67,78 61,70" fill="#ffffff" />
+                    <polygon points="67,78 63,73 66,75" fill="#f1f5f9" />
+                    <ellipse cx="37.5" cy="27" rx="1.6" ry="3.6" transform="rotate(-38 37.5 27)" fill="#5c0928" />
+                    <path d="M 26 77 Q 50 85 75 77" fill="none" stroke="#f6d378" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4.5" />
+                  </svg>
+                </div>
                 <div>
                   <h1 class="bill-main-title">રૂકસાના લેડીઝ ટેલર</h1>
                   <div class="bill-title-underline"></div>
                 </div>
               </div>
 
+              <!-- Address Line -->
               <div class="bill-address-row">
                 <span>C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર ગામ, ભરૂચ</span>
               </div>
 
+              <!-- Info Cards Grid -->
               <div class="bill-info-cards-grid">
+                <!-- Left: Customer Name & Mobile -->
                 <div class="bill-info-card-left">
                   <div class="bill-info-item">
                     <div class="bill-circle-icon">
-                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                      <svg style="width:17px; height:17px; fill:#fff;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                     </div>
                     <div class="bill-info-texts">
                       <div class="bill-info-label">ગ્રાહકનું નામ :</div>
@@ -1156,7 +1291,7 @@
                   </div>
                   <div class="bill-info-item">
                     <div class="bill-circle-icon">
-                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                      <svg style="width:16px; height:16px; fill:#fff;" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                     </div>
                     <div class="bill-info-texts">
                       <div class="bill-info-label">મોબાઈલ નંબર :</div>
@@ -1165,10 +1300,11 @@
                   </div>
                 </div>
 
+                <!-- Right: Bill No & Bill Date -->
                 <div class="bill-info-card-right">
                   <div class="bill-info-item">
-                    <div class="bill-circle-icon" style="background: #0284c7;">
-                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <div class="bill-circle-icon">
+                      <svg style="width:16px; height:16px; fill:#fff;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                     </div>
                     <div class="bill-info-texts">
                       <div class="bill-info-label">બિલ નંબર :</div>
@@ -1176,8 +1312,8 @@
                     </div>
                   </div>
                   <div class="bill-info-item">
-                    <div class="bill-circle-icon" style="background: #0284c7;">
-                      <svg style="width:18px; height:18px; fill:#fff;" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                    <div class="bill-circle-icon">
+                      <svg style="width:16px; height:16px; fill:#fff;" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
                     </div>
                     <div class="bill-info-texts">
                       <div class="bill-info-label">બિલ તારીખ :</div>
@@ -1187,6 +1323,7 @@
                 </div>
               </div>
 
+              <!-- Item Table with Burgundy Header -->
               <table class="bill-custom-table">
                 <thead>
                   <tr>
@@ -1201,6 +1338,7 @@
                 </tbody>
               </table>
 
+              <!-- Summary Section Pills -->
               <div class="bill-summary-list">
                 <div class="bill-sum-pill total">
                   <div class="pill-left"><span>કુલ રકમ (Total):</span></div>
@@ -1216,30 +1354,25 @@
                 </div>
               </div>
 
+              <!-- Footer with Thank You Note -->
               <div class="bill-footer-thanks">
                 <span>✨ પધારવા બદલ આભાર! ફરી પધારશો. ❤️</span>
               </div>
             </div>
 
-            <div class="btn-actions-grid">
-              <button class="btn-whatsapp" onclick="sendWhatsAppReceipt()">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
-                WhatsApp બિલ
-              </button>
-              <button class="btn-pdf" onclick="downloadBillPDF()">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                PDF ડાઉનલોડ
+            <!-- SINGLE CENTERED WHATSAPP BUTTON (AUTO SAVES BILL & SENDS PHOTO) -->
+            <div class="single-action-box">
+              <button class="btn-super-whatsapp" onclick="saveAndSendWhatsApp()">
+                <svg class="icon-svg" style="fill:#ffffff; width:26px; height:26px;" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+                <span>WhatsApp બિલ મોકલો</span>
               </button>
             </div>
-            <button class="btn-save-bill" onclick="saveCurrentBill()">
-              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
-              બિલ સેવ કરો
-            </button>
+
           </div>
         </div>
       </section>
 
-      <!-- 5. CUSTOMERS DIRECTORY VIEW -->
+      <!-- 6. CUSTOMERS DIRECTORY VIEW -->
       <section class="view" id="view-customers">
         <div class="card-panel">
           <div class="panel-title">
@@ -1254,7 +1387,7 @@
         </div>
       </section>
 
-      <!-- 6. UPI QR STAND -->
+      <!-- 7. UPI QR STAND -->
       <section class="view" id="view-qr-pay">
         <div class="card-panel">
           <div class="panel-title">
@@ -1287,7 +1420,7 @@
         </div>
       </section>
 
-      <!-- 7. REPORTS VIEW -->
+      <!-- 8. REPORTS VIEW -->
       <section class="view" id="view-reports">
         <div class="card-panel">
           <div class="panel-title">
@@ -1357,7 +1490,7 @@
     </div>
   </div>
 
-  <!-- FULL-SCREEN CUSTOMER PROFILE -->
+  <!-- FULL-SCREEN CUSTOMER PROFILE (FIXED & FULLY FUNCTIONAL) -->
   <div id="custProfileModal">
     <div class="profile-top-header">
       <button class="profile-back-btn" onclick="closeCustomerProfile()">
@@ -1393,7 +1526,7 @@
     </div>
   </div>
 
-  <!-- QUICK VIEW OF BILL DETAILS -->
+  <!-- Quick Bill Modal -->
   <div id="billDetailsModal" onclick="closeBillDetails(event)">
     <div class="bill-modal-content" onclick="event.stopPropagation()">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -1430,19 +1563,49 @@
     }
   }
 
-  const ICON_DRESS = '<div class="item-badge" style="background:#fce7f3;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#db2777" d="M12 2C8.69 2 6 4.69 6 8c0 2.97 2.16 5.43 5 5.91V19H9v2h6v-2h-2v-5.09c2.84-.48 5-2.94 5-5.91 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg></div>';
-  const ICON_SHIRT = '<div class="item-badge" style="background:#e0f2fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#0284c7" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
-  const ICON_SUIT = '<div class="item-badge" style="background:#ede9fe;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#7c3aed" d="M20 4h-4.18C15.4 2.84 13.8 2 12 2c-1.8 0-3.4.84-3.82 2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8-1c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2z"/></svg></div>';
-  const ICON_SCISSORS = '<div class="item-badge" style="background:#fef3c7;"><svg class="icon-svg" style="width:26px; height:26px;" viewBox="0 0 24 24"><path fill="#d97706" d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64z"/></svg></div>';
-
   let servicesList = [
-    { id: 1, name: 'સાદા ડ્રેસ', price: 400, iconRender: ICON_DRESS },
-    { id: 2, name: 'અસ્તર વાળા ડ્રેસ', price: 650, iconRender: ICON_DRESS },
-    { id: 3, name: 'લેસ', price: 100, iconRender: ICON_SCISSORS },
-    { id: 4, name: 'બ્લાઉઝ', price: 800, iconRender: ICON_DRESS },
-    { id: 5, name: 'કોટસુટ', price: 2500, iconRender: ICON_SUIT },
-    { id: 6, name: 'લેડીઝ શર્ટ', price: 900, iconRender: ICON_SHIRT },
-    { id: 7, name: 'રિપેરિંગ કામ', price: 150, iconRender: ICON_SCISSORS }
+    { 
+      id: 1, 
+      name: 'સાદા ડ્રેસ', 
+      price: 400, 
+      imgUrl: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=150&auto=format&fit=crop&q=80' 
+    },
+    { 
+      id: 2, 
+      name: 'અસ્તર વાળા ડ્રેસ', 
+      price: 650, 
+      imgUrl: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=150&auto=format&fit=crop&q=80' 
+    },
+    { 
+      id: 3, 
+      name: 'લેસ', 
+      price: 100, 
+      imgUrl: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=150&auto=format&fit=crop&q=80' 
+    },
+    { 
+      id: 4, 
+      name: 'બ્લાઉઝ', 
+      price: 800, 
+      imgUrl: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=150&auto=format&fit=crop&q=80' 
+    },
+    { 
+      id: 5, 
+      name: 'કોટસુટ', 
+      price: 2500, 
+      imgUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=150&auto=format&fit=crop&q=80' 
+    },
+    { 
+      id: 6, 
+      name: 'લેડીઝ શર્ટ', 
+      price: 900, 
+      imgUrl: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=150&auto=format&fit=crop&q=80' 
+    },
+    { 
+      id: 7, 
+      name: 'રિપેરિંગ કામ', 
+      price: 150, 
+      imgUrl: 'https://images.unsplash.com/photo-1528458876861-544fd1761a91?w=150&auto=format&fit=crop&q=80' 
+    }
   ];
 
   let cart = {};
@@ -1511,6 +1674,7 @@
         snapshot.forEach(doc => measDB.push({ id: doc.id, ...doc.data() }));
         localStorage.setItem('ruksana_tailor_measurements', JSON.stringify(measDB));
         renderCustomers();
+        if(activeCustomerData) renderCustomerMeasurements();
       }
     });
 
@@ -1522,6 +1686,7 @@
         refreshDashboardStats();
         renderCustomers();
         renderReports();
+        if(activeCustomerData) renderCustomerBills();
       }
     });
   }
@@ -1533,7 +1698,6 @@
     generateStandaloneQR();
   };
 
-  // Close menus when clicked outside
   window.addEventListener('click', function(e) {
     if (!e.target.closest('.meas-action-wrap')) {
       document.querySelectorAll('.meas-dropdown-menu').forEach(m => m.classList.remove('show'));
@@ -1551,7 +1715,6 @@
     const target = document.getElementById(viewId);
     if(target) target.classList.add('active');
 
-    // Desktop
     document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
     if(viewId === 'view-dashboard') { document.getElementById('deskNavDash')?.classList.add('active'); refreshDashboardStats(); }
     if(viewId === 'view-measurements') { document.getElementById('deskNavMeas')?.classList.add('active'); }
@@ -1560,7 +1723,6 @@
     if(viewId === 'view-qr-pay') { document.getElementById('deskNavQr')?.classList.add('active'); generateStandaloneQR(); }
     if(viewId === 'view-reports') { document.getElementById('deskNavRep')?.classList.add('active'); renderReports(); }
 
-    // Mobile
     document.querySelectorAll('.bottom-nav-btn').forEach(el => el.classList.remove('active'));
     if(viewId === 'view-dashboard') document.getElementById('mobNavDash')?.classList.add('active');
     if(viewId === 'view-measurements') document.getElementById('mobNavMeas')?.classList.add('active');
@@ -1694,9 +1856,9 @@
     list.innerHTML = servicesList.map(item => `
       <div class="item-row-card">
         <div class="item-meta">
-          ${item.iconRender}
+          <img src="${item.imgUrl}" alt="${item.name}" class="item-photo-thumb" onerror="this.src='https://images.unsplash.com/photo-1528458876861-544fd1761a91?w=150&auto=format&fit=crop&q=80'">
           <div>
-            <div style="font-weight:700; font-size:14.5px;">${item.name}</div>
+            <div style="font-weight:700; font-size:15px; color:#1e293b;">${item.name}</div>
             <div class="price-edit-box">
               <span style="color:var(--primary); font-weight:700; font-size:13px;">₹</span>
               <input type="number" class="price-edit-input" 
@@ -1728,7 +1890,12 @@
     if(!name) return showToast('કામનું નામ લખો.', 'error');
 
     const newId = Date.now();
-    servicesList.push({ id: newId, name: name, price: price, iconRender: ICON_SCISSORS });
+    servicesList.push({ 
+      id: newId, 
+      name: name, 
+      price: price, 
+      imgUrl: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=150&auto=format&fit=crop&q=80' 
+    });
     itemPrices[newId] = price;
     cart[newId] = 1;
 
@@ -1810,12 +1977,13 @@
     };
   }
 
-  function saveCurrentBill() {
+  // --- બિલ આપોઆપ સેવ થશે અને ફોટો WhatsApp પર શેર થશે ---
+  async function saveAndSendWhatsApp() {
     if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
-      return;
+      return showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
     }
 
+    // ૧. બિલ સેવ કરવું
     const editId = document.getElementById('editingBillId').value;
     if(editId) {
       const idx = billsDB.findIndex(b => String(b.id) === String(editId));
@@ -1823,75 +1991,68 @@
         billsDB[idx] = { ...billsDB[idx], ...currentBillData, id: editId };
       }
       if(db) db.collection("bills").doc(String(editId)).set(currentBillData, {merge:true}).catch(()=>{});
-      showToast('બિલ સુધારી લીધું!', 'success');
     } else {
       const newBillId = String(Date.now());
       billsDB.unshift({ id: newBillId, ...currentBillData });
       if(db) db.collection("bills").doc(newBillId).set(currentBillData).catch(()=>{});
-      showToast('બિલ સેવ થઈ ગયું!', 'success');
     }
 
     localStorage.setItem('ruksana_tailor_bills', JSON.stringify(billsDB));
     refreshDashboardStats();
     renderCustomers();
     renderReports();
-    openCustomerProfile(currentBillData.customer, currentBillData.phone);
-  }
 
-  // --- સ્ટેબલ અને સાફ PDF ડાઉનલોડ ફંક્શન ---
-  function downloadBillPDF() {
-    if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      return showToast('ગ્રાહકનું નામ અને આઇટમ ઉમેરો.', 'error');
-    }
-    showToast('PDF તૈયાર થઈ રહી છે...', 'info');
+    showToast('બિલ સેવ થયું! ફોટો તૈયાર થઈ રહ્યો છે...', 'info');
 
-    const safeCustName = (currentBillData.customer || 'Customer').replace(/[^a-zA-Z0-9\u0A80-\u0AFF]/g, '_');
-    const originalElement = document.getElementById('printableReceipt');
-
-    // ક્લોન બનાવીને સ્ક્રીનની બહાર રાખી પ્રિન્ટ લેવો
-    const clone = originalElement.cloneNode(true);
-    clone.style.width = '480px';
-    clone.style.position = 'fixed';
-    clone.style.left = '0';
-    clone.style.top = '0';
-    clone.style.zIndex = '-99999';
-    clone.style.background = '#ffffff';
-    clone.style.display = 'block';
-    clone.style.boxShadow = 'none';
-    document.body.appendChild(clone);
-
-    // html2canvas વડે ફોન્ટ અને લેઆઉટ સાથે સચોટ કેપ્ચર
-    setTimeout(() => {
-      html2canvas(clone, {
-        scale: 2,
+    // ૨. બિલ પાવતીનો ચોખ્ખો ફોટો બનાવવો
+    const receiptEl = document.getElementById('printableReceipt');
+    try {
+      const canvas = await html2canvas(receiptEl, {
+        scale: 2.5,
         useCORS: true,
         backgroundColor: '#ffffff',
         logging: false
-      }).then(canvas => {
-        document.body.removeChild(clone);
-
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a5');
-
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`Bill_${currentBillData.billNo}_${safeCustName}.pdf`);
-        showToast('PDF સફળતાપૂર્વક ડાઉનલોડ થઈ!', 'success');
-      }).catch(err => {
-        if(document.body.contains(clone)) document.body.removeChild(clone);
-        console.error("PDF Error: ", err);
-        showToast('PDF બનાવવામાં સમસ્યા આવી.', 'error');
       });
-    }, 150);
+
+      canvas.toBlob(async (blob) => {
+        if(!blob) return fallbackTextWhatsApp();
+
+        const safeName = (currentBillData.customer || 'Bill').replace(/[^a-zA-Z0-9]/g, '_');
+        const file = new File([blob], `Bill_${currentBillData.billNo}_${safeName}.png`, { type: 'image/png' });
+
+        // ૩. Web Share API વડે સીધો ફોટો મોકલવો
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: `રૂકસાના લેડીઝ ટેલર - બિલ #${currentBillData.billNo}`,
+              text: `નમસ્તે ${currentBillData.customer}, આ તમારું રૂકસાના લેડીઝ ટેલરનું બિલ છે.`
+            });
+            showToast('બિલ WhatsApp પર શેર થઈ ગયું!', 'success');
+          } catch(err) {
+            if(err.name !== 'AbortError') fallbackTextWhatsApp();
+          }
+        } else {
+          const link = document.createElement('a');
+          link.download = `Bill_${currentBillData.billNo}_${safeName}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          showToast('બિલનો ફોટો ડાઉનલોડ થયો, WhatsApp ખુલી રહ્યું છે...', 'info');
+          fallbackTextWhatsApp();
+        }
+      }, 'image/png');
+
+    } catch(e) {
+      console.error(e);
+      fallbackTextWhatsApp();
+    }
   }
 
-  function sendWhatsAppReceipt() {
-    if(!currentBillData || currentBillData.items.length === 0 || currentBillData.customer === '-') {
-      return showToast('ગ્રાહકનું નામ અને આઇટમ પસંદ કરો.', 'error');
-    }
+  function fallbackTextWhatsApp() {
+    let rawPhone = currentBillData.phone ? currentBillData.phone.replace(/[^0-9]/g, '') : '';
+    let targetPhone = '';
+    if (rawPhone.length === 10) targetPhone = '91' + rawPhone;
+    else if (rawPhone.length > 10) targetPhone = rawPhone;
 
     let itemsStr = '';
     currentBillData.items.forEach(it => {
@@ -1915,24 +2076,34 @@
     msg += `------------------------------------\n`;
     msg += `પધારવા બદલ આભાર!`;
 
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+    let url = targetPhone ? `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(msg)}` 
+                          : `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
   }
 
   // --- ગ્રાહકોની યાદી અને પ્રોફાઇલ સિસ્ટમ ---
   function getCustomerProfilesMap() {
     let map = {};
     measDB.forEach(m => {
-      const key = (m.phone && m.phone !== '-') ? m.phone.trim() : m.name.trim();
+      const cleanPhone = (m.phone && m.phone !== '-') ? m.phone.trim() : '';
+      const cleanName = m.name ? m.name.trim() : '';
+      const key = cleanPhone ? cleanPhone : cleanName.toLowerCase();
+      if(!key) return;
+
       if(!map[key]) {
-        map[key] = { name: m.name, phone: m.phone, measCount: 0, billsCount: 0 };
+        map[key] = { name: cleanName, phone: cleanPhone, measCount: 0, billsCount: 0 };
       }
       map[key].measCount++;
     });
 
     billsDB.forEach(b => {
-      const key = (b.phone && b.phone !== '-') ? b.phone.trim() : b.customer.trim();
+      const cleanPhone = (b.phone && b.phone !== '-') ? b.phone.trim() : '';
+      const cleanName = b.customer ? b.customer.trim() : '';
+      const key = cleanPhone ? cleanPhone : cleanName.toLowerCase();
+      if(!key) return;
+
       if(!map[key]) {
-        map[key] = { name: b.customer, phone: b.phone, measCount: 0, billsCount: 0 };
+        map[key] = { name: cleanName, phone: cleanPhone, measCount: 0, billsCount: 0 };
       }
       map[key].billsCount++;
     });
@@ -1941,7 +2112,7 @@
   }
 
   function renderCustomers() {
-    const q = (document.getElementById('custSearchInput')?.value || '').toLowerCase();
+    const q = (document.getElementById('custSearchInput')?.value || '').toLowerCase().trim();
     const container = document.getElementById('customersContainer');
     const badge = document.getElementById('custTotalCountBadge');
     if(!container) return;
@@ -1983,8 +2154,8 @@
   }
 
   function openCustomerProfile(name, phone) {
-    activeCustomerData = { name, phone };
-    document.getElementById('profCustName').innerText = name;
+    activeCustomerData = { name: (name || '').trim(), phone: (phone || '').trim() };
+    document.getElementById('profCustName').innerText = name || '-';
     document.getElementById('profCustPhone').innerText = phone ? `📞 ${phone}` : 'મોબાઈલ નંબર નથી';
     
     document.getElementById('custProfileModal').style.display = 'flex';
@@ -2022,33 +2193,37 @@
     const container = document.getElementById('profMeasList');
     const { name, phone } = activeCustomerData;
 
-    const userMeas = measDB.filter(m => 
-      (phone && phone !== '-' && m.phone === phone) || (m.name.toLowerCase() === name.toLowerCase())
-    );
+    const userMeas = measDB.filter(m => {
+      const mPhone = (m.phone || '').trim();
+      const mName = (m.name || '').trim().toLowerCase();
+      if (phone && phone !== '-' && mPhone && mPhone === phone) return true;
+      if (name && mName === name.toLowerCase()) return true;
+      return false;
+    });
 
     if(userMeas.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b;">આ ગ્રાહકનું કોઈ માપ સેવ કરેલું નથી.</div>`;
+      container.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b; font-weight:700;">આ ગ્રાહકનું કોઈ માપ સેવ કરેલું નથી.</div>`;
       return;
     }
 
     container.innerHTML = userMeas.map(m => {
       const upperZone = [
-        { title: 'લંબાઈ', val: m.specs.len },
-        { title: 'છાતી', val: m.specs.chest },
-        { title: 'કમર', val: m.specs.waist },
-        { title: 'શોલ્ડર', val: m.specs.shoulder }
+        { title: 'લંબાઈ', val: m.specs?.len },
+        { title: 'છાતી', val: m.specs?.chest },
+        { title: 'કમર', val: m.specs?.waist },
+        { title: 'શોલ્ડર', val: m.specs?.shoulder }
       ].filter(s => s.val && s.val.trim() !== '');
 
       const armNeckZone = [
-        { title: 'બાય લંબાઈ', val: m.specs.sleeve },
-        { title: 'મોરી', val: m.specs.mori },
-        { title: 'આગળ ગળો', val: m.specs.fneck },
-        { title: 'પાછળ ગળો', val: m.specs.bneck }
+        { title: 'બાય લંબાઈ', val: m.specs?.sleeve },
+        { title: 'મોરી', val: m.specs?.mori },
+        { title: 'આગળ ગળો', val: m.specs?.fneck },
+        { title: 'પાછળ ગળો', val: m.specs?.bneck }
       ].filter(s => s.val && s.val.trim() !== '');
 
       const lowerZone = [
-        { title: 'સીટ', val: m.specs.seat },
-        { title: 'પેન્ટ લંબાઈ', val: m.specs.plen }
+        { title: 'સીટ', val: m.specs?.seat },
+        { title: 'પેન્ટ લંબાઈ', val: m.specs?.plen }
       ].filter(s => s.val && s.val.trim() !== '');
 
       const renderZone = (title, items) => {
@@ -2113,12 +2288,16 @@
     const container = document.getElementById('profBillsList');
     const { name, phone } = activeCustomerData;
 
-    const userBills = billsDB.filter(b => 
-      (phone && phone !== '-' && b.phone === phone) || (b.customer.toLowerCase() === name.toLowerCase())
-    );
+    const userBills = billsDB.filter(b => {
+      const bPhone = (b.phone || '').trim();
+      const bName = (b.customer || '').trim().toLowerCase();
+      if (phone && phone !== '-' && bPhone && bPhone === phone) return true;
+      if (name && bName === name.toLowerCase()) return true;
+      return false;
+    });
 
     if(userBills.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b;">આ ગ્રાહકનું કોઈ બિલ બનેલું નથી.</div>`;
+      container.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b; font-weight:700;">આ ગ્રાહકનું કોઈ બિલ બનેલું નથી.</div>`;
       return;
     }
 
@@ -2172,16 +2351,16 @@
     document.getElementById('mClothType').value = item.clothType;
     document.getElementById('mExtraNotes').value = item.notes || '';
 
-    document.getElementById('m_len').value = item.specs.len || '';
-    document.getElementById('m_chest').value = item.specs.chest || '';
-    document.getElementById('m_waist').value = item.specs.waist || '';
-    document.getElementById('m_seat').value = item.specs.seat || '';
-    document.getElementById('m_shoulder').value = item.specs.shoulder || '';
-    document.getElementById('m_sleeve').value = item.specs.sleeve || '';
-    document.getElementById('m_mori').value = item.specs.mori || '';
-    document.getElementById('m_fneck').value = item.specs.fneck || '';
-    document.getElementById('m_bneck').value = item.specs.bneck || '';
-    document.getElementById('m_plen').value = item.specs.plen || '';
+    document.getElementById('m_len').value = item.specs?.len || '';
+    document.getElementById('m_chest').value = item.specs?.chest || '';
+    document.getElementById('m_waist').value = item.specs?.waist || '';
+    document.getElementById('m_seat').value = item.specs?.seat || '';
+    document.getElementById('m_shoulder').value = item.specs?.shoulder || '';
+    document.getElementById('m_sleeve').value = item.specs?.sleeve || '';
+    document.getElementById('m_mori').value = item.specs?.mori || '';
+    document.getElementById('m_fneck').value = item.specs?.fneck || '';
+    document.getElementById('m_bneck').value = item.specs?.bneck || '';
+    document.getElementById('m_plen').value = item.specs?.plen || '';
 
     document.getElementById('measEditNotice').innerText = `(સુધારી રહ્યા છો: ${item.name})`;
     showToast(`માપ ફોર્મમાં લોડ થઈ ગયું છે.`, 'info');
@@ -2219,7 +2398,12 @@
       let exist = servicesList.find(s => s.name === it.name);
       if(!exist) {
         const newId = Date.now() + Math.floor(Math.random()*100);
-        exist = { id: newId, name: it.name, price: it.price, iconRender: ICON_SCISSORS };
+        exist = { 
+          id: newId, 
+          name: it.name, 
+          price: it.price, 
+          imgUrl: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=150&auto=format&fit=crop&q=80' 
+        };
         servicesList.push(exist);
       }
       cart[exist.id] = it.qty;
@@ -2269,9 +2453,10 @@
         <div style="display:flex; justify-content:space-between;"><span>એડવાન્સ જમા:</span> <b>₹${bill.advance}</b></div>
         <div style="display:flex; justify-content:space-between; color:#be123c; font-weight:bold; font-size:16px;"><span>બાકી રકમ:</span> <span>₹${bill.due}</span></div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
-        <button class="btn-whatsapp" style="padding:10px;" onclick="loadAndWhatsAppBill('${bill.id}')">WhatsApp</button>
-        <button class="btn-pdf" style="padding:10px;" onclick="loadAndDownloadPDF('${bill.id}')">PDF ડાઉનલોડ</button>
+      <div style="display:flex; justify-content:center; margin-top:16px;">
+        <button class="btn-super-whatsapp" style="padding:12px 20px; font-size:15px; width:100%;" onclick="loadAndWhatsAppBill('${bill.id}')">
+          WhatsApp બિલ મોકલો
+        </button>
       </div>
     `;
 
@@ -2288,14 +2473,7 @@
     const bill = billsDB.find(b => String(b.id) === String(billId));
     if(!bill) return;
     currentBillData = bill;
-    sendWhatsAppReceipt();
-  }
 
-  function loadAndDownloadPDF(billId) {
-    const bill = billsDB.find(b => String(b.id) === String(billId));
-    if(!bill) return;
-    currentBillData = bill;
-    
     document.getElementById('lblBillNo').innerText = '#' + bill.billNo;
     document.getElementById('lblDate').innerText = bill.date;
     document.getElementById('lblCustName').innerText = bill.customer;
@@ -2314,7 +2492,7 @@
       </tr>
     `).join('');
 
-    downloadBillPDF();
+    saveAndSendWhatsApp();
   }
 
   function sendMeasWhatsApp(id) {
@@ -2325,21 +2503,28 @@
     msg += `ગ્રાહક: ${m.name} | મો: ${m.phone}\n`;
     msg += `પ્રકાર: ${m.clothType} | તારીખ: ${m.date}\n`;
     msg += `------------------------------------\n`;
-    if(m.specs.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
-    if(m.specs.chest) msg += `• છાતી: ${m.specs.chest}\n`;
-    if(m.specs.waist) msg += `• કમર: ${m.specs.waist}\n`;
-    if(m.specs.seat) msg += `• સીટ: ${m.specs.seat}\n`;
-    if(m.specs.shoulder) msg += `• શોલ્ડર: ${m.specs.shoulder}\n`;
-    if(m.specs.sleeve) msg += `• બાય લંબાઈ: ${m.specs.sleeve}\n`;
-    if(m.specs.mori) msg += `• મોરી: ${m.specs.mori}\n`;
-    if(m.specs.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
-    if(m.specs.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
-    if(m.specs.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
+    if(m.specs?.len) msg += `• લંબાઈ: ${m.specs.len}\n`;
+    if(m.specs?.chest) msg += `• છાતી: ${m.specs.chest}\n`;
+    if(m.specs?.waist) msg += `• કમર: ${m.specs.waist}\n`;
+    if(m.specs?.seat) msg += `• સીટ: ${m.specs.seat}\n`;
+    if(m.specs?.shoulder) msg += `• શોલ્ડર: ${m.specs.shoulder}\n`;
+    if(m.specs?.sleeve) msg += `• બાય લંબાઈ: ${m.specs.sleeve}\n`;
+    if(m.specs?.mori) msg += `• મોરી: ${m.specs.mori}\n`;
+    if(m.specs?.fneck) msg += `• આગળ ગળો: ${m.specs.fneck}\n`;
+    if(m.specs?.bneck) msg += `• પાછળ ગળો: ${m.specs.bneck}\n`;
+    if(m.specs?.plen) msg += `• પેન્ટ લંબાઈ: ${m.specs.plen}\n`;
     if(m.notes) msg += `\n*નોંધ:* ${m.notes}\n`;
     msg += `------------------------------------\n`;
     msg += `C-9 અત્તોહિત પાર્ક સોસાયટી, રહાડપોર, ભરૂચ\nફોન: 7572842641`;
 
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+    let rawPhone = m.phone ? m.phone.replace(/[^0-9]/g, '') : '';
+    let targetPhone = '';
+    if (rawPhone.length === 10) targetPhone = '91' + rawPhone;
+    else if (rawPhone.length > 10) targetPhone = rawPhone;
+
+    let url = targetPhone ? `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(msg)}` 
+                          : `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
   }
 
   // --- સ્ટેન્ડઅલોન QR ---
