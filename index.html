@@ -54,7 +54,7 @@
       background-color: var(--bg); 
       color: var(--text-main); 
       min-height: 100vh; 
-      overflow-x: hidden; 
+    0 overflow-x: hidden; 
     }
 
     .icon-svg {
@@ -218,7 +218,7 @@
       align-items: center;
       justify-content: space-between;
       position: sticky;
-      top: 0;
+    0 top: 0;
       z-index: 200;
       box-shadow: 0 4px 20px rgba(92, 9, 40, 0.15);
     }
@@ -257,7 +257,7 @@
       gap: 8px; 
       transition: var(--transition); 
     }
-    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.18); color: #ffffff; transform: translateY(-1px); }
+    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.18); color: #ffffff; }
     .btn-logout { background: #ee5253; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; margin-left: 8px; transition: var(--transition); display: flex; align-items: center; gap: 6px; }
 
     /* Mobile Bottom Navigation */
@@ -305,6 +305,7 @@
     }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes scaleUp { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    @keyframes floatSoft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
     /* Welcome Screen - Pro & Big */
     .welcome-container {
@@ -439,7 +440,7 @@
       padding: 8px;
       border-radius: 16px;
       border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-sm); 
     }
     .sub-tab-btn {
       flex: 1;
@@ -633,9 +634,9 @@
       border-radius: 14px; 
       object-fit: cover; 
       border: 1.5px solid #fecdd3; 
-      background: #fff0f4;
-      flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      background: #fff0f4; 
+      flex-shrink: 0; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06); 
     }
 
     .price-edit-box { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
@@ -705,7 +706,7 @@
       text-align: center; 
     }
 
-    /* પર્ફેક્ટ સાઈડ-બાય-સાઈડ ૨-કોલમ ગ્રીડ (હંમેશા આજુબાજુમાં જ રહેશે) */
+    /* પર્ફેક્ટ સાઈડ-બાય-સાઈડ ૨-કોલમ ગ્રીડ */
     .bill-info-cards-grid { 
       display: grid !important; 
       grid-template-columns: 1.15fr 0.85fr !important; 
@@ -920,7 +921,7 @@
     .report-year-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .year-badge-wrap { display: flex; align-items: center; gap: 8px; }
     .year-select-dropdown { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 13.5px; outline: none; }
-    .report-chips-scroll { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+    .report-chips-scroll { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
     .filter-chip-btn { white-space: nowrap; padding: 8px 16px; border-radius: 24px; border: 1.5px solid var(--border-color); background: #ffffff; color: var(--text-main); font-size: 13px; font-weight: 700; cursor: pointer; }
     .filter-chip-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
 
@@ -930,17 +931,6 @@
     .qr-img-wrapper img { width: 100%; height: 100%; object-fit: contain; }
     .quick-amount-chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
     .chip-amt { background: #fff0f4; border: 1px solid #f2cad8; color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; cursor: pointer; }
-
-    @media (max-width: 768px) {
-      .app-wrapper { border-radius: 0; box-shadow: none; }
-      .desktop-nav { display: none; }
-      .bottom-nav.nav-active { display: flex; }
-      .main-content { padding: 14px; padding-bottom: 95px; }
-      .dashboard-banner { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; border-radius: 16px; }
-      .items-scroll-list { max-height: none; }
-      .card-panel { padding: 16px; border-radius: 16px; }
-      /* આ ક્વેરીમાંથી grid-template-columns હટાવી દીધું છે જેથી મોબાઇલમાં પણ ૨-કોલમ જ રહે */
-    }
   </style>
 </head>
 <body>
@@ -1038,7 +1028,7 @@
 
     <main class="main-content">
       
-      <!-- 2. PRO WELCOME VIEW (BIG & BEAUTIFUL) -->
+      <!-- 2. PRO WELCOME VIEW -->
       <section class="view active" id="view-welcome">
         <div class="welcome-container">
           <div class="welcome-card">
@@ -1243,7 +1233,7 @@
             <span style="display:flex; align-items:center; gap:8px;">
               <svg class="icon-svg" viewBox="0 0 24 24"><path fill="#5c0928" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
               જનરેટ થયેલ બિલ પહોંચ
-            </span>
+          </span>
           </div>
 
           <div style="max-width: 500px; margin: 0 auto;">
@@ -1864,7 +1854,6 @@
               <input type="number" class="price-edit-input" 
                 value="${itemPrices[item.id] !== undefined ? itemPrices[item.id] : item.price}" 
                 oninput="updateServicePrice(${item.id}, this.value)">
-            </div>
           </div>
         </div>
         <div class="qty-group">
@@ -1983,7 +1972,9 @@
       return showToast('ગ્રાહકનું નામ અને ૧ આઇટમ ઉમેરો.', 'error');
     }
 
-    // ૧. બિલ સેવ કરવું
+    const cleanCustName = currentBillData.customer.trim();
+    const cleanPhone = currentBillData.phone.trim();
+
     const editId = document.getElementById('editingBillId').value;
     if(editId) {
       const idx = billsDB.findIndex(b => String(b.id) === String(editId));
@@ -2004,7 +1995,6 @@
 
     showToast('બિલ સેવ થયું! ફોટો તૈયાર થઈ રહ્યો છે...', 'info');
 
-    // ૨. બિલ પાવતીનો ચોખ્ખો ફોટો બનાવવો
     const receiptEl = document.getElementById('printableReceipt');
     try {
       const canvas = await html2canvas(receiptEl, {
@@ -2017,16 +2007,15 @@
       canvas.toBlob(async (blob) => {
         if(!blob) return fallbackTextWhatsApp();
 
-        const safeName = (currentBillData.customer || 'Bill').replace(/[^a-zA-Z0-9]/g, '_');
+        const safeName = (cleanCustName || 'Bill').replace(/[^a-zA-Z0-9]/g, '_');
         const file = new File([blob], `Bill_${currentBillData.billNo}_${safeName}.png`, { type: 'image/png' });
 
-        // ૩. Web Share API વડે સીધો ફોટો મોકલવો
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
               files: [file],
               title: `રૂકસાના લેડીઝ ટેલર - બિલ #${currentBillData.billNo}`,
-              text: `નમસ્તે ${currentBillData.customer}, આ તમારું રૂકસાના લેડીઝ ટેલરનું બિલ છે.`
+              text: `નમસ્તે ${cleanCustName}, આ તમારું રૂકસાના લેડીઝ ટેલરનું બિલ છે.`
             });
             showToast('બિલ WhatsApp પર શેર થઈ ગયું!', 'success');
           } catch(err) {
@@ -2085,25 +2074,25 @@
   function getCustomerProfilesMap() {
     let map = {};
     measDB.forEach(m => {
-      const cleanPhone = (m.phone && m.phone !== '-') ? m.phone.trim() : '';
+      const rawPhone = (m.phone && m.phone !== '-') ? m.phone.replace(/[^0-9]/g, '') : '';
       const cleanName = m.name ? m.name.trim() : '';
-      const key = cleanPhone ? cleanPhone : cleanName.toLowerCase();
+      const key = rawPhone ? rawPhone : cleanName.toLowerCase();
       if(!key) return;
 
       if(!map[key]) {
-        map[key] = { name: cleanName, phone: cleanPhone, measCount: 0, billsCount: 0 };
+        map[key] = { name: cleanName, phone: m.phone ? m.phone.trim() : '', rawPhone: rawPhone, measCount: 0, billsCount: 0 };
       }
       map[key].measCount++;
     });
 
     billsDB.forEach(b => {
-      const cleanPhone = (b.phone && b.phone !== '-') ? b.phone.trim() : '';
+      const rawPhone = (b.phone && b.phone !== '-') ? b.phone.replace(/[^0-9]/g, '') : '';
       const cleanName = b.customer ? b.customer.trim() : '';
-      const key = cleanPhone ? cleanPhone : cleanName.toLowerCase();
+      const key = rawPhone ? rawPhone : cleanName.toLowerCase();
       if(!key) return;
 
       if(!map[key]) {
-        map[key] = { name: cleanName, phone: cleanPhone, measCount: 0, billsCount: 0 };
+        map[key] = { name: cleanName, phone: b.phone ? b.phone.trim() : '', rawPhone: rawPhone, measCount: 0, billsCount: 0 };
       }
       map[key].billsCount++;
     });
@@ -2154,7 +2143,12 @@
   }
 
   function openCustomerProfile(name, phone) {
-    activeCustomerData = { name: (name || '').trim(), phone: (phone || '').trim() };
+    const cleanPhone = (phone && phone !== '-') ? phone.replace(/[^0-9]/g, '') : '';
+    activeCustomerData = { 
+      name: (name || '').trim(), 
+      phone: (phone || '').trim(), 
+      rawPhone: cleanPhone 
+    };
     document.getElementById('profCustName').innerText = name || '-';
     document.getElementById('profCustPhone').innerText = phone ? `📞 ${phone}` : 'મોબાઈલ નંબર નથી';
     
@@ -2183,7 +2177,7 @@
       tabBills.classList.add('active');
       tabMeas.classList.remove('active');
       secBills.style.display = 'block';
-      secBills.style.display = 'none';
+      secMeas.style.display = 'none';
       renderCustomerBills();
     }
   }
@@ -2191,12 +2185,12 @@
   function renderCustomerMeasurements() {
     if(!activeCustomerData) return;
     const container = document.getElementById('profMeasList');
-    const { name, phone } = activeCustomerData;
+    const { name, rawPhone } = activeCustomerData;
 
     const userMeas = measDB.filter(m => {
-      const mPhone = (m.phone || '').trim();
+      const mRawPhone = (m.phone && m.phone !== '-') ? m.phone.replace(/[^0-9]/g, '') : '';
       const mName = (m.name || '').trim().toLowerCase();
-      if (phone && phone !== '-' && mPhone && mPhone === phone) return true;
+      if (rawPhone && mRawPhone && mRawPhone === rawPhone) return true;
       if (name && mName === name.toLowerCase()) return true;
       return false;
     });
@@ -2286,12 +2280,12 @@
   function renderCustomerBills() {
     if(!activeCustomerData) return;
     const container = document.getElementById('profBillsList');
-    const { name, phone } = activeCustomerData;
+    const { name, rawPhone } = activeCustomerData;
 
     const userBills = billsDB.filter(b => {
-      const bPhone = (b.phone || '').trim();
+      const bRawPhone = (b.phone && b.phone !== '-') ? b.phone.replace(/[^0-9]/g, '') : '';
       const bName = (b.customer || '').trim().toLowerCase();
-      if (phone && phone !== '-' && bPhone && bPhone === phone) return true;
+      if (rawPhone && bRawPhone && bRawPhone === rawPhone) return true;
       if (name && bName === name.toLowerCase()) return true;
       return false;
     });
@@ -2375,7 +2369,7 @@
       renderCustomerMeasurements();
       renderCustomers();
       showToast('માપ કાઢી નાખ્યું.', 'info');
-    }
+  }
   }
 
   function editCustomerBill(billId) {
@@ -2611,7 +2605,7 @@
     if(yearSelect) {
       currentReportYear = yearSelect.value;
       renderReports();
-    }
+  }
   }
 
   function setReportFilter(periodType) {
